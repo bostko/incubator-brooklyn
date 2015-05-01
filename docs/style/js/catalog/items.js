@@ -1,14 +1,24 @@
-{
+var items = {
   "entities" : [ {
     "type" : "brooklyn.entity.messaging.activemq.ActiveMQBroker",
-    "defaultVersion" : "5.7.0",
+    "defaultVersion" : "5.10.2",
     "name" : "ActiveMQ Broker",
     "description" : "ActiveMQ is an open source message broker which fully implements the Java Message Service 1.1 (JMS)",
     "iconUrl" : "classpath:///activemq-logo.png",
     "config" : [ {
+      "name" : "activemq.brokerName",
+      "type" : "java.lang.String",
+      "defaultValue" : "localhost",
+      "description" : "ActiveMQ Broker Name",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "activemq.install.mirror.url",
       "type" : "java.lang.String",
-      "defaultValue" : "http://www.mirrorservice.org/sites/ftp.apache.org/activemq/apache-activemq",
+      "defaultValue" : "http://www.mirrorservice.org/sites/ftp.apache.org/activemq",
       "description" : "URL of mirror",
       "reconfigurable" : false,
       "label" : null,
@@ -91,6 +101,26 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "entity.running",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, if service already running",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "entity.started",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, for running services",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "defaultValue" : null,
@@ -101,10 +131,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "files.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of files, to be copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "files.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of files to be copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of files, to be copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -133,7 +173,7 @@
     }, {
       "name" : "install.skip",
       "type" : "java.lang.Boolean",
-      "defaultValue" : false,
+      "defaultValue" : null,
       "description" : "Skip the driver install commands entirely, for pre-installed software",
       "reconfigurable" : false,
       "label" : null,
@@ -153,7 +193,7 @@
     }, {
       "name" : "install.version",
       "type" : "java.lang.String",
-      "defaultValue" : "5.7.0",
+      "defaultValue" : "5.10.2",
       "description" : "Suggested version",
       "reconfigurable" : false,
       "label" : null,
@@ -185,6 +225,16 @@
       "type" : "java.util.Map",
       "defaultValue" : { },
       "description" : "Java command line system properties",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "jmx.agent.local.path",
+      "type" : "java.lang.String",
+      "defaultValue" : null,
+      "description" : "Path to JMX driver on the local machine",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -233,6 +283,16 @@
       "type" : "brooklyn.location.PortRange",
       "defaultValue" : "31001-65535",
       "description" : "JMX direct/private port (e.g. JMX RMI server port, or JMXMP port, but not RMI registry port)",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "jmx.direct.port.legacy.NOT_USED",
+      "type" : "brooklyn.location.PortRange",
+      "defaultValue" : null,
+      "description" : "Legacy definition JMX direct/private port (e.g. JMX RMI server port, or JMXMP port, but not RMI registry port)",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -369,10 +429,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
-      "name" : "resources.latch",
+      "name" : "resources.install.latch",
       "type" : "java.lang.Boolean",
       "defaultValue" : null,
-      "description" : "Latch for blocking resources until ready",
+      "description" : "Latch for blocking install resources until ready",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "resources.runtime.latch",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Latch for blocking runtime resources until ready",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -449,10 +519,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "templates.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of templates, to be filled in and copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "templates.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of templates to be filled in and copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of templates, to be filled in and copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -460,125 +540,140 @@
       "links" : null
     } ],
     "sensors" : [ {
+      "name" : "activemq.brokerName",
+      "type" : "java.lang.String",
+      "description" : "ActiveMQ Broker Name",
+      "links" : { }
+    }, {
       "name" : "activemq.jetty.port",
       "type" : "java.lang.Integer",
       "description" : "jetty port",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "activemq.templateConfigurationUrl",
       "type" : "java.lang.String",
       "description" : "Template file (in freemarker format) for the conf/activemq.xml file",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "broker.url",
       "type" : "java.lang.String",
       "description" : "Broker Connection URL",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "download.addon.urls",
       "type" : "java.util.Map",
       "description" : "URL patterns for downloading named add-ons (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "download.url",
       "type" : "java.lang.String",
       "description" : "URL pattern for downloading the installer (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "description" : "Directory for installed artifacts (e.g. expanded dir after unpacking .tgz)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.address",
       "type" : "java.lang.String",
       "description" : "Host IP address",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.name",
       "type" : "java.lang.String",
       "description" : "Host name",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.address",
       "type" : "java.lang.String",
       "description" : "Host address as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.hostname",
       "type" : "java.lang.String",
       "description" : "Host name as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "install.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be installed in",
-      "links" : null
+      "links" : { }
+    }, {
+      "name" : "jmx.agent.local.path",
+      "type" : "java.lang.String",
+      "description" : "Path to JMX driver on the local machine",
+      "links" : { }
     }, {
       "name" : "jmx.context",
       "type" : "java.lang.String",
       "description" : "JMX context path",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "jmx.direct.port",
       "type" : "java.lang.Integer",
       "description" : "JMX direct/private port (e.g. JMX RMI server port, or JMXMP port, but not RMI registry port)",
-      "links" : null
+      "links" : { }
+    }, {
+      "name" : "jmx.direct.port.legacy.NOT_USED",
+      "type" : "java.lang.Integer",
+      "description" : "Legacy definition JMX direct/private port (e.g. JMX RMI server port, or JMXMP port, but not RMI registry port)",
+      "links" : { }
     }, {
       "name" : "jmx.password",
       "type" : "java.lang.String",
       "description" : "JMX password",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "jmx.service.url",
       "type" : "java.lang.String",
       "description" : "The URL for connecting to the MBean Server",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "jmx.user",
       "type" : "java.lang.String",
       "description" : "JMX username",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "openwire.port",
       "type" : "java.lang.Integer",
       "description" : "OpenWire port",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "rmi.registry.port",
       "type" : "java.lang.Integer",
       "description" : "RMI registry port, used for discovering JMX (private) port",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "run.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be run from",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.isUp",
       "type" : "java.lang.Boolean",
       "description" : "Whether the service is active and availability (confirmed and monitored)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.process.isRunning",
       "type" : "java.lang.Boolean",
       "description" : "Whether the process for the service is confirmed as running",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.state",
       "type" : "brooklyn.entity.basic.Lifecycle",
       "description" : "Actual lifecycle state of the service",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareprocess.pid.file",
       "type" : "java.lang.String",
       "description" : "PID file",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareservice.provisioningLocation",
       "type" : "brooklyn.location.MachineProvisioningLocation",
       "description" : "Location used to provision a machine where this is running",
-      "links" : null
+      "links" : { }
     } ],
     "effectors" : [ {
       "name" : "restart",
@@ -671,8 +766,8 @@
       "links" : null
     }, {
       "name" : "enricher.service_state.children_and_members.quorum.running",
-      "type" : "brooklyn.entity.basic.QuorumCheck",
-      "defaultValue" : "QuorumCheck[require=0,100.0%]",
+      "type" : "brooklyn.util.collections.QuorumCheck",
+      "defaultValue" : "QuorumCheck[all;require=0,100.0%]",
       "description" : "Problems check from children actual states (lifecycle), applied by default to members and children, not checking upness, but requiring by default that none are on-fire",
       "reconfigurable" : false,
       "label" : null,
@@ -681,8 +776,8 @@
       "links" : null
     }, {
       "name" : "enricher.service_state.children_and_members.quorum.up",
-      "type" : "brooklyn.entity.basic.QuorumCheck",
-      "defaultValue" : "QuorumCheck[require=1,0.0%]",
+      "type" : "brooklyn.util.collections.QuorumCheck",
+      "defaultValue" : "QuorumCheck[atLeastOne;require=1,0.0%]",
       "description" : "Up check, applied by default to members, requiring at least one present and up",
       "reconfigurable" : false,
       "label" : null,
@@ -724,67 +819,77 @@
       "name" : "cassandra.cluster.datacenterUsages",
       "type" : "com.google.common.collect.Multimap",
       "description" : "Current set of datacenters in use, with nodes in each",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cassandra.cluster.datacenters",
       "type" : "java.util.Set",
       "description" : "Current set of datacenters in use",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cassandra.cluster.hostname",
       "type" : "java.lang.String",
       "description" : "Hostname to connect to cluster with",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cassandra.cluster.seeds.current",
       "type" : "java.util.Set",
       "description" : "Current set of seeds to use to bootstrap the cluster",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cassandra.cluster.seeds.hasPublished",
       "type" : "java.lang.Boolean",
       "description" : "Whether we have published any seeds",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cassandra.cluster.thrift.port",
       "type" : "java.lang.Integer",
       "description" : "Cassandra Thrift RPC port to connect to cluster with",
-      "links" : null
+      "links" : { }
+    }, {
+      "name" : "cluster.first",
+      "type" : "java.lang.Boolean",
+      "description" : "Set on an entity if it is the first member of a cluster",
+      "links" : { }
+    }, {
+      "name" : "cluster.first.entity",
+      "type" : "brooklyn.entity.Entity",
+      "description" : "The first member of the cluster",
+      "links" : { }
     }, {
       "name" : "fabric.size",
       "type" : "java.lang.Integer",
       "description" : "Fabric size",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "group.members",
       "type" : "java.util.Collection",
       "description" : "Members of the group",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "group.members.added",
       "type" : "brooklyn.entity.Entity",
       "description" : "Entity added to group members",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "group.members.count",
       "type" : "java.lang.Integer",
       "description" : "Number of members",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "group.members.removed",
       "type" : "brooklyn.entity.Entity",
       "description" : "Entity removed from group members",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.isUp",
       "type" : "java.lang.Boolean",
       "description" : "Whether the service is active and availability (confirmed and monitored)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.state",
       "type" : "brooklyn.entity.basic.Lifecycle",
       "description" : "Actual lifecycle state of the service",
-      "links" : null
+      "links" : { }
     } ],
     "effectors" : [ {
       "name" : "restart",
@@ -952,6 +1057,16 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "dynamiccluster.firstmemberspec",
+      "type" : "brooklyn.entity.proxying.EntitySpec",
+      "defaultValue" : null,
+      "description" : "entity spec for creating new cluster members, used for the very first member if different",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "dynamiccluster.memberspec",
       "type" : "brooklyn.entity.proxying.EntitySpec",
       "defaultValue" : null,
@@ -1004,7 +1119,7 @@
     }, {
       "name" : "dynamiccluster.zone.failureDetector",
       "type" : "brooklyn.entity.group.DynamicCluster$ZoneFailureDetector",
-      "defaultValue" : "brooklyn.entity.group.zoneaware.ProportionalZoneFailureDetector@b7193fc",
+      "defaultValue" : "brooklyn.entity.group.zoneaware.ProportionalZoneFailureDetector@77acc39c",
       "description" : "Zone failure detector",
       "reconfigurable" : false,
       "label" : null,
@@ -1014,7 +1129,7 @@
     }, {
       "name" : "dynamiccluster.zone.placementStrategy",
       "type" : "brooklyn.entity.group.DynamicCluster$NodePlacementStrategy",
-      "defaultValue" : "brooklyn.entity.group.zoneaware.BalancingNodePlacementStrategy@37f02eaa",
+      "defaultValue" : "brooklyn.entity.group.zoneaware.BalancingNodePlacementStrategy@45498134",
       "description" : "Node placement strategy",
       "reconfigurable" : false,
       "label" : null,
@@ -1023,8 +1138,8 @@
       "links" : null
     }, {
       "name" : "enricher.service_state.children_and_members.quorum.running",
-      "type" : "brooklyn.entity.basic.QuorumCheck",
-      "defaultValue" : "QuorumCheck[require=0,100.0%]",
+      "type" : "brooklyn.util.collections.QuorumCheck",
+      "defaultValue" : "QuorumCheck[all;require=0,100.0%]",
       "description" : "Problems check from children actual states (lifecycle), applied by default to members and children, not checking upness, but requiring by default that none are on-fire",
       "reconfigurable" : false,
       "label" : null,
@@ -1033,8 +1148,8 @@
       "links" : null
     }, {
       "name" : "enricher.service_state.children_and_members.quorum.up",
-      "type" : "brooklyn.entity.basic.QuorumCheck",
-      "defaultValue" : "QuorumCheck[require=1,0.0%]",
+      "type" : "brooklyn.util.collections.QuorumCheck",
+      "defaultValue" : "QuorumCheck[atLeastOne;require=1,0.0%]",
       "description" : "Up check, applied by default to members, requiring at least one present and up",
       "reconfigurable" : false,
       "label" : null,
@@ -1066,192 +1181,192 @@
       "name" : "cassandra.cluster.datacenterUsages",
       "type" : "com.google.common.collect.Multimap",
       "description" : "Current set of datacenters in use, with nodes in each",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cassandra.cluster.datacenters",
       "type" : "java.util.Set",
       "description" : "Current set of datacenters in use",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cassandra.cluster.first.node.started.utc",
       "type" : "java.lang.Long",
       "description" : "Time (UTC) when the first node was started",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cassandra.cluster.hostname",
       "type" : "java.lang.String",
       "description" : "Hostname to connect to cluster with",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cassandra.cluster.metrics.processCpuTime.fraction.perNode",
       "type" : "java.lang.Double",
       "description" : "Fraction of CPU time used (percentage reported by JMX), averaged over all nodes",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cassandra.cluster.metrics.processCpuTime.fraction.windowed",
       "type" : "java.lang.Double",
       "description" : "Fraction of CPU time used (percentage, over time window), averaged over all nodes",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cassandra.cluster.name",
       "type" : "java.lang.String",
       "description" : "Name of the Cassandra cluster",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cassandra.cluster.nodes",
       "type" : "java.util.List",
       "description" : "List of host:port of all active nodes in the cluster (thrift port, and public hostname/IP)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cassandra.cluster.read.active",
       "type" : "java.lang.Integer",
       "description" : "Current active ReadStage tasks",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cassandra.cluster.read.pending",
       "type" : "java.lang.Long",
       "description" : "Current pending ReadStage tasks",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cassandra.cluster.schema.versions.count",
       "type" : "java.lang.Integer",
       "description" : "Number of different schema versions in the cluster; should be 1 for a healthy cluster, 0 when off; 2 and above indicats a Schema Disagreement Error (and keyspace access may fail)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cassandra.cluster.seeds.current",
       "type" : "java.util.Set",
       "description" : "Current set of seeds to use to bootstrap the cluster",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cassandra.cluster.seeds.hasPublished",
       "type" : "java.lang.Boolean",
       "description" : "Whether we have published any seeds",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cassandra.cluster.start.nodes.queued",
       "type" : "java.util.List",
       "description" : "Nodes queued for starting (for sequential start)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cassandra.cluster.thrift.latency.perNode",
       "type" : "java.lang.Long",
       "description" : "Latency for thrift port connection  averaged over all nodes (ms)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cassandra.cluster.thrift.port",
       "type" : "java.lang.Integer",
       "description" : "Cassandra Thrift RPC port to connect to cluster with",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cassandra.cluster.write.active",
       "type" : "java.lang.Integer",
       "description" : "Current active MutationStage tasks",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cassandra.cluster.write.pending",
       "type" : "java.lang.Long",
       "description" : "Current pending MutationStage tasks",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cassandra.reads.perSec.last.perNode",
       "type" : "java.lang.Double",
       "description" : "Reads/sec (last datapoint) averaged over all nodes",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cassandra.reads.perSec.windowed.perNode",
       "type" : "java.lang.Double",
       "description" : "Reads/sec (over time window) averaged over all nodes",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cassandra.thrift.latency.windowed.perNode",
       "type" : "java.lang.Double",
       "description" : "Latency for thrift port (ms, over time window) averaged over all nodes",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cassandra.write.perSec.last.perNode",
       "type" : "java.lang.Double",
       "description" : "Writes/sec (last datapoint) averaged over all nodes",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cassandra.writes.perSec.windowed.perNode",
       "type" : "java.lang.Double",
       "description" : "Writes/sec (over time window) averaged over all nodes",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cluster.entity",
       "type" : "brooklyn.entity.Entity",
       "description" : "The cluster an entity is a member of",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cluster.first",
       "type" : "java.lang.Boolean",
       "description" : "Set on an entity if it is the first member of a cluster",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cluster.first.entity",
       "type" : "brooklyn.entity.Entity",
       "description" : "The first member of the cluster",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cluster.member",
       "type" : "java.lang.Boolean",
       "description" : "Set on an entity if it is a member of a cluster",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "datastore.url",
       "type" : "java.lang.String",
       "description" : "Primary contact URL for a datastore (e.g. mysql://localhost:3306/)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "dynamiccluster.entityQuarantined",
       "type" : "brooklyn.entity.Entity",
       "description" : "Entity failed to start, and has been quarantined",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "dynamiccluster.failedSubLocations",
       "type" : "java.util.Set",
       "description" : "Sub locations that seem to have failed",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "dynamiccluster.quarantineGroup",
       "type" : "brooklyn.entity.group.QuarantineGroup",
       "description" : "Group of quarantined entities that failed to start",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "dynamiccluster.subLocations",
       "type" : "java.util.List",
       "description" : "Locations for each availability zone to use",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "group.members",
       "type" : "java.util.Collection",
       "description" : "Members of the group",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "group.members.added",
       "type" : "brooklyn.entity.Entity",
       "description" : "Entity added to group members",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "group.members.count",
       "type" : "java.lang.Integer",
       "description" : "Number of members",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "group.members.removed",
       "type" : "brooklyn.entity.Entity",
       "description" : "Entity removed from group members",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.isUp",
       "type" : "java.lang.Boolean",
       "description" : "Whether the service is active and availability (confirmed and monitored)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.state",
       "type" : "brooklyn.entity.basic.Lifecycle",
       "description" : "Actual lifecycle state of the service",
-      "links" : null
+      "links" : { }
     } ],
     "effectors" : [ {
       "name" : "executeScript",
@@ -1629,6 +1744,26 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "entity.running",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, if service already running",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "entity.started",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, for running services",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "defaultValue" : null,
@@ -1639,10 +1774,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "files.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of files, to be copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "files.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of files to be copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of files, to be copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -1671,7 +1816,7 @@
     }, {
       "name" : "install.skip",
       "type" : "java.lang.Boolean",
-      "defaultValue" : false,
+      "defaultValue" : null,
       "description" : "Skip the driver install commands entirely, for pre-installed software",
       "reconfigurable" : false,
       "label" : null,
@@ -1739,6 +1884,16 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "jmx.agent.local.path",
+      "type" : "java.lang.String",
+      "defaultValue" : null,
+      "description" : "Path to JMX driver on the local machine",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "jmx.agent.mode",
       "type" : "java.lang.Enum",
       "defaultValue" : "JMXMP_AND_RMI",
@@ -1781,6 +1936,16 @@
       "type" : "brooklyn.location.PortRange",
       "defaultValue" : "31001-65535",
       "description" : "JMX direct/private port (e.g. JMX RMI server port, or JMXMP port, but not RMI registry port)",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "jmx.direct.port.legacy.NOT_USED",
+      "type" : "brooklyn.location.PortRange",
+      "defaultValue" : null,
+      "description" : "Legacy definition JMX direct/private port (e.g. JMX RMI server port, or JMXMP port, but not RMI registry port)",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -1907,10 +2072,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
-      "name" : "resources.latch",
+      "name" : "resources.install.latch",
       "type" : "java.lang.Boolean",
       "defaultValue" : null,
-      "description" : "Latch for blocking resources until ready",
+      "description" : "Latch for blocking install resources until ready",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "resources.runtime.latch",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Latch for blocking runtime resources until ready",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -1987,10 +2162,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "templates.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of templates, to be filled in and copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "templates.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of templates to be filled in and copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of templates, to be filled in and copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -2001,312 +2186,322 @@
       "name" : "cassandra.cluster.name",
       "type" : "java.lang.String",
       "description" : "Name of the Cassandra cluster",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cassandra.gossip.port",
       "type" : "java.lang.Integer",
       "description" : "Cassandra Gossip communications port",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cassandra.liveNodeCount",
       "type" : "java.lang.Integer",
       "description" : "Number of live nodes in cluster",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cassandra.native.port",
       "type" : "java.lang.Integer",
       "description" : "Cassandra Native Transport port",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cassandra.peers",
       "type" : "java.lang.Integer",
       "description" : "Number of peers in cluster",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cassandra.read.active",
       "type" : "java.lang.Integer",
       "description" : "Current active ReadStage tasks",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cassandra.read.completed",
       "type" : "java.lang.Long",
       "description" : "Total completed ReadStage tasks",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cassandra.read.pending",
       "type" : "java.lang.Long",
       "description" : "Current pending ReadStage tasks",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cassandra.reads.perSec.last",
       "type" : "java.lang.Double",
       "description" : "Reads/sec (last datapoint)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cassandra.reads.perSec.windowed",
       "type" : "java.lang.Double",
       "description" : "Reads/sec (over time window)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cassandra.replication.datacenterName",
       "type" : "java.lang.String",
       "description" : "Datacenter name (used for configuring replication, when a suitable snitch is used)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cassandra.replication.rackName",
       "type" : "java.lang.String",
       "description" : "Rack name (used for configuring replication, when a suitable snitch is used)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cassandra.service.jmx.up",
       "type" : "java.lang.Boolean",
       "description" : "Whether JMX is up for this service",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cassandra.ssl-gossip.port",
       "type" : "java.lang.Integer",
       "description" : "Cassandra Gossip SSL communications port",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cassandra.thrift.latency",
       "type" : "java.lang.Long",
       "description" : "Latency for thrift port connection (ms) or null if down",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cassandra.thrift.latency.windowed",
       "type" : "java.lang.Double",
       "description" : "Latency for thrift port (ms, averaged over time window)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cassandra.thrift.port",
       "type" : "java.lang.Integer",
       "description" : "Cassandra Thrift RPC port",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cassandra.token",
       "type" : "java.math.BigInteger",
       "description" : "Cassandra Token",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cassandra.tokens",
       "type" : "java.util.Set",
       "description" : "Cassandra Tokens",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cassandra.write.active",
       "type" : "java.lang.Integer",
       "description" : "Current active MutationStage tasks",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cassandra.write.completed",
       "type" : "java.lang.Long",
       "description" : "Total completed MutationStage tasks",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cassandra.write.pending",
       "type" : "java.lang.Long",
       "description" : "Current pending MutationStage tasks",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cassandra.write.perSec.last",
       "type" : "java.lang.Double",
       "description" : "Writes/sec (last datapoint)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cassandra.writes.perSec.windowed",
       "type" : "java.lang.Double",
       "description" : "Writes/sec (over time window)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "datastore.url",
       "type" : "java.lang.String",
       "description" : "Primary contact URL for a datastore (e.g. mysql://localhost:3306/)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "download.addon.urls",
       "type" : "java.util.Map",
       "description" : "URL patterns for downloading named add-ons (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "download.url",
       "type" : "java.lang.String",
       "description" : "URL pattern for downloading the installer (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "description" : "Directory for installed artifacts (e.g. expanded dir after unpacking .tgz)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.address",
       "type" : "java.lang.String",
       "description" : "Host IP address",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.name",
       "type" : "java.lang.String",
       "description" : "Host name",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.address",
       "type" : "java.lang.String",
       "description" : "Host address as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.hostname",
       "type" : "java.lang.String",
       "description" : "Host name as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "install.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be installed in",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "java.metrics.gc.time",
       "type" : "java.util.Map",
       "description" : "garbage collection time",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "java.metrics.heap.committed",
       "type" : "java.lang.Long",
       "description" : "Commited heap size (bytes)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "java.metrics.heap.init",
       "type" : "java.lang.Long",
       "description" : "Initial heap size (bytes)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "java.metrics.heap.max",
       "type" : "java.lang.Long",
       "description" : "Max heap size (bytes)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "java.metrics.heap.used",
       "type" : "java.lang.Long",
       "description" : "Current heap size (bytes)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "java.metrics.nonheap.used",
       "type" : "java.lang.Long",
       "description" : "Current non-heap size (bytes)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "java.metrics.physicalmemory.free",
       "type" : "java.lang.Long",
       "description" : "The free memory available to the operating system",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "java.metrics.physicalmemory.total",
       "type" : "java.lang.Long",
       "description" : "The physical memory available to the operating system",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "java.metrics.processCpuTime.fraction.last",
       "type" : "java.lang.Double",
       "description" : "Fraction of CPU time used, reported by JVM (percentage, last datapoint)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "java.metrics.processCpuTime.fraction.windowed",
       "type" : "java.lang.Double",
       "description" : "Fraction of CPU time used, reported by JVM (percentage, over time window)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "java.metrics.processCpuTime.total",
       "type" : "java.lang.Double",
       "description" : "Process CPU time (total millis since start)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "java.metrics.processors.available",
       "type" : "java.lang.Integer",
       "description" : "number of processors available to the Java virtual machine",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "java.metrics.starttime",
       "type" : "java.lang.Long",
       "description" : "Start time of Java process (UTC)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "java.metrics.systemload.average",
       "type" : "java.lang.Double",
       "description" : "average system load",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "java.metrics.threads.current",
       "type" : "java.lang.Integer",
       "description" : "Current number of threads",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "java.metrics.threads.max",
       "type" : "java.lang.Integer",
       "description" : "Peak number of threads",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "java.metrics.uptime",
       "type" : "java.lang.Long",
       "description" : "Uptime of Java process (millis, elapsed since start)",
-      "links" : null
+      "links" : { }
+    }, {
+      "name" : "jmx.agent.local.path",
+      "type" : "java.lang.String",
+      "description" : "Path to JMX driver on the local machine",
+      "links" : { }
     }, {
       "name" : "jmx.context",
       "type" : "java.lang.String",
       "description" : "JMX context path",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "jmx.direct.port",
       "type" : "java.lang.Integer",
       "description" : "JMX direct/private port (e.g. JMX RMI server port, or JMXMP port, but not RMI registry port)",
-      "links" : null
+      "links" : { }
+    }, {
+      "name" : "jmx.direct.port.legacy.NOT_USED",
+      "type" : "java.lang.Integer",
+      "description" : "Legacy definition JMX direct/private port (e.g. JMX RMI server port, or JMXMP port, but not RMI registry port)",
+      "links" : { }
     }, {
       "name" : "jmx.password",
       "type" : "java.lang.String",
       "description" : "JMX password",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "jmx.service.url",
       "type" : "java.lang.String",
       "description" : "The URL for connecting to the MBean Server",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "jmx.user",
       "type" : "java.lang.String",
       "description" : "JMX username",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "rmi.registry.port",
       "type" : "java.lang.Integer",
       "description" : "RMI registry port, used for discovering JMX (private) port",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "run.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be run from",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.isUp",
       "type" : "java.lang.Boolean",
       "description" : "Whether the service is active and availability (confirmed and monitored)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.process.isRunning",
       "type" : "java.lang.Boolean",
       "description" : "Whether the process for the service is confirmed as running",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.state",
       "type" : "brooklyn.entity.basic.Lifecycle",
       "description" : "Actual lifecycle state of the service",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareprocess.pid.file",
       "type" : "java.lang.String",
       "description" : "PID file",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareservice.provisioningLocation",
       "type" : "brooklyn.location.MachineProvisioningLocation",
       "description" : "Location used to provision a machine where this is running",
-      "links" : null
+      "links" : { }
     } ],
     "effectors" : [ {
       "name" : "executeScript",
@@ -2345,7 +2540,7 @@
     } ]
   }, {
     "type" : "brooklyn.entity.nosql.solr.SolrServer",
-    "defaultVersion" : "4.7.0",
+    "defaultVersion" : "4.7.2",
     "name" : "Apache Solr Node",
     "description" : "Solr is the popular, blazing fast open source enterprise search platform from the Apache Lucene project.",
     "iconUrl" : "classpath:///solr-logo.jpeg",
@@ -2405,6 +2600,26 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "entity.running",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, if service already running",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "entity.started",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, for running services",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "defaultValue" : null,
@@ -2415,10 +2630,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "files.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of files, to be copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "files.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of files to be copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of files, to be copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -2447,7 +2672,7 @@
     }, {
       "name" : "install.skip",
       "type" : "java.lang.Boolean",
-      "defaultValue" : false,
+      "defaultValue" : null,
       "description" : "Skip the driver install commands entirely, for pre-installed software",
       "reconfigurable" : false,
       "label" : null,
@@ -2467,8 +2692,176 @@
     }, {
       "name" : "install.version",
       "type" : "java.lang.String",
-      "defaultValue" : "4.7.0",
+      "defaultValue" : "4.7.2",
       "description" : "Suggested version",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "java.check.hostname.bug",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : true,
+      "description" : "Check whether hostname is too long and will likely crash Javadue to bug 7089443",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "java.metrics.mxbeanStatsEnabled",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : true,
+      "description" : "Enables collection of JVM stats from the MXBeans, such as memory and thread usage (default is true)",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "java.opts",
+      "type" : "java.util.Set",
+      "defaultValue" : [ ],
+      "description" : "Java command line options",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "java.sysprops",
+      "type" : "java.util.Map",
+      "defaultValue" : { },
+      "description" : "Java command line system properties",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "jmx.agent.local.path",
+      "type" : "java.lang.String",
+      "defaultValue" : null,
+      "description" : "Path to JMX driver on the local machine",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "jmx.agent.mode",
+      "type" : "java.lang.Enum",
+      "defaultValue" : "AUTODETECT",
+      "description" : "What type of JMX agent to use; defaults to null (autodetect) which means JMXMP_AND_RMI allowing firewall access through a single port as well as local access supporting jconsole (unless JMX_SSL_ENABLED is set, in which case it is JMXMP only)",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : [ {
+        "value" : "AUTODETECT",
+        "description" : "AUTODETECT"
+      }, {
+        "value" : "JMXMP",
+        "description" : "JMXMP"
+      }, {
+        "value" : "JMXMP_AND_RMI",
+        "description" : "JMXMP_AND_RMI"
+      }, {
+        "value" : "JMX_RMI_CUSTOM_AGENT",
+        "description" : "JMX_RMI_CUSTOM_AGENT"
+      }, {
+        "value" : "JMX_RMI",
+        "description" : "JMX_RMI"
+      }, {
+        "value" : "NONE",
+        "description" : "NONE"
+      } ],
+      "links" : null
+    }, {
+      "name" : "jmx.context",
+      "type" : "java.lang.String",
+      "defaultValue" : "jmxrmi",
+      "description" : "JMX context path",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "jmx.direct.port",
+      "type" : "brooklyn.location.PortRange",
+      "defaultValue" : "31001-65535",
+      "description" : "JMX direct/private port (e.g. JMX RMI server port, or JMXMP port, but not RMI registry port)",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "jmx.direct.port.legacy.NOT_USED",
+      "type" : "brooklyn.location.PortRange",
+      "defaultValue" : null,
+      "description" : "Legacy definition JMX direct/private port (e.g. JMX RMI server port, or JMXMP port, but not RMI registry port)",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "jmx.enabled",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : true,
+      "description" : "JMX enabled",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "jmx.password",
+      "type" : "java.lang.String",
+      "defaultValue" : null,
+      "description" : "JMX password",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "jmx.ssl.access.cert",
+      "type" : "java.security.cert.Certificate",
+      "defaultValue" : null,
+      "description" : "certificate of key used to access a JMX agent",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "jmx.ssl.access.key",
+      "type" : "java.security.PrivateKey",
+      "defaultValue" : null,
+      "description" : "key used to access a JMX agent (typically per entity, embedded in the managed JVM)",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "jmx.ssl.enabled",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : false,
+      "description" : "JMX over JMXMP enabled with SSL/TLS",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "jmx.user",
+      "type" : "java.lang.String",
+      "defaultValue" : null,
+      "description" : "JMX username",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -2535,10 +2928,30 @@
       "possibleValues" : null,
       "links" : null
     }, {
-      "name" : "resources.latch",
+      "name" : "resources.install.latch",
       "type" : "java.lang.Boolean",
       "defaultValue" : null,
-      "description" : "Latch for blocking resources until ready",
+      "description" : "Latch for blocking install resources until ready",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "resources.runtime.latch",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Latch for blocking runtime resources until ready",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "rmi.registry.port",
+      "type" : "brooklyn.location.PortRange",
+      "defaultValue" : "1099,19099-65535",
+      "description" : "RMI registry port, used for discovering JMX (private) port",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -2645,10 +3058,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "templates.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of templates, to be filled in and copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "templates.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of templates to be filled in and copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of templates, to be filled in and copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -2659,77 +3082,202 @@
       "name" : "download.addon.urls",
       "type" : "java.util.Map",
       "description" : "URL patterns for downloading named add-ons (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "download.url",
       "type" : "java.lang.String",
       "description" : "URL pattern for downloading the installer (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "description" : "Directory for installed artifacts (e.g. expanded dir after unpacking .tgz)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.address",
       "type" : "java.lang.String",
       "description" : "Host IP address",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.name",
       "type" : "java.lang.String",
       "description" : "Host name",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.address",
       "type" : "java.lang.String",
       "description" : "Host address as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.hostname",
       "type" : "java.lang.String",
       "description" : "Host name as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "install.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be installed in",
-      "links" : null
+      "links" : { }
+    }, {
+      "name" : "java.metrics.gc.time",
+      "type" : "java.util.Map",
+      "description" : "garbage collection time",
+      "links" : { }
+    }, {
+      "name" : "java.metrics.heap.committed",
+      "type" : "java.lang.Long",
+      "description" : "Commited heap size (bytes)",
+      "links" : { }
+    }, {
+      "name" : "java.metrics.heap.init",
+      "type" : "java.lang.Long",
+      "description" : "Initial heap size (bytes)",
+      "links" : { }
+    }, {
+      "name" : "java.metrics.heap.max",
+      "type" : "java.lang.Long",
+      "description" : "Max heap size (bytes)",
+      "links" : { }
+    }, {
+      "name" : "java.metrics.heap.used",
+      "type" : "java.lang.Long",
+      "description" : "Current heap size (bytes)",
+      "links" : { }
+    }, {
+      "name" : "java.metrics.nonheap.used",
+      "type" : "java.lang.Long",
+      "description" : "Current non-heap size (bytes)",
+      "links" : { }
+    }, {
+      "name" : "java.metrics.physicalmemory.free",
+      "type" : "java.lang.Long",
+      "description" : "The free memory available to the operating system",
+      "links" : { }
+    }, {
+      "name" : "java.metrics.physicalmemory.total",
+      "type" : "java.lang.Long",
+      "description" : "The physical memory available to the operating system",
+      "links" : { }
+    }, {
+      "name" : "java.metrics.processCpuTime.fraction.last",
+      "type" : "java.lang.Double",
+      "description" : "Fraction of CPU time used, reported by JVM (percentage, last datapoint)",
+      "links" : { }
+    }, {
+      "name" : "java.metrics.processCpuTime.fraction.windowed",
+      "type" : "java.lang.Double",
+      "description" : "Fraction of CPU time used, reported by JVM (percentage, over time window)",
+      "links" : { }
+    }, {
+      "name" : "java.metrics.processCpuTime.total",
+      "type" : "java.lang.Double",
+      "description" : "Process CPU time (total millis since start)",
+      "links" : { }
+    }, {
+      "name" : "java.metrics.processors.available",
+      "type" : "java.lang.Integer",
+      "description" : "number of processors available to the Java virtual machine",
+      "links" : { }
+    }, {
+      "name" : "java.metrics.starttime",
+      "type" : "java.lang.Long",
+      "description" : "Start time of Java process (UTC)",
+      "links" : { }
+    }, {
+      "name" : "java.metrics.systemload.average",
+      "type" : "java.lang.Double",
+      "description" : "average system load",
+      "links" : { }
+    }, {
+      "name" : "java.metrics.threads.current",
+      "type" : "java.lang.Integer",
+      "description" : "Current number of threads",
+      "links" : { }
+    }, {
+      "name" : "java.metrics.threads.max",
+      "type" : "java.lang.Integer",
+      "description" : "Peak number of threads",
+      "links" : { }
+    }, {
+      "name" : "java.metrics.uptime",
+      "type" : "java.lang.Long",
+      "description" : "Uptime of Java process (millis, elapsed since start)",
+      "links" : { }
+    }, {
+      "name" : "jmx.agent.local.path",
+      "type" : "java.lang.String",
+      "description" : "Path to JMX driver on the local machine",
+      "links" : { }
+    }, {
+      "name" : "jmx.context",
+      "type" : "java.lang.String",
+      "description" : "JMX context path",
+      "links" : { }
+    }, {
+      "name" : "jmx.direct.port",
+      "type" : "java.lang.Integer",
+      "description" : "JMX direct/private port (e.g. JMX RMI server port, or JMXMP port, but not RMI registry port)",
+      "links" : { }
+    }, {
+      "name" : "jmx.direct.port.legacy.NOT_USED",
+      "type" : "java.lang.Integer",
+      "description" : "Legacy definition JMX direct/private port (e.g. JMX RMI server port, or JMXMP port, but not RMI registry port)",
+      "links" : { }
+    }, {
+      "name" : "jmx.password",
+      "type" : "java.lang.String",
+      "description" : "JMX password",
+      "links" : { }
+    }, {
+      "name" : "jmx.service.url",
+      "type" : "java.lang.String",
+      "description" : "The URL for connecting to the MBean Server",
+      "links" : { }
+    }, {
+      "name" : "jmx.user",
+      "type" : "java.lang.String",
+      "description" : "JMX username",
+      "links" : { }
+    }, {
+      "name" : "rmi.registry.port",
+      "type" : "java.lang.Integer",
+      "description" : "RMI registry port, used for discovering JMX (private) port",
+      "links" : { }
     }, {
       "name" : "run.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be run from",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.isUp",
       "type" : "java.lang.Boolean",
       "description" : "Whether the service is active and availability (confirmed and monitored)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.process.isRunning",
       "type" : "java.lang.Boolean",
       "description" : "Whether the process for the service is confirmed as running",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.state",
       "type" : "brooklyn.entity.basic.Lifecycle",
       "description" : "Actual lifecycle state of the service",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareprocess.pid.file",
       "type" : "java.lang.String",
       "description" : "PID file",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareservice.provisioningLocation",
       "type" : "brooklyn.location.MachineProvisioningLocation",
       "description" : "Location used to provision a machine where this is running",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "solr.http.port",
       "type" : "java.lang.Integer",
       "description" : "Solr HTTP communications port",
-      "links" : null
+      "links" : { }
     } ],
     "effectors" : [ {
       "name" : "restart",
@@ -2785,7 +3333,7 @@
       "name" : "bind.entity.filter",
       "type" : "com.google.common.base.Predicate",
       "defaultValue" : "Predicates.instanceOf(brooklyn.entity.basic.SoftwareProcess)",
-      "description" : "Filter for entities which will use the BIND DNS service for name resolution",
+      "description" : "Filter for entities which will use the BIND DNS service for name resolution.Default is all instances of SoftwareProcess in the application.",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -2824,7 +3372,7 @@
     }, {
       "name" : "bind.sensor.hostname",
       "type" : "brooklyn.event.AttributeSensor",
-      "defaultValue" : "Sensor: host.name (java.lang.String)",
+      "defaultValue" : null,
       "description" : "Sensor on managed entities that reports the hostname",
       "reconfigurable" : false,
       "label" : null,
@@ -2876,6 +3424,16 @@
       "type" : "java.lang.String",
       "defaultValue" : "classpath://brooklyn/entity/network/bind/reverse.zone",
       "description" : "The BIND reverse lookup zone file to serve (as FreeMarker template)",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "bind.updateRootZones",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : false,
+      "description" : "Instructs the entity to fetch the latest root zones file from ftp.rs.internic.net.",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -2937,6 +3495,26 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "entity.running",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, if service already running",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "entity.started",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, for running services",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "defaultValue" : null,
@@ -2947,10 +3525,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "files.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of files, to be copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "files.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of files to be copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of files, to be copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -2979,7 +3567,7 @@
     }, {
       "name" : "install.skip",
       "type" : "java.lang.Boolean",
-      "defaultValue" : false,
+      "defaultValue" : null,
       "description" : "Skip the driver install commands entirely, for pre-installed software",
       "reconfigurable" : false,
       "label" : null,
@@ -3067,10 +3655,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
-      "name" : "resources.latch",
+      "name" : "resources.install.latch",
       "type" : "java.lang.Boolean",
       "defaultValue" : null,
-      "description" : "Latch for blocking resources until ready",
+      "description" : "Latch for blocking install resources until ready",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "resources.runtime.latch",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Latch for blocking runtime resources until ready",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -3137,10 +3735,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "templates.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of templates, to be filled in and copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "templates.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of templates to be filled in and copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of templates, to be filled in and copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -3148,96 +3756,126 @@
       "links" : null
     } ],
     "sensors" : [ {
+      "name" : "bind.entities",
+      "type" : "brooklyn.entity.basic.DynamicGroup",
+      "description" : "The entities being managed by this server",
+      "links" : { }
+    }, {
+      "name" : "bind.mappings",
+      "type" : "com.google.common.collect.Multimap",
+      "description" : "All address mappings maintained by the server, in form address -> [names]",
+      "links" : { }
+    }, {
       "name" : "bind.port",
       "type" : "java.lang.Integer",
       "description" : "BIND DNS port for TCP and UDP",
-      "links" : null
+      "links" : { }
+    }, {
+      "name" : "bind.records.a",
+      "type" : "java.util.Map",
+      "description" : "All A records for the server, in form name -> address",
+      "links" : { }
+    }, {
+      "name" : "bind.records.cname",
+      "type" : "com.google.common.collect.Multimap",
+      "description" : "All CNAME records for the server, in form name -> [names]",
+      "links" : { }
+    }, {
+      "name" : "bind.records.ptr",
+      "type" : "java.util.Map",
+      "description" : "All PTR records for the server, in form address -> name. Entries will be in REVERSE_LOOKUP_CIDR. Entries are guaranteed to have an inverse mapping in A_RECORDS.",
+      "links" : { }
     }, {
       "name" : "bind.reverse-lookup.cidr",
       "type" : "brooklyn.util.net.Cidr",
-      "description" : "The network CIDR that hosts must have for reverse lookup entriers to be added (default uses server address /24)",
-      "links" : null
+      "description" : "The network CIDR that hosts must have for reverse lookup entries to be added (default uses server address /24)",
+      "links" : { }
     }, {
       "name" : "bind.reverse-lookup.domain",
       "type" : "java.lang.String",
       "description" : "The in-addr.arpa reverse lookup domain name",
-      "links" : null
+      "links" : { }
+    }, {
+      "name" : "bind.serial",
+      "type" : "java.lang.Long",
+      "description" : "A serial number guaranteed to be valid for use in a modified domain.zone or reverse.zone file",
+      "links" : { }
     }, {
       "name" : "download.addon.urls",
       "type" : "java.util.Map",
       "description" : "URL patterns for downloading named add-ons (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "download.url",
       "type" : "java.lang.String",
       "description" : "URL pattern for downloading the installer (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "description" : "Directory for installed artifacts (e.g. expanded dir after unpacking .tgz)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.address",
       "type" : "java.lang.String",
       "description" : "Host IP address",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.name",
       "type" : "java.lang.String",
       "description" : "Host name",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.address",
       "type" : "java.lang.String",
       "description" : "Host address as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.hostname",
       "type" : "java.lang.String",
       "description" : "Host name as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "install.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be installed in",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "run.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be run from",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.isUp",
       "type" : "java.lang.Boolean",
       "description" : "Whether the service is active and availability (confirmed and monitored)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.process.isRunning",
       "type" : "java.lang.Boolean",
       "description" : "Whether the process for the service is confirmed as running",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.state",
       "type" : "brooklyn.entity.basic.Lifecycle",
       "description" : "Actual lifecycle state of the service",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareprocess.pid.file",
       "type" : "java.lang.String",
       "description" : "PID file",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareservice.provisioningLocation",
       "type" : "brooklyn.location.MachineProvisioningLocation",
       "description" : "Location used to provision a machine where this is running",
-      "links" : null
+      "links" : { }
     } ],
     "effectors" : [ {
-      "name" : "getAddressMappings",
+      "name" : "getReverseMappings",
       "returnType" : "java.util.Map",
       "parameters" : [ ],
-      "description" : "Gets the Hostname->IP mappings stored in this DNS server's conf file",
+      "description" : "Gets the IP to hostname mappings stored in this DNS server's conf file",
       "links" : null
     }, {
       "name" : "restart",
@@ -3301,7 +3939,7 @@
     }, {
       "name" : "brooklynnode.managementPassword",
       "type" : "java.lang.String",
-      "defaultValue" : "password",
+      "defaultValue" : null,
       "description" : "Password for MANAGEMENT_USER",
       "reconfigurable" : false,
       "label" : null,
@@ -3323,7 +3961,7 @@
       "name" : "brooklyn.mirror.monitoring_status",
       "type" : "java.lang.String",
       "description" : "brooklyn.mirror.monitoring_status",
-      "links" : null
+      "links" : { }
     } ],
     "effectors" : [ ]
   }, {
@@ -3346,7 +3984,7 @@
       "name" : "brooklynnode.brooklyncatalog.contents",
       "type" : "java.lang.String",
       "defaultValue" : null,
-      "description" : "Contents for the brooklyn catalog.xml file (to upload to ~/.brooklyn/catalog.xml",
+      "description" : "Contents for the brooklyn catalog.xml file (uploaded to ~/.brooklyn/catalog.xml)",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -3366,7 +4004,7 @@
       "name" : "brooklynnode.brooklyncatalog.uri",
       "type" : "java.lang.String",
       "defaultValue" : null,
-      "description" : "URI for the brooklyn catalog.xml file (to upload to ~/.brooklyn/catalog.xml",
+      "description" : "URI for the brooklyn catalog.xml file (uploaded to ~/.brooklyn/catalog.xml)",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -3376,7 +4014,7 @@
       "name" : "brooklynnode.brooklynproperties.global.contents",
       "type" : "java.lang.String",
       "defaultValue" : null,
-      "description" : "Contents for the global brooklyn properties file (to upload to ~/.brooklyn/brooklyn.properties",
+      "description" : "Contents for the global brooklyn properties file (uploaded to ~/.brooklyn/brooklyn.properties)",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -3385,7 +4023,7 @@
     }, {
       "name" : "brooklynnode.brooklynproperties.global.remotepath",
       "type" : "java.lang.String",
-      "defaultValue" : "${HOME}/.brooklyn/brooklyn.properties",
+      "defaultValue" : "${HOME}/.brooklyn/brooklyn.properties; only useful for testing as this path will not be used on the remote system",
       "description" : "Remote path for the global brooklyn.properties file to be uploaded",
       "reconfigurable" : false,
       "label" : null,
@@ -3396,7 +4034,7 @@
       "name" : "brooklynnode.brooklynproperties.global.uri",
       "type" : "java.lang.String",
       "defaultValue" : null,
-      "description" : "URI for the global brooklyn properties file (to upload to ~/.brooklyn/brooklyn.properties",
+      "description" : "URI for the global brooklyn properties file (uploaded to ~/.brooklyn/brooklyn.properties)",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -3406,7 +4044,7 @@
       "name" : "brooklynnode.brooklynproperties.local.contents",
       "type" : "java.lang.String",
       "defaultValue" : null,
-      "description" : "Contents for the launch-specific brooklyn properties file (to upload to ~/.brooklyn/brooklyn.properties",
+      "description" : "Contents for the launch-specific brooklyn properties file",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -3426,7 +4064,7 @@
       "name" : "brooklynnode.brooklynproperties.local.uri",
       "type" : "java.lang.String",
       "defaultValue" : null,
-      "description" : "URI for the launch-specific brooklyn properties file (to upload to ~/.brooklyn/brooklyn.properties",
+      "description" : "URI for the launch-specific brooklyn properties file",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -3476,7 +4114,7 @@
       "name" : "brooklynnode.download.archive.subpath",
       "type" : "java.lang.String",
       "defaultValue" : null,
-      "description" : "Path to the main directory in the archive being supplied for installation; to use the root of an archive, specify '.'; default value if left blank is the appropriate value for brooklyn,e.g. 'brooklyn-0.7.0-SNAPSHOT'",
+      "description" : "Path to the main directory in the archive being supplied for installation; to use the root of an archive, specify '.'; default value taken based on download URL (e.g. 'name' for 'http://path/name.tgz' or 'http://path/name-dist.tgz') falling back to an appropriate value for brooklyn, e.g. 'brooklyn-0.7.0-SNAPSHOT'",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -3503,6 +4141,16 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "brooklynnode.launch.parameters.extra",
+      "type" : "java.lang.String",
+      "defaultValue" : null,
+      "description" : "Launch parameters passed on the CLI, in addition to 'launch' and parameters implied by other config keys (and placed afterwards on the command line)",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "brooklynnode.locations",
       "type" : "java.lang.String",
       "defaultValue" : null,
@@ -3515,7 +4163,7 @@
     }, {
       "name" : "brooklynnode.managementPassword",
       "type" : "java.lang.String",
-      "defaultValue" : "password",
+      "defaultValue" : null,
       "description" : "Password for MANAGEMENT_USER",
       "reconfigurable" : false,
       "label" : null,
@@ -3536,7 +4184,17 @@
       "name" : "brooklynnode.noshutdownonexit",
       "type" : "java.lang.Boolean",
       "defaultValue" : false,
-      "description" : "Whether to shutdown entities on exit",
+      "description" : "Whether to pass the (deprecated) noShutdownOnExit flag to the process",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "brooklynnode.poll_period",
+      "type" : "brooklyn.util.time.Duration",
+      "defaultValue" : "2s",
+      "description" : "Frequency to poll for client sensors",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -3546,11 +4204,14 @@
       "name" : "brooklynnode.properties.file.ifExists",
       "type" : "java.lang.Enum",
       "defaultValue" : "FAIL",
-      "description" : "What to do in the case where brooklyn.properties already exists",
+      "description" : "What to do in the case where a global brooklyn.properties already exists",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
       "possibleValues" : [ {
+        "value" : "DO_NOT_USE",
+        "description" : "DO_NOT_USE"
+      }, {
         "value" : "USE_EXISTING",
         "description" : "USE_EXISTING"
       }, {
@@ -3562,10 +4223,20 @@
       } ],
       "links" : null
     }, {
-      "name" : "brooklynnode.webconsole.bindAddress",
-      "type" : "java.lang.String",
+      "name" : "brooklynnode.webconsole.address.bind",
+      "type" : "java.net.InetAddress",
+      "defaultValue" : "0.0.0.0/0.0.0.0",
+      "description" : "Specifies the IP address of the NIC to bind the Brooklyn Management Console to (default 0.0.0.0)",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "brooklynnode.webconsole.address.public",
+      "type" : "java.net.InetAddress",
       "defaultValue" : null,
-      "description" : "Specifies the IP address of the NIC to bind the Brooklyn Management Console to",
+      "description" : "Specifies the public IP address or hostname for the Brooklyn Management Console",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -3669,8 +4340,28 @@
     }, {
       "name" : "download.url",
       "type" : "java.lang.String",
-      "defaultValue" : "<#if version?contains(\"SNAPSHOT\")>https://oss.sonatype.org/service/local/artifact/maven/redirect?r=snapshots&g=io.brooklyn&v=${version}&a=brooklyn-dist&c=dist&e=tar.gz<#else>http://search.maven.org/remotecontent?filepath=io/brooklyn/brooklyn-dist/${version}/brooklyn-dist-${version}-dist.tar.gz</#if>",
+      "defaultValue" : "<#if version?contains(\"SNAPSHOT\")>https://repository.apache.org/service/local/artifact/maven/redirect?r=snapshots&g=org.apache.brooklyn&v=${version}&a=brooklyn-dist&c=dist&e=tar.gz<#else>http://search.maven.org/remotecontent?filepath=org/apache/brooklyn/brooklyn-dist/${version}/brooklyn-dist-${version}-dist.tar.gz</#if>",
       "description" : "URL pattern for downloading the installer (will substitute things like ${version} automatically)",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "entity.running",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, if service already running",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "entity.started",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, for running services",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -3687,10 +4378,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "files.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of files, to be copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "files.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of files to be copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of files, to be copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -3719,7 +4420,7 @@
     }, {
       "name" : "install.skip",
       "type" : "java.lang.Boolean",
-      "defaultValue" : false,
+      "defaultValue" : null,
       "description" : "Skip the driver install commands entirely, for pre-installed software",
       "reconfigurable" : false,
       "label" : null,
@@ -3837,10 +4538,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
-      "name" : "resources.latch",
+      "name" : "resources.install.latch",
       "type" : "java.lang.Boolean",
       "defaultValue" : null,
-      "description" : "Latch for blocking resources until ready",
+      "description" : "Latch for blocking install resources until ready",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "resources.runtime.latch",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Latch for blocking runtime resources until ready",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -3907,10 +4618,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "templates.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of templates, to be filled in and copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "templates.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of templates to be filled in and copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of templates, to be filled in and copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -3921,122 +4642,137 @@
       "name" : "brooklynnode.app",
       "type" : "java.lang.String",
       "description" : "Application (fully qualified class name) to launch using the brooklyn CLI",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "brooklynnode.classpath",
       "type" : "java.util.List",
       "description" : "classpath to use, as list of URL entries",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "brooklynnode.copytorundir",
       "type" : "java.util.Map",
       "description" : "URLs of resources to be copied across to the server, giving the path they are to be copied to",
-      "links" : null
+      "links" : { }
+    }, {
+      "name" : "brooklynnode.ha.state",
+      "type" : "brooklyn.management.ha.ManagementNodeState",
+      "description" : "High-availability state of the management node (MASTER, HOT_STANDBY, etc)",
+      "links" : { }
     }, {
       "name" : "brooklynnode.locations",
       "type" : "java.lang.String",
       "description" : "Locations to use when launching the app",
-      "links" : null
+      "links" : { }
     }, {
-      "name" : "brooklynnode.webconsole.bindAddress",
-      "type" : "java.lang.String",
-      "description" : "Specifies the IP address of the NIC to bind the Brooklyn Management Console to",
-      "links" : null
+      "name" : "brooklynnode.webconsole.address.bind",
+      "type" : "java.net.InetAddress",
+      "description" : "Specifies the IP address of the NIC to bind the Brooklyn Management Console to (default 0.0.0.0)",
+      "links" : { }
+    }, {
+      "name" : "brooklynnode.webconsole.address.public",
+      "type" : "java.net.InetAddress",
+      "description" : "Specifies the public IP address or hostname for the Brooklyn Management Console",
+      "links" : { }
     }, {
       "name" : "brooklynnode.webconsole.enabledHttpProtocols",
       "type" : "java.util.List",
       "description" : "List of enabled protocols (e.g. http, https)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "brooklynnode.webconsole.httpPort",
       "type" : "java.lang.Integer",
       "description" : "HTTP Port for the brooklyn web-console",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "brooklynnode.webconsole.httpsPort",
       "type" : "java.lang.Integer",
       "description" : "HTTPS Port for the brooklyn web-console",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "brooklynnode.webconsole.nosecurity",
       "type" : "java.lang.Boolean",
       "description" : "Whether to start the web console with no security",
-      "links" : null
+      "links" : { }
+    }, {
+      "name" : "brooklynnode.webconsole.up",
+      "type" : "java.lang.Boolean",
+      "description" : "Whether the web console is responding normally",
+      "links" : { }
     }, {
       "name" : "brooklynnode.webconsole.url",
       "type" : "java.net.URI",
       "description" : "URL of the brooklyn web-console",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "download.addon.urls",
       "type" : "java.util.Map",
       "description" : "URL patterns for downloading named add-ons (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "download.url",
       "type" : "java.lang.String",
       "description" : "URL pattern for downloading the installer (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "description" : "Directory for installed artifacts (e.g. expanded dir after unpacking .tgz)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.address",
       "type" : "java.lang.String",
       "description" : "Host IP address",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.name",
       "type" : "java.lang.String",
       "description" : "Host name",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.address",
       "type" : "java.lang.String",
       "description" : "Host address as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.hostname",
       "type" : "java.lang.String",
       "description" : "Host name as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "install.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be installed in",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "run.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be run from",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.isUp",
       "type" : "java.lang.Boolean",
       "description" : "Whether the service is active and availability (confirmed and monitored)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.process.isRunning",
       "type" : "java.lang.Boolean",
       "description" : "Whether the process for the service is confirmed as running",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.state",
       "type" : "brooklyn.entity.basic.Lifecycle",
       "description" : "Actual lifecycle state of the service",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareprocess.pid.file",
       "type" : "java.lang.String",
       "description" : "PID file",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareservice.provisioningLocation",
       "type" : "brooklyn.location.MachineProvisioningLocation",
       "description" : "Location used to provision a machine where this is running",
-      "links" : null
+      "links" : { }
     } ],
     "effectors" : [ {
       "name" : "deployBlueprint",
@@ -4066,6 +4802,59 @@
       "description" : "Restart the process/service represented by an entity",
       "links" : null
     }, {
+      "name" : "setHighAvailabilityMode",
+      "returnType" : "brooklyn.management.ha.ManagementNodeState",
+      "parameters" : [ {
+        "name" : "mode",
+        "type" : "brooklyn.management.ha.HighAvailabilityMode",
+        "description" : "HA mode",
+        "defaultValue" : null
+      } ],
+      "description" : "Set the HA mode on the node, returning the existing state",
+      "links" : null
+    }, {
+      "name" : "setHighAvailabilityPriority",
+      "returnType" : "java.lang.Integer",
+      "parameters" : [ {
+        "name" : "priority",
+        "type" : "java.lang.Integer",
+        "description" : "HA priority",
+        "defaultValue" : null
+      } ],
+      "description" : "Set the HA priority on the node, returning the old priority",
+      "links" : null
+    }, {
+      "name" : "shutdown",
+      "returnType" : "java.lang.Void",
+      "parameters" : [ {
+        "name" : "stopAppsFirst",
+        "type" : "java.lang.Boolean",
+        "description" : "Whether to stop apps before shutting down",
+        "defaultValue" : null
+      }, {
+        "name" : "forceShutdownOnError",
+        "type" : "java.lang.Boolean",
+        "description" : "Force shutdown if apps fail to stop or timeout",
+        "defaultValue" : null
+      }, {
+        "name" : "shutdownTimeout",
+        "type" : "brooklyn.util.time.Duration",
+        "description" : "A maximum delay to wait for apps to gracefully stop before giving up or forcibly exiting",
+        "defaultValue" : null
+      }, {
+        "name" : "requestTimeout",
+        "type" : "brooklyn.util.time.Duration",
+        "description" : "Maximum time to block the request for the shutdown to finish, 0 to wait infinitely",
+        "defaultValue" : null
+      }, {
+        "name" : "delayForHttpReturn",
+        "type" : "brooklyn.util.time.Duration",
+        "description" : "The delay before exiting the process, to permit the REST response to be returned",
+        "defaultValue" : null
+      } ],
+      "description" : "Shutdown the remote brooklyn instance (stops via the REST API only; leaves any VM)",
+      "links" : null
+    }, {
       "name" : "start",
       "returnType" : "void",
       "parameters" : [ {
@@ -4081,6 +4870,32 @@
       "returnType" : "void",
       "parameters" : [ ],
       "description" : "Stop the process/service represented by an entity",
+      "links" : null
+    }, {
+      "name" : "stopNodeAndKillApps",
+      "returnType" : "java.lang.Void",
+      "parameters" : [ {
+        "name" : "timeout",
+        "type" : "brooklyn.util.time.Duration",
+        "description" : "How long to wait before giving up on stopping the node",
+        "defaultValue" : {
+          "nanos" : 3600000000000
+        }
+      } ],
+      "description" : "Stop all apps managed by the Brooklyn process, stop the process, and any VM created, and unmanage this entity",
+      "links" : null
+    }, {
+      "name" : "stopNodeButLeaveApps",
+      "returnType" : "java.lang.Void",
+      "parameters" : [ {
+        "name" : "timeout",
+        "type" : "brooklyn.util.time.Duration",
+        "description" : "How long to wait before giving up on stopping the node",
+        "defaultValue" : {
+          "nanos" : 3600000000000
+        }
+      } ],
+      "description" : "Stop the Brooklyn process, and any VM created, and unmanage this entity; but if it was managing other applications, leave them running",
       "links" : null
     } ]
   }, {
@@ -4160,8 +4975,8 @@
       "links" : null
     }, {
       "name" : "enricher.service_state.children_and_members.quorum.running",
-      "type" : "brooklyn.entity.basic.QuorumCheck",
-      "defaultValue" : "QuorumCheck[require=0,100.0%]",
+      "type" : "brooklyn.util.collections.QuorumCheck",
+      "defaultValue" : "QuorumCheck[all;require=0,100.0%]",
       "description" : "Problems check from children actual states (lifecycle), applied by default to members and children, not checking upness, but requiring by default that none are on-fire",
       "reconfigurable" : false,
       "label" : null,
@@ -4170,8 +4985,8 @@
       "links" : null
     }, {
       "name" : "enricher.service_state.children_and_members.quorum.up",
-      "type" : "brooklyn.entity.basic.QuorumCheck",
-      "defaultValue" : "QuorumCheck[require=1,0.0%]",
+      "type" : "brooklyn.util.collections.QuorumCheck",
+      "defaultValue" : "QuorumCheck[atLeastOne;require=1,0.0%]",
       "description" : "Up check, applied by default to members, requiring at least one present and up",
       "reconfigurable" : false,
       "label" : null,
@@ -4300,155 +5115,165 @@
       "links" : null
     } ],
     "sensors" : [ {
+      "name" : "cluster.first",
+      "type" : "java.lang.Boolean",
+      "description" : "Set on an entity if it is the first member of a cluster",
+      "links" : { }
+    }, {
+      "name" : "cluster.first.entity",
+      "type" : "brooklyn.entity.Entity",
+      "description" : "The first member of the cluster",
+      "links" : { }
+    }, {
       "name" : "controlleddynamicwebappcluster.cluster",
       "type" : "brooklyn.entity.webapp.DynamicWebAppCluster",
       "description" : "Underlying web-app cluster",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "controlleddynamicwebappcluster.controller",
       "type" : "brooklyn.entity.proxy.LoadBalancer",
       "description" : "Controller for the cluster; if null a default will created (using controllerSpec)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "controlleddynamicwebappcluster.controllerSpec",
       "type" : "brooklyn.entity.proxying.EntitySpec",
       "description" : "Spec for creating the controller (if one not supplied explicitly); if null an NGINX instance will be created",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "controlleddynamicwebappcluster.webClusterSpec",
       "type" : "brooklyn.entity.proxying.EntitySpec",
       "description" : "Spec for creating the cluster; if null a DynamicWebAppCluster will be created",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "dynamiccluster.factory",
       "type" : "brooklyn.entity.basic.ConfigurableEntityFactory",
       "description" : "factory (or closure) to create the web server",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "dynamiccluster.memberspec",
       "type" : "brooklyn.entity.proxying.EntitySpec",
       "description" : "Spec for web server entiites to be created",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "dynamicgroup.running",
       "type" : "java.lang.Boolean",
       "description" : "Whether the entity is running, and will automatically update group membership",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "group.members",
       "type" : "java.util.Collection",
       "description" : "Members of the group",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "group.members.added",
       "type" : "brooklyn.entity.Entity",
       "description" : "Entity added to group members",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "group.members.count",
       "type" : "java.lang.Integer",
       "description" : "Number of members",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "group.members.removed",
       "type" : "brooklyn.entity.Entity",
       "description" : "Entity removed from group members",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.name",
       "type" : "java.lang.String",
       "description" : "Host name",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "http.port",
       "type" : "java.lang.Integer",
       "description" : "HTTP port",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "https.port",
       "type" : "java.lang.Integer",
       "description" : "HTTP port (with SSL/TLS)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.isUp",
       "type" : "java.lang.Boolean",
       "description" : "Whether the service is active and availability (confirmed and monitored)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.state",
       "type" : "brooklyn.entity.basic.Lifecycle",
       "description" : "Actual lifecycle state of the service",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.deployedWars",
       "type" : "java.util.Set",
       "description" : "Names of archives/contexts that are currently deployed",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.enabledProtocols",
       "type" : "java.util.Set",
       "description" : "List of enabled protocols (e.g. http, https)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.https.ssl",
       "type" : "brooklyn.entity.webapp.HttpsSslConfig",
       "description" : "SSL Configuration for HTTPS",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.bytes.received",
       "type" : "java.lang.Long",
       "description" : "Total bytes received by the webserver",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.bytes.sent",
       "type" : "java.lang.Long",
       "description" : "Total bytes sent by the webserver",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.errors",
       "type" : "java.lang.Integer",
       "description" : "Request errors",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.perSec.last",
       "type" : "java.lang.Double",
       "description" : "Reqs/sec (last datapoint)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.perSec.windowed",
       "type" : "java.lang.Double",
       "description" : "Reqs/sec (over time window)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.processingTime.fraction.last",
       "type" : "java.lang.Double",
       "description" : "Fraction of time spent processing, reported by webserver (percentage, last datapoint)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.processingTime.fraction.windowed",
       "type" : "java.lang.Double",
       "description" : "Fraction of time spent processing, reported by webserver (percentage, over time window)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.processingTime.max",
       "type" : "java.lang.Integer",
       "description" : "Max processing time for any single request, reported by webserver (millis)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.processingTime.total",
       "type" : "java.lang.Integer",
       "description" : "Total processing time, reported by webserver (millis)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.total",
       "type" : "java.lang.Integer",
       "description" : "Request count",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.url",
       "type" : "java.lang.String",
       "description" : "URL",
-      "links" : null
+      "links" : { }
     } ],
     "effectors" : [ {
       "name" : "deploy",
@@ -4482,6 +5307,12 @@
         "defaultValue" : null
       } ],
       "description" : "Replaces the entity with the given ID, if it is a member; first adds a new member, then removes this one. Returns id of the new entity; or throws exception if couldn't be replaced.",
+      "links" : null
+    }, {
+      "name" : "rescanEntities",
+      "returnType" : "void",
+      "parameters" : [ ],
+      "description" : "Rescans all entities to determine whether they match the configured filter.",
       "links" : null
     }, {
       "name" : "resize",
@@ -4532,7 +5363,7 @@
   }, {
     "type" : "brooklyn.entity.nosql.couchbase.CouchbaseCluster",
     "name" : "CouchBase Cluster",
-    "description" : "CouchBase is...",
+    "description" : "Couchbase is an open source, distributed (shared-nothing architecture) NoSQL document-oriented database that is optimized for interactive applications.",
     "iconUrl" : "",
     "config" : [ {
       "name" : "cluster.initial.quorumSize",
@@ -4549,6 +5380,26 @@
       "type" : "java.lang.Integer",
       "defaultValue" : 1,
       "description" : "Initial cluster size",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "couchbase.adminPassword",
+      "type" : "java.lang.String",
+      "defaultValue" : "Password",
+      "description" : "Password for the admin user on the node",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "couchbase.adminUsername",
+      "type" : "java.lang.String",
+      "defaultValue" : "Administrator",
+      "description" : "Username for the admin user on the node",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -4585,10 +5436,30 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "couchbase.cluster.name",
+      "type" : "java.lang.String",
+      "defaultValue" : null,
+      "description" : "Optional name for this cluster",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "couchbase.cluster.postStartStabilizationDelay",
       "type" : "brooklyn.util.time.Duration",
       "defaultValue" : "10s",
       "description" : "Delay after nodes have been started before treating it as a cluster",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "couchbase.cluster.replicationConfiguration",
+      "type" : "java.util.List",
+      "defaultValue" : null,
+      "description" : "List of replication rules to configure, each rule including target (id of another cluster) and mode (unidirectional or bidirectional)",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -4619,6 +5490,16 @@
       "type" : "brooklyn.entity.basic.EntityFactory",
       "defaultValue" : null,
       "description" : "factory for creating new cluster members",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "dynamiccluster.firstmemberspec",
+      "type" : "brooklyn.entity.proxying.EntitySpec",
+      "defaultValue" : null,
+      "description" : "entity spec for creating new cluster members, used for the very first member if different",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -4677,7 +5558,7 @@
     }, {
       "name" : "dynamiccluster.zone.failureDetector",
       "type" : "brooklyn.entity.group.DynamicCluster$ZoneFailureDetector",
-      "defaultValue" : "brooklyn.entity.group.zoneaware.ProportionalZoneFailureDetector@b7193fc",
+      "defaultValue" : "brooklyn.entity.group.zoneaware.ProportionalZoneFailureDetector@77acc39c",
       "description" : "Zone failure detector",
       "reconfigurable" : false,
       "label" : null,
@@ -4687,7 +5568,7 @@
     }, {
       "name" : "dynamiccluster.zone.placementStrategy",
       "type" : "brooklyn.entity.group.DynamicCluster$NodePlacementStrategy",
-      "defaultValue" : "brooklyn.entity.group.zoneaware.BalancingNodePlacementStrategy@37f02eaa",
+      "defaultValue" : "brooklyn.entity.group.zoneaware.BalancingNodePlacementStrategy@45498134",
       "description" : "Node placement strategy",
       "reconfigurable" : false,
       "label" : null,
@@ -4696,8 +5577,8 @@
       "links" : null
     }, {
       "name" : "enricher.service_state.children_and_members.quorum.running",
-      "type" : "brooklyn.entity.basic.QuorumCheck",
-      "defaultValue" : "QuorumCheck[require=0,100.0%]",
+      "type" : "brooklyn.util.collections.QuorumCheck",
+      "defaultValue" : "QuorumCheck[all;require=0,100.0%]",
       "description" : "Problems check from children actual states (lifecycle), applied by default to members and children, not checking upness, but requiring by default that none are on-fire",
       "reconfigurable" : false,
       "label" : null,
@@ -4706,8 +5587,8 @@
       "links" : null
     }, {
       "name" : "enricher.service_state.children_and_members.quorum.up",
-      "type" : "brooklyn.entity.basic.QuorumCheck",
-      "defaultValue" : "QuorumCheck[require=1,0.0%]",
+      "type" : "brooklyn.util.collections.QuorumCheck",
+      "defaultValue" : "QuorumCheck[atLeastOne;require=1,0.0%]",
       "description" : "Up check, applied by default to members, requiring at least one present and up",
       "reconfigurable" : false,
       "label" : null,
@@ -4739,172 +5620,172 @@
       "name" : "cluster.entity",
       "type" : "brooklyn.entity.Entity",
       "description" : "The cluster an entity is a member of",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cluster.first",
       "type" : "java.lang.Boolean",
       "description" : "Set on an entity if it is the first member of a cluster",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cluster.first.entity",
       "type" : "brooklyn.entity.Entity",
       "description" : "The first member of the cluster",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cluster.member",
       "type" : "java.lang.Boolean",
       "description" : "Set on an entity if it is a member of a cluster",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "coucbase.cluster.actualClusterSize",
       "type" : "java.lang.Integer",
       "description" : "returns the actual number of nodes in the cluster",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "couchbase.cluster.bucketCreationInProgress",
       "type" : "java.lang.Boolean",
       "description" : "Indicates that a bucket is currently being created, andfurther bucket creation should be deferred",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "couchbase.cluster.buckets",
       "type" : "java.util.List",
       "description" : "Names of all the buckets the couchbase cluster",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "couchbase.cluster.clusterEntities",
       "type" : "java.util.Set",
       "description" : "the set of service up nodes",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "couchbase.cluster.connection.url",
       "type" : "java.lang.String",
       "description" : "Couchbase-style URL to connect to the cluster (e.g. http://127.0.0.1:8091/ or couchbase://10.0.0.1,10.0.0.2/)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "couchbase.cluster.isClusterInitialized",
       "type" : "java.lang.Boolean",
       "description" : "flag to emit if the couchbase cluster was intialized",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "couchbase.cluster.node.addresses",
       "type" : "java.util.List",
       "description" : "List of host:port of all active nodes in the cluster (http admin port, and public hostname/IP)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "couchbase.cluster.primaryNode",
       "type" : "brooklyn.entity.Entity",
       "description" : "The primary couchbase node to query and issue add-server and rebalance on",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "couchbase.stats.cluster.per.node.cmd.get",
       "type" : "java.lang.Double",
       "description" : "Average across cluster for pools/nodes/<current node>/interestingStats/cmd_get",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "couchbase.stats.cluster.per.node.couch.docs.actual.disk.size",
       "type" : "java.lang.Long",
       "description" : "Average across cluster for pools/nodes/<current node>/interestingStats/couch_docs_actual_disk_size",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "couchbase.stats.cluster.per.node.couch.docs.data.size",
       "type" : "java.lang.Long",
       "description" : "Average across cluster for pools/nodes/<current node>/interestingStats/couch_docs_data_size",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "couchbase.stats.cluster.per.node.couch.views.actual.disk.size",
       "type" : "java.lang.Long",
       "description" : "Average across cluster for pools/nodes/<current node>/interestingStats/couch_views_actual_disk_size",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "couchbase.stats.cluster.per.node.couch.views.data.size",
       "type" : "java.lang.Long",
       "description" : "Average across cluster for pools/nodes/<current node>/interestingStats/couch_views_data_size",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "couchbase.stats.cluster.per.node.curr.items",
       "type" : "java.lang.Double",
       "description" : "Average across cluster for pools/nodes/<current node>/interestingStats/curr_items",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "couchbase.stats.cluster.per.node.curr.items.tot",
       "type" : "java.lang.Double",
       "description" : "Average across cluster for pools/nodes/<current node>/interestingStats/curr_items_tot",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "couchbase.stats.cluster.per.node.ep.bg.fetched",
       "type" : "java.lang.Double",
       "description" : "Average across cluster for pools/nodes/<current node>/interestingStats/ep_bg_fetched",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "couchbase.stats.cluster.per.node.get.hits",
       "type" : "java.lang.Double",
       "description" : "Average across cluster for pools/nodes/<current node>/interestingStats/get_hits",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "couchbase.stats.cluster.per.node.mem.used",
       "type" : "java.lang.Long",
       "description" : "Average across cluster for pools/nodes/<current node>/interestingStats/mem_used",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "couchbase.stats.cluster.per.node.ops",
       "type" : "java.lang.Double",
       "description" : "Average across cluster for pools/nodes/<current node>/interestingStats/ops",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "couchbase.stats.cluster.per.node.vb.replica.curr.items",
       "type" : "java.lang.Double",
       "description" : "Average across cluster for pools/nodes/<current node>/interestingStats/vb_replica_curr_items",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "dynamiccluster.entityQuarantined",
       "type" : "brooklyn.entity.Entity",
       "description" : "Entity failed to start, and has been quarantined",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "dynamiccluster.failedSubLocations",
       "type" : "java.util.Set",
       "description" : "Sub locations that seem to have failed",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "dynamiccluster.quarantineGroup",
       "type" : "brooklyn.entity.group.QuarantineGroup",
       "description" : "Group of quarantined entities that failed to start",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "dynamiccluster.subLocations",
       "type" : "java.util.List",
       "description" : "Locations for each availability zone to use",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "group.members",
       "type" : "java.util.Collection",
       "description" : "Members of the group",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "group.members.added",
       "type" : "brooklyn.entity.Entity",
       "description" : "Entity added to group members",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "group.members.count",
       "type" : "java.lang.Integer",
       "description" : "Number of members",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "group.members.removed",
       "type" : "brooklyn.entity.Entity",
       "description" : "Entity removed from group members",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.isUp",
       "type" : "java.lang.Boolean",
       "description" : "Whether the service is active and availability (confirmed and monitored)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.state",
       "type" : "brooklyn.entity.basic.Lifecycle",
       "description" : "Actual lifecycle state of the service",
-      "links" : null
+      "links" : { }
     } ],
     "effectors" : [ {
       "name" : "replaceMember",
@@ -4965,9 +5846,9 @@
     } ]
   }, {
     "type" : "brooklyn.entity.nosql.couchbase.CouchbaseNode",
-    "defaultVersion" : "2.5.1",
+    "defaultVersion" : "3.0.0",
     "name" : "CouchBase Node",
-    "description" : "CouchBase is...",
+    "description" : "Couchbase Server is an open source, distributed (shared-nothing architecture) NoSQL document-oriented database that is optimized for interactive applications.",
     "iconUrl" : "",
     "config" : [ {
       "name" : "children.startable.mode",
@@ -5039,6 +5920,16 @@
       "type" : "java.lang.Integer",
       "defaultValue" : 300,
       "description" : "initial ram size of the cluster",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "couchbase.enterprise.enabled",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : true,
+      "description" : "Whether to use Couchbase Enterprise; if false uses the community version. Defaults to true.",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -5167,8 +6058,28 @@
     }, {
       "name" : "download.url",
       "type" : "java.lang.String",
-      "defaultValue" : "http://packages.couchbase.com/releases/${version}/couchbase-server-enterprise_${version}_${driver.osTag}",
+      "defaultValue" : "http://packages.couchbase.com/releases/${version}/couchbase-server-${driver.communityOrEnterprise}${driver.downloadLinkPreVersionSeparator}${version}${driver.downloadLinkOsTagWithPrefix}",
       "description" : "URL pattern for downloading the installer (will substitute things like ${version} automatically)",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "entity.running",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, if service already running",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "entity.started",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, for running services",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -5185,10 +6096,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "files.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of files, to be copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "files.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of files to be copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of files, to be copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -5217,7 +6138,7 @@
     }, {
       "name" : "install.skip",
       "type" : "java.lang.Boolean",
-      "defaultValue" : false,
+      "defaultValue" : null,
       "description" : "Skip the driver install commands entirely, for pre-installed software",
       "reconfigurable" : false,
       "label" : null,
@@ -5237,7 +6158,7 @@
     }, {
       "name" : "install.version",
       "type" : "java.lang.String",
-      "defaultValue" : "2.5.1",
+      "defaultValue" : "3.0.0",
       "description" : "Suggested version",
       "reconfigurable" : false,
       "label" : null,
@@ -5305,10 +6226,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
-      "name" : "resources.latch",
+      "name" : "resources.install.latch",
       "type" : "java.lang.Boolean",
       "defaultValue" : null,
-      "description" : "Latch for blocking resources until ready",
+      "description" : "Latch for blocking install resources until ready",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "resources.runtime.latch",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Latch for blocking runtime resources until ready",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -5375,10 +6306,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "templates.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of templates, to be filled in and copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "templates.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of templates to be filled in and copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of templates, to be filled in and copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -5389,219 +6330,240 @@
       "name" : "couchbase.apiPort",
       "type" : "java.lang.Integer",
       "description" : "Couchbase API Port",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "couchbase.clientInterfaceProxy",
       "type" : "java.lang.Integer",
       "description" : "Client interface (proxy)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "couchbase.clusterInitRamSize",
       "type" : "java.lang.Integer",
       "description" : "initial ram size of the cluster",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "couchbase.erlangPortMapper",
       "type" : "java.lang.Integer",
       "description" : "Erlang Port Mapper Daemon Listener Port (epmd)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "couchbase.incomingSslProxy",
       "type" : "java.lang.Integer",
       "description" : "Incoming SSL Proxy",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "couchbase.internalBucketPort",
       "type" : "java.lang.Integer",
       "description" : "Internal Bucket Port",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "couchbase.internalCapiHttpsForSsl",
       "type" : "java.lang.Integer",
       "description" : "Internal CAPI HTTPS for SSL",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "couchbase.internalExternalBucketPort",
       "type" : "java.lang.Integer",
       "description" : "Internal/External Bucket Port",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "couchbase.internalOutgoingSslProxy",
       "type" : "java.lang.Integer",
       "description" : "Internal Outgoing SSL Proxy",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "couchbase.internalRestHttpsForSsl",
       "type" : "java.lang.Integer",
       "description" : "Internal REST HTTPS for SSL",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "couchbase.isInCluster",
       "type" : "java.lang.Boolean",
-      "description" : "flag to determine if the current couchbase node has been added to a cluster",
-      "links" : null
+      "description" : "flag to determine if the current couchbase node has been added to a cluster, including being the first / primary node",
+      "links" : { }
     }, {
       "name" : "couchbase.isPrimaryNode",
       "type" : "java.lang.Boolean",
       "description" : "flag to determine if the current couchbase node is the primary node for the cluster",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "couchbase.nodeDataExchangePortRangeEnd",
       "type" : "java.lang.Integer",
       "description" : "Node data exchange Port Range End",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "couchbase.nodeDataExchangePortRangeStart",
       "type" : "java.lang.Integer",
       "description" : "Node data exchange Port Range Start",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "couchbase.rebalance.status",
       "type" : "java.lang.String",
       "description" : "Displays the current rebalance status from pools/nodes/rebalanceStatus",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "couchbase.stats.cmd.get",
       "type" : "java.lang.Double",
       "description" : "Retrieved from pools/nodes/<current node>/interestingStats/cmd_get",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "couchbase.stats.couch.docs.actual.disk.size",
       "type" : "java.lang.Long",
       "description" : "Retrieved from pools/nodes/<current node>/interestingStats/couch_docs_actual_disk_size",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "couchbase.stats.couch.docs.data.size",
       "type" : "java.lang.Long",
       "description" : "Retrieved from pools/nodes/<current node>/interestingStats/couch_docs_data_size",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "couchbase.stats.couch.views.actual.disk.size",
       "type" : "java.lang.Long",
       "description" : "Retrieved from pools/nodes/<current node>/interestingStats/couch_views_actual_disk_size",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "couchbase.stats.couch.views.data.size",
       "type" : "java.lang.Long",
       "description" : "Retrieved from pools/nodes/<current node>/interestingStats/couch_views_data_size",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "couchbase.stats.curr.items",
       "type" : "java.lang.Long",
       "description" : "Retrieved from pools/nodes/<current node>/interestingStats/curr_items",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "couchbase.stats.curr.items.tot",
       "type" : "java.lang.Long",
       "description" : "Retrieved from pools/nodes/<current node>/interestingStats/curr_items_tot",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "couchbase.stats.ep.bg.fetched",
       "type" : "java.lang.Long",
       "description" : "Retrieved from pools/nodes/<current node>/interestingStats/ep_bg_fetched",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "couchbase.stats.get.hits",
       "type" : "java.lang.Long",
       "description" : "Retrieved from pools/nodes/<current node>/interestingStats/get_hits",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "couchbase.stats.mem.used",
       "type" : "java.lang.Long",
       "description" : "Retrieved from pools/nodes/<current node>/interestingStats/mem_used",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "couchbase.stats.ops",
       "type" : "java.lang.Double",
       "description" : "Retrieved from pools/nodes/<current node>/interestingStats/ops",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "couchbase.stats.vb.replica.curr.items",
       "type" : "java.lang.Long",
       "description" : "Retrieved from pools/nodes/<current node>/interestingStats/vb_replica_curr_items",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "couchbase.webAdminPort",
       "type" : "java.lang.Integer",
       "description" : "Web Administration Port",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "download.addon.urls",
       "type" : "java.util.Map",
       "description" : "URL patterns for downloading named add-ons (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "download.url",
       "type" : "java.lang.String",
       "description" : "URL pattern for downloading the installer (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "description" : "Directory for installed artifacts (e.g. expanded dir after unpacking .tgz)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.address",
       "type" : "java.lang.String",
       "description" : "Host IP address",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.name",
       "type" : "java.lang.String",
       "description" : "Host name",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.address",
       "type" : "java.lang.String",
       "description" : "Host address as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.hostname",
       "type" : "java.lang.String",
       "description" : "Host name as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "install.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be installed in",
-      "links" : null
+      "links" : { }
+    }, {
+      "name" : "main.uri",
+      "type" : "java.net.URI",
+      "description" : "Main URI for contacting the service/endpoint offered by this entity",
+      "links" : { }
     }, {
       "name" : "run.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be run from",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.isUp",
       "type" : "java.lang.Boolean",
       "description" : "Whether the service is active and availability (confirmed and monitored)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.process.isRunning",
       "type" : "java.lang.Boolean",
       "description" : "Whether the process for the service is confirmed as running",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.state",
       "type" : "brooklyn.entity.basic.Lifecycle",
       "description" : "Actual lifecycle state of the service",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareprocess.pid.file",
       "type" : "java.lang.String",
       "description" : "PID file",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareservice.provisioningLocation",
       "type" : "brooklyn.location.MachineProvisioningLocation",
       "description" : "Location used to provision a machine where this is running",
-      "links" : null
-    }, {
-      "name" : "webapp.url",
-      "type" : "java.lang.String",
-      "description" : "URL",
-      "links" : null
+      "links" : { }
     } ],
     "effectors" : [ {
+      "name" : "addReplicationRule",
+      "returnType" : "java.lang.Void",
+      "parameters" : [ {
+        "name" : "fromBucket",
+        "type" : "java.lang.String",
+        "description" : "Bucket to be replicated",
+        "defaultValue" : null
+      }, {
+        "name" : "toCluster",
+        "type" : "java.lang.Object",
+        "description" : "Entity (or ID) of the cluster to which this should replicate",
+        "defaultValue" : null
+      }, {
+        "name" : "toBucket",
+        "type" : "java.lang.String",
+        "description" : "Destination bucket for replication in the toCluster, defaulting to the same as the fromBucket",
+        "defaultValue" : null
+      } ],
+      "description" : "Adds a replication rule from the indicated bucket on the cluster where this node is located to the indicated cluster and optional destination bucket",
+      "links" : null
+    }, {
       "name" : "bucketCreate",
       "returnType" : "void",
       "parameters" : [ {
@@ -5806,6 +6768,26 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "entity.running",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, if service already running",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "entity.started",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, for running services",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "erlang.version",
       "type" : "java.lang.String",
       "defaultValue" : "R15B",
@@ -5826,10 +6808,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "files.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of files, to be copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "files.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of files to be copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of files, to be copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -5878,7 +6870,7 @@
     }, {
       "name" : "install.skip",
       "type" : "java.lang.Boolean",
-      "defaultValue" : false,
+      "defaultValue" : null,
       "description" : "Skip the driver install commands entirely, for pre-installed software",
       "reconfigurable" : false,
       "label" : null,
@@ -5966,10 +6958,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
-      "name" : "resources.latch",
+      "name" : "resources.install.latch",
       "type" : "java.lang.Boolean",
       "defaultValue" : null,
-      "description" : "Latch for blocking resources until ready",
+      "description" : "Latch for blocking install resources until ready",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "resources.runtime.latch",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Latch for blocking runtime resources until ready",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -6036,10 +7038,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "templates.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of templates, to be filled in and copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "templates.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of templates to be filled in and copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of templates, to be filled in and copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -6070,167 +7082,167 @@
       "name" : "couchdb.cluster.name",
       "type" : "java.lang.String",
       "description" : "Name of the CouchDB cluster",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "couchdb.config.fileName",
       "type" : "java.lang.String",
       "description" : "Name for the copied config file",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "couchdb.config.templateUrl",
       "type" : "java.lang.String",
       "description" : "Template file (in freemarker format) for the couchdb config file",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "couchdb.uri.templateUrl",
       "type" : "java.lang.String",
       "description" : "Template file (in freemarker format) for the couchdb URI file",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "download.addon.urls",
       "type" : "java.util.Map",
       "description" : "URL patterns for downloading named add-ons (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "download.url",
       "type" : "java.lang.String",
       "description" : "URL pattern for downloading the installer (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "description" : "Directory for installed artifacts (e.g. expanded dir after unpacking .tgz)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.address",
       "type" : "java.lang.String",
       "description" : "Host IP address",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.name",
       "type" : "java.lang.String",
       "description" : "Host name",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.address",
       "type" : "java.lang.String",
       "description" : "Host address as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.hostname",
       "type" : "java.lang.String",
       "description" : "Host name as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "http.port",
       "type" : "java.lang.Integer",
       "description" : "HTTP port",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "https.port",
       "type" : "java.lang.Integer",
       "description" : "HTTP port (with SSL/TLS)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "install.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be installed in",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "run.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be run from",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.isUp",
       "type" : "java.lang.Boolean",
       "description" : "Whether the service is active and availability (confirmed and monitored)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.process.isRunning",
       "type" : "java.lang.Boolean",
       "description" : "Whether the process for the service is confirmed as running",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.state",
       "type" : "brooklyn.entity.basic.Lifecycle",
       "description" : "Actual lifecycle state of the service",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareprocess.pid.file",
       "type" : "java.lang.String",
       "description" : "PID file",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareservice.provisioningLocation",
       "type" : "brooklyn.location.MachineProvisioningLocation",
       "description" : "Location used to provision a machine where this is running",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.enabledProtocols",
       "type" : "java.util.Set",
       "description" : "List of enabled protocols (e.g. http, https)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.https.ssl",
       "type" : "brooklyn.entity.webapp.HttpsSslConfig",
       "description" : "SSL Configuration for HTTPS",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.bytes.received",
       "type" : "java.lang.Long",
       "description" : "Total bytes received by the webserver",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.bytes.sent",
       "type" : "java.lang.Long",
       "description" : "Total bytes sent by the webserver",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.errors",
       "type" : "java.lang.Integer",
       "description" : "Request errors",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.perSec.last",
       "type" : "java.lang.Double",
       "description" : "Reqs/sec (last datapoint)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.perSec.windowed",
       "type" : "java.lang.Double",
       "description" : "Reqs/sec (over time window)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.processingTime.fraction.last",
       "type" : "java.lang.Double",
       "description" : "Fraction of time spent processing, reported by webserver (percentage, last datapoint)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.processingTime.fraction.windowed",
       "type" : "java.lang.Double",
       "description" : "Fraction of time spent processing, reported by webserver (percentage, over time window)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.processingTime.max",
       "type" : "java.lang.Integer",
       "description" : "Max processing time for any single request, reported by webserver (millis)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.processingTime.total",
       "type" : "java.lang.Integer",
       "description" : "Total processing time, reported by webserver (millis)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.total",
       "type" : "java.lang.Integer",
       "description" : "Request count",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.url",
       "type" : "java.lang.String",
       "description" : "URL",
-      "links" : null
+      "links" : { }
     } ],
     "effectors" : [ {
       "name" : "restart",
@@ -6312,6 +7324,16 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "dynamiccluster.firstmemberspec",
+      "type" : "brooklyn.entity.proxying.EntitySpec",
+      "defaultValue" : null,
+      "description" : "entity spec for creating new cluster members, used for the very first member if different",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "dynamiccluster.memberspec",
       "type" : "brooklyn.entity.proxying.EntitySpec",
       "defaultValue" : null,
@@ -6364,7 +7386,7 @@
     }, {
       "name" : "dynamiccluster.zone.failureDetector",
       "type" : "brooklyn.entity.group.DynamicCluster$ZoneFailureDetector",
-      "defaultValue" : "brooklyn.entity.group.zoneaware.ProportionalZoneFailureDetector@b7193fc",
+      "defaultValue" : "brooklyn.entity.group.zoneaware.ProportionalZoneFailureDetector@77acc39c",
       "description" : "Zone failure detector",
       "reconfigurable" : false,
       "label" : null,
@@ -6374,7 +7396,7 @@
     }, {
       "name" : "dynamiccluster.zone.placementStrategy",
       "type" : "brooklyn.entity.group.DynamicCluster$NodePlacementStrategy",
-      "defaultValue" : "brooklyn.entity.group.zoneaware.BalancingNodePlacementStrategy@37f02eaa",
+      "defaultValue" : "brooklyn.entity.group.zoneaware.BalancingNodePlacementStrategy@45498134",
       "description" : "Node placement strategy",
       "reconfigurable" : false,
       "label" : null,
@@ -6383,8 +7405,8 @@
       "links" : null
     }, {
       "name" : "enricher.service_state.children_and_members.quorum.running",
-      "type" : "brooklyn.entity.basic.QuorumCheck",
-      "defaultValue" : "QuorumCheck[require=0,100.0%]",
+      "type" : "brooklyn.util.collections.QuorumCheck",
+      "defaultValue" : "QuorumCheck[all;require=0,100.0%]",
       "description" : "Problems check from children actual states (lifecycle), applied by default to members and children, not checking upness, but requiring by default that none are on-fire",
       "reconfigurable" : false,
       "label" : null,
@@ -6393,8 +7415,8 @@
       "links" : null
     }, {
       "name" : "enricher.service_state.children_and_members.quorum.up",
-      "type" : "brooklyn.entity.basic.QuorumCheck",
-      "defaultValue" : "QuorumCheck[require=1,0.0%]",
+      "type" : "brooklyn.util.collections.QuorumCheck",
+      "defaultValue" : "QuorumCheck[atLeastOne;require=1,0.0%]",
       "description" : "Up check, applied by default to members, requiring at least one present and up",
       "reconfigurable" : false,
       "label" : null,
@@ -6526,182 +7548,182 @@
       "name" : "cluster.entity",
       "type" : "brooklyn.entity.Entity",
       "description" : "The cluster an entity is a member of",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cluster.first",
       "type" : "java.lang.Boolean",
       "description" : "Set on an entity if it is the first member of a cluster",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cluster.first.entity",
       "type" : "brooklyn.entity.Entity",
       "description" : "The first member of the cluster",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cluster.member",
       "type" : "java.lang.Boolean",
       "description" : "Set on an entity if it is a member of a cluster",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "dynamiccluster.entityQuarantined",
       "type" : "brooklyn.entity.Entity",
       "description" : "Entity failed to start, and has been quarantined",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "dynamiccluster.failedSubLocations",
       "type" : "java.util.Set",
       "description" : "Sub locations that seem to have failed",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "dynamiccluster.quarantineGroup",
       "type" : "brooklyn.entity.group.QuarantineGroup",
       "description" : "Group of quarantined entities that failed to start",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "dynamiccluster.subLocations",
       "type" : "java.util.List",
       "description" : "Locations for each availability zone to use",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "group.members",
       "type" : "java.util.Collection",
       "description" : "Members of the group",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "group.members.added",
       "type" : "brooklyn.entity.Entity",
       "description" : "Entity added to group members",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "group.members.count",
       "type" : "java.lang.Integer",
       "description" : "Number of members",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "group.members.removed",
       "type" : "brooklyn.entity.Entity",
       "description" : "Entity removed from group members",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "http.port",
       "type" : "java.lang.Integer",
       "description" : "HTTP port",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "https.port",
       "type" : "java.lang.Integer",
       "description" : "HTTP port (with SSL/TLS)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.isUp",
       "type" : "java.lang.Boolean",
       "description" : "Whether the service is active and availability (confirmed and monitored)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.state",
       "type" : "brooklyn.entity.basic.Lifecycle",
       "description" : "Actual lifecycle state of the service",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.deployedWars",
       "type" : "java.util.Set",
       "description" : "Names of archives/contexts that are currently deployed",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.enabledProtocols",
       "type" : "java.util.Set",
       "description" : "List of enabled protocols (e.g. http, https)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.https.ssl",
       "type" : "brooklyn.entity.webapp.HttpsSslConfig",
       "description" : "SSL Configuration for HTTPS",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.bytes.received",
       "type" : "java.lang.Long",
       "description" : "Total bytes received by the webserver",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.bytes.sent",
       "type" : "java.lang.Long",
       "description" : "Total bytes sent by the webserver",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.errors",
       "type" : "java.lang.Integer",
       "description" : "Request errors",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.errors.perNode",
       "type" : "java.lang.Integer",
       "description" : "Cluster entity request error average",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.perSec.last",
       "type" : "java.lang.Double",
       "description" : "Reqs/sec (last datapoint)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.perSec.last.perNode",
       "type" : "java.lang.Double",
       "description" : "Reqs/sec (last datapoint) averaged over all nodes",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.perSec.windowed",
       "type" : "java.lang.Double",
       "description" : "Reqs/sec (over time window)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.perSec.windowed.perNode",
       "type" : "java.lang.Double",
       "description" : "Reqs/sec (over time window) averaged over all nodes",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.processingTime.fraction.last",
       "type" : "java.lang.Double",
       "description" : "Fraction of time spent processing, reported by webserver (percentage, last datapoint)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.processingTime.fraction.windowed",
       "type" : "java.lang.Double",
       "description" : "Fraction of time spent processing, reported by webserver (percentage, over time window)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.processingTime.fraction.windowed.perNode",
       "type" : "java.lang.Double",
       "description" : "Fraction of time spent processing reported by webserver (percentage, over time window) averaged over all nodes",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.processingTime.max",
       "type" : "java.lang.Integer",
       "description" : "Max processing time for any single request, reported by webserver (millis)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.processingTime.perNode",
       "type" : "java.lang.Integer",
       "description" : "Total processing time per node (millis)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.processingTime.total",
       "type" : "java.lang.Integer",
       "description" : "Total processing time, reported by webserver (millis)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.total",
       "type" : "java.lang.Integer",
       "description" : "Request count",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.total.perNode",
       "type" : "java.lang.Double",
       "description" : "Cluster entity request average",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.url",
       "type" : "java.lang.String",
       "description" : "URL",
-      "links" : null
+      "links" : { }
     } ],
     "effectors" : [ {
       "name" : "deploy",
@@ -6796,7 +7818,7 @@
   }, {
     "type" : "brooklyn.entity.nosql.elasticsearch.ElasticSearchCluster",
     "name" : "Elastic Search Cluster",
-    "description" : "Elastic Search is...",
+    "description" : "Elasticsearch is an open-source search server based on Lucene. It provides a distributed, multitenant-capable full-text search engine with a RESTful web interface and schema-free JSON documents.",
     "iconUrl" : "",
     "config" : [ {
       "name" : "cluster.initial.quorumSize",
@@ -6843,6 +7865,16 @@
       "type" : "brooklyn.entity.basic.EntityFactory",
       "defaultValue" : null,
       "description" : "factory for creating new cluster members",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "dynamiccluster.firstmemberspec",
+      "type" : "brooklyn.entity.proxying.EntitySpec",
+      "defaultValue" : null,
+      "description" : "entity spec for creating new cluster members, used for the very first member if different",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -6901,7 +7933,7 @@
     }, {
       "name" : "dynamiccluster.zone.failureDetector",
       "type" : "brooklyn.entity.group.DynamicCluster$ZoneFailureDetector",
-      "defaultValue" : "brooklyn.entity.group.zoneaware.ProportionalZoneFailureDetector@b7193fc",
+      "defaultValue" : "brooklyn.entity.group.zoneaware.ProportionalZoneFailureDetector@77acc39c",
       "description" : "Zone failure detector",
       "reconfigurable" : false,
       "label" : null,
@@ -6911,7 +7943,7 @@
     }, {
       "name" : "dynamiccluster.zone.placementStrategy",
       "type" : "brooklyn.entity.group.DynamicCluster$NodePlacementStrategy",
-      "defaultValue" : "brooklyn.entity.group.zoneaware.BalancingNodePlacementStrategy@37f02eaa",
+      "defaultValue" : "brooklyn.entity.group.zoneaware.BalancingNodePlacementStrategy@45498134",
       "description" : "Node placement strategy",
       "reconfigurable" : false,
       "label" : null,
@@ -6930,8 +7962,8 @@
       "links" : null
     }, {
       "name" : "enricher.service_state.children_and_members.quorum.running",
-      "type" : "brooklyn.entity.basic.QuorumCheck",
-      "defaultValue" : "QuorumCheck[require=0,100.0%]",
+      "type" : "brooklyn.util.collections.QuorumCheck",
+      "defaultValue" : "QuorumCheck[all;require=0,100.0%]",
       "description" : "Problems check from children actual states (lifecycle), applied by default to members and children, not checking upness, but requiring by default that none are on-fire",
       "reconfigurable" : false,
       "label" : null,
@@ -6940,8 +7972,8 @@
       "links" : null
     }, {
       "name" : "enricher.service_state.children_and_members.quorum.up",
-      "type" : "brooklyn.entity.basic.QuorumCheck",
-      "defaultValue" : "QuorumCheck[require=1,0.0%]",
+      "type" : "brooklyn.util.collections.QuorumCheck",
+      "defaultValue" : "QuorumCheck[atLeastOne;require=1,0.0%]",
       "description" : "Up check, applied by default to members, requiring at least one present and up",
       "reconfigurable" : false,
       "label" : null,
@@ -6973,77 +8005,77 @@
       "name" : "cluster.entity",
       "type" : "brooklyn.entity.Entity",
       "description" : "The cluster an entity is a member of",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cluster.first",
       "type" : "java.lang.Boolean",
       "description" : "Set on an entity if it is the first member of a cluster",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cluster.first.entity",
       "type" : "brooklyn.entity.Entity",
       "description" : "The first member of the cluster",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cluster.member",
       "type" : "java.lang.Boolean",
       "description" : "Set on an entity if it is a member of a cluster",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "dynamiccluster.entityQuarantined",
       "type" : "brooklyn.entity.Entity",
       "description" : "Entity failed to start, and has been quarantined",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "dynamiccluster.failedSubLocations",
       "type" : "java.util.Set",
       "description" : "Sub locations that seem to have failed",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "dynamiccluster.quarantineGroup",
       "type" : "brooklyn.entity.group.QuarantineGroup",
       "description" : "Group of quarantined entities that failed to start",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "dynamiccluster.subLocations",
       "type" : "java.util.List",
       "description" : "Locations for each availability zone to use",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "elasticsearch.cluster.name",
       "type" : "java.lang.String",
       "description" : "Name of the ElasticSearch cluster",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "group.members",
       "type" : "java.util.Collection",
       "description" : "Members of the group",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "group.members.added",
       "type" : "brooklyn.entity.Entity",
       "description" : "Entity added to group members",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "group.members.count",
       "type" : "java.lang.Integer",
       "description" : "Number of members",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "group.members.removed",
       "type" : "brooklyn.entity.Entity",
       "description" : "Entity removed from group members",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.isUp",
       "type" : "java.lang.Boolean",
       "description" : "Whether the service is active and availability (confirmed and monitored)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.state",
       "type" : "brooklyn.entity.basic.Lifecycle",
       "description" : "Actual lifecycle state of the service",
-      "links" : null
+      "links" : { }
     } ],
     "effectors" : [ {
       "name" : "replaceMember",
@@ -7106,7 +8138,7 @@
     "type" : "brooklyn.entity.nosql.elasticsearch.ElasticSearchNode",
     "defaultVersion" : "1.2.1",
     "name" : "Elastic Search Node",
-    "description" : "Elastic Search is...",
+    "description" : "Elasticsearch is an open-source search server based on Lucene. It provides a distributed, multitenant-capable full-text search engine with a RESTful web interface and schema-free JSON documents.",
     "iconUrl" : "",
     "config" : [ {
       "name" : "children.startable.mode",
@@ -7234,6 +8266,26 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "entity.running",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, if service already running",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "entity.started",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, for running services",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "defaultValue" : null,
@@ -7244,10 +8296,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "files.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of files, to be copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "files.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of files to be copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of files, to be copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -7286,7 +8348,7 @@
     }, {
       "name" : "install.skip",
       "type" : "java.lang.Boolean",
-      "defaultValue" : false,
+      "defaultValue" : null,
       "description" : "Skip the driver install commands entirely, for pre-installed software",
       "reconfigurable" : false,
       "label" : null,
@@ -7374,10 +8436,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
-      "name" : "resources.latch",
+      "name" : "resources.install.latch",
       "type" : "java.lang.Boolean",
       "defaultValue" : null,
-      "description" : "Latch for blocking resources until ready",
+      "description" : "Latch for blocking install resources until ready",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "resources.runtime.latch",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Latch for blocking runtime resources until ready",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -7444,10 +8516,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "templates.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of templates, to be filled in and copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "templates.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of templates to be filled in and copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of templates, to be filled in and copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -7458,127 +8540,127 @@
       "name" : "datastore.url",
       "type" : "java.lang.String",
       "description" : "Primary contact URL for a datastore (e.g. mysql://localhost:3306/)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "download.addon.urls",
       "type" : "java.util.Map",
       "description" : "URL patterns for downloading named add-ons (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "download.url",
       "type" : "java.lang.String",
       "description" : "URL pattern for downloading the installer (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "elasticsearch.node.cluster.name",
       "type" : "java.lang.String",
       "description" : "Cluster name (or elasticsearch selected if not set",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "elasticsearch.node.docs.count",
       "type" : "java.lang.Integer",
       "description" : "elasticsearch.node.docs.count",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "elasticsearch.node.get.time.in.millis",
       "type" : "java.lang.Integer",
       "description" : "elasticsearch.node.get.time.in.millis",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "elasticsearch.node.get.total",
       "type" : "java.lang.Integer",
       "description" : "elasticsearch.node.get.total",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "elasticsearch.node.id",
       "type" : "java.lang.String",
       "description" : "elasticsearch.node.id",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "elasticsearch.node.name",
       "type" : "java.lang.String",
       "description" : "Node name (or randomly selected if not set",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "elasticsearch.node.search.query.time.in.millis",
       "type" : "java.lang.Integer",
       "description" : "elasticsearch.node.search.query.time.in.millis",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "elasticsearch.node.search.query.total",
       "type" : "java.lang.Integer",
       "description" : "elasticsearch.node.search.query.total",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "elasticsearch.node.store.bytes",
       "type" : "java.lang.Integer",
       "description" : "elasticsearch.node.store.bytes",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "description" : "Directory for installed artifacts (e.g. expanded dir after unpacking .tgz)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.address",
       "type" : "java.lang.String",
       "description" : "Host IP address",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.name",
       "type" : "java.lang.String",
       "description" : "Host name",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.address",
       "type" : "java.lang.String",
       "description" : "Host address as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.hostname",
       "type" : "java.lang.String",
       "description" : "Host name as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "http.port",
       "type" : "java.lang.Integer",
       "description" : "HTTP port",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "install.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be installed in",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "run.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be run from",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.isUp",
       "type" : "java.lang.Boolean",
       "description" : "Whether the service is active and availability (confirmed and monitored)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.process.isRunning",
       "type" : "java.lang.Boolean",
       "description" : "Whether the process for the service is confirmed as running",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.state",
       "type" : "brooklyn.entity.basic.Lifecycle",
       "description" : "Actual lifecycle state of the service",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareprocess.pid.file",
       "type" : "java.lang.String",
       "description" : "PID file",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareservice.provisioningLocation",
       "type" : "brooklyn.location.MachineProvisioningLocation",
       "description" : "Location used to provision a machine where this is running",
-      "links" : null
+      "links" : { }
     } ],
     "effectors" : [ {
       "name" : "restart",
@@ -7666,6 +8748,26 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "entity.running",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, if service already running",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "entity.started",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, for running services",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "defaultValue" : null,
@@ -7676,10 +8778,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "files.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of files, to be copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "files.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of files to be copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of files, to be copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -7728,7 +8840,7 @@
     }, {
       "name" : "install.skip",
       "type" : "java.lang.Boolean",
-      "defaultValue" : false,
+      "defaultValue" : null,
       "description" : "Skip the driver install commands entirely, for pre-installed software",
       "reconfigurable" : false,
       "label" : null,
@@ -7816,6 +8928,16 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "jmx.agent.local.path",
+      "type" : "java.lang.String",
+      "defaultValue" : null,
+      "description" : "Path to JMX driver on the local machine",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "jmx.agent.mode",
       "type" : "java.lang.Enum",
       "defaultValue" : "AUTODETECT",
@@ -7858,6 +8980,16 @@
       "type" : "brooklyn.location.PortRange",
       "defaultValue" : "31001-65535",
       "description" : "JMX direct/private port (e.g. JMX RMI server port, or JMXMP port, but not RMI registry port)",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "jmx.direct.port.legacy.NOT_USED",
+      "type" : "brooklyn.location.PortRange",
+      "defaultValue" : null,
+      "description" : "Legacy definition JMX direct/private port (e.g. JMX RMI server port, or JMXMP port, but not RMI registry port)",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -7984,10 +9116,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
-      "name" : "resources.latch",
+      "name" : "resources.install.latch",
       "type" : "java.lang.Boolean",
       "defaultValue" : null,
-      "description" : "Latch for blocking resources until ready",
+      "description" : "Latch for blocking install resources until ready",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "resources.runtime.latch",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Latch for blocking runtime resources until ready",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -8064,10 +9206,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "templates.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of templates, to be filled in and copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "templates.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of templates to be filled in and copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of templates, to be filled in and copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -8128,197 +9280,207 @@
       "name" : "download.addon.urls",
       "type" : "java.util.Map",
       "description" : "URL patterns for downloading named add-ons (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "download.url",
       "type" : "java.lang.String",
       "description" : "URL pattern for downloading the installer (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "description" : "Directory for installed artifacts (e.g. expanded dir after unpacking .tgz)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.address",
       "type" : "java.lang.String",
       "description" : "Host IP address",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.name",
       "type" : "java.lang.String",
       "description" : "Host name",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.address",
       "type" : "java.lang.String",
       "description" : "Host address as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.hostname",
       "type" : "java.lang.String",
       "description" : "Host name as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "http.port",
       "type" : "java.lang.Integer",
       "description" : "HTTP port",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "https.port",
       "type" : "java.lang.Integer",
       "description" : "HTTP port (with SSL/TLS)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "install.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be installed in",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "jboss6.bind.address",
       "type" : "java.lang.String",
       "description" : "Address of interface JBoss should listen on, defaulting 0.0.0.0 (but could set e.g. to attributeWhenReady(HOSTNAME)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "jboss6.clusterName",
       "type" : "java.lang.String",
       "description" : "Identifier used to group JBoss instances",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "jboss6.portincrement",
       "type" : "java.lang.Integer",
       "description" : "Increment to be used for all jboss ports",
-      "links" : null
+      "links" : { }
+    }, {
+      "name" : "jmx.agent.local.path",
+      "type" : "java.lang.String",
+      "description" : "Path to JMX driver on the local machine",
+      "links" : { }
     }, {
       "name" : "jmx.context",
       "type" : "java.lang.String",
       "description" : "JMX context path",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "jmx.direct.port",
       "type" : "java.lang.Integer",
       "description" : "JMX direct/private port (e.g. JMX RMI server port, or JMXMP port, but not RMI registry port)",
-      "links" : null
+      "links" : { }
+    }, {
+      "name" : "jmx.direct.port.legacy.NOT_USED",
+      "type" : "java.lang.Integer",
+      "description" : "Legacy definition JMX direct/private port (e.g. JMX RMI server port, or JMXMP port, but not RMI registry port)",
+      "links" : { }
     }, {
       "name" : "jmx.password",
       "type" : "java.lang.String",
       "description" : "JMX password",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "jmx.service.url",
       "type" : "java.lang.String",
       "description" : "The URL for connecting to the MBean Server",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "jmx.user",
       "type" : "java.lang.String",
       "description" : "JMX username",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "rmi.registry.port",
       "type" : "java.lang.Integer",
       "description" : "RMI registry port, used for discovering JMX (private) port",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "run.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be run from",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.isUp",
       "type" : "java.lang.Boolean",
       "description" : "Whether the service is active and availability (confirmed and monitored)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.process.isRunning",
       "type" : "java.lang.Boolean",
       "description" : "Whether the process for the service is confirmed as running",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.state",
       "type" : "brooklyn.entity.basic.Lifecycle",
       "description" : "Actual lifecycle state of the service",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareprocess.pid.file",
       "type" : "java.lang.String",
       "description" : "PID file",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareservice.provisioningLocation",
       "type" : "brooklyn.location.MachineProvisioningLocation",
       "description" : "Location used to provision a machine where this is running",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.deployedWars",
       "type" : "java.util.Set",
       "description" : "Names of archives/contexts that are currently deployed",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.enabledProtocols",
       "type" : "java.util.Set",
       "description" : "List of enabled protocols (e.g. http, https)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.https.ssl",
       "type" : "brooklyn.entity.webapp.HttpsSslConfig",
       "description" : "SSL Configuration for HTTPS",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.bytes.received",
       "type" : "java.lang.Long",
       "description" : "Total bytes received by the webserver",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.bytes.sent",
       "type" : "java.lang.Long",
       "description" : "Total bytes sent by the webserver",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.errors",
       "type" : "java.lang.Integer",
       "description" : "Request errors",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.perSec.last",
       "type" : "java.lang.Double",
       "description" : "Reqs/sec (last datapoint)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.perSec.windowed",
       "type" : "java.lang.Double",
       "description" : "Reqs/sec (over time window)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.processingTime.fraction.last",
       "type" : "java.lang.Double",
       "description" : "Fraction of time spent processing, reported by webserver (percentage, last datapoint)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.processingTime.fraction.windowed",
       "type" : "java.lang.Double",
       "description" : "Fraction of time spent processing, reported by webserver (percentage, over time window)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.processingTime.max",
       "type" : "java.lang.Integer",
       "description" : "Max processing time for any single request, reported by webserver (millis)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.processingTime.total",
       "type" : "java.lang.Integer",
       "description" : "Total processing time, reported by webserver (millis)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.total",
       "type" : "java.lang.Integer",
       "description" : "Request count",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.url",
       "type" : "java.lang.String",
       "description" : "URL",
-      "links" : null
+      "links" : { }
     } ],
     "effectors" : [ {
       "name" : "deploy",
@@ -8433,6 +9595,26 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "entity.running",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, if service already running",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "entity.started",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, for running services",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "defaultValue" : null,
@@ -8443,10 +9625,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "files.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of files, to be copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "files.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of files to be copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of files, to be copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -8495,7 +9687,7 @@
     }, {
       "name" : "install.skip",
       "type" : "java.lang.Boolean",
-      "defaultValue" : false,
+      "defaultValue" : null,
       "description" : "Skip the driver install commands entirely, for pre-installed software",
       "reconfigurable" : false,
       "label" : null,
@@ -8623,10 +9815,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
-      "name" : "resources.latch",
+      "name" : "resources.install.latch",
       "type" : "java.lang.Boolean",
       "defaultValue" : null,
-      "description" : "Latch for blocking resources until ready",
+      "description" : "Latch for blocking install resources until ready",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "resources.runtime.latch",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Latch for blocking runtime resources until ready",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -8693,10 +9895,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "templates.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of templates, to be filled in and copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "templates.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of templates to be filled in and copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of templates, to be filled in and copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -8837,192 +10049,192 @@
       "name" : "download.addon.urls",
       "type" : "java.util.Map",
       "description" : "URL patterns for downloading named add-ons (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "download.url",
       "type" : "java.lang.String",
       "description" : "URL pattern for downloading the installer (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "description" : "Directory for installed artifacts (e.g. expanded dir after unpacking .tgz)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.address",
       "type" : "java.lang.String",
       "description" : "Host IP address",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.name",
       "type" : "java.lang.String",
       "description" : "Host name",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.address",
       "type" : "java.lang.String",
       "description" : "Host address as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.hostname",
       "type" : "java.lang.String",
       "description" : "Host name as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "http.port",
       "type" : "java.lang.Integer",
       "description" : "HTTP port",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "https.port",
       "type" : "java.lang.Integer",
       "description" : "HTTP port (with SSL/TLS)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "install.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be installed in",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "jboss.bind.address",
       "type" : "java.lang.String",
       "description" : "Address of interface JBoss should listen on, defaulting 0.0.0.0 (but could set e.g. to attributeWhenReady(HOSTNAME)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "jboss.pid.file",
       "type" : "java.lang.String",
       "description" : "PID file",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "run.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be run from",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.isUp",
       "type" : "java.lang.Boolean",
       "description" : "Whether the service is active and availability (confirmed and monitored)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.process.isRunning",
       "type" : "java.lang.Boolean",
       "description" : "Whether the process for the service is confirmed as running",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.state",
       "type" : "brooklyn.entity.basic.Lifecycle",
       "description" : "Actual lifecycle state of the service",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareprocess.pid.file",
       "type" : "java.lang.String",
       "description" : "PID file",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareservice.provisioningLocation",
       "type" : "brooklyn.location.MachineProvisioningLocation",
       "description" : "Location used to provision a machine where this is running",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.deployedWars",
       "type" : "java.util.Set",
       "description" : "Names of archives/contexts that are currently deployed",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.enabledProtocols",
       "type" : "java.util.Set",
       "description" : "List of enabled protocols (e.g. http, https)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.https.ssl",
       "type" : "brooklyn.entity.webapp.HttpsSslConfig",
       "description" : "SSL Configuration for HTTPS",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.jboss.managementHttpPort",
       "type" : "java.lang.Integer",
       "description" : "Management port",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.jboss.managementHttpsPort",
       "type" : "java.lang.Integer",
       "description" : "Management port",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.jboss.managementNativePort",
       "type" : "java.lang.Integer",
       "description" : "Management native port",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.jboss.managementStatus",
       "type" : "java.lang.Integer",
       "description" : "HTTP response code for the management server",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.jboss.managementUp",
       "type" : "java.lang.Boolean",
       "description" : "Management server is responding with OK",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.jboss.managementUrl",
       "type" : "java.lang.String",
       "description" : "URL where management endpoint is available",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.bytes.received",
       "type" : "java.lang.Long",
       "description" : "Total bytes received by the webserver",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.bytes.sent",
       "type" : "java.lang.Long",
       "description" : "Total bytes sent by the webserver",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.errors",
       "type" : "java.lang.Integer",
       "description" : "Request errors",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.perSec.last",
       "type" : "java.lang.Double",
       "description" : "Reqs/sec (last datapoint)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.perSec.windowed",
       "type" : "java.lang.Double",
       "description" : "Reqs/sec (over time window)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.processingTime.fraction.last",
       "type" : "java.lang.Double",
       "description" : "Fraction of time spent processing, reported by webserver (percentage, last datapoint)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.processingTime.fraction.windowed",
       "type" : "java.lang.Double",
       "description" : "Fraction of time spent processing, reported by webserver (percentage, over time window)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.processingTime.max",
       "type" : "java.lang.Integer",
       "description" : "Max processing time for any single request, reported by webserver (millis)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.processingTime.total",
       "type" : "java.lang.Integer",
       "description" : "Total processing time, reported by webserver (millis)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.total",
       "type" : "java.lang.Integer",
       "description" : "Request count",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.url",
       "type" : "java.lang.String",
       "description" : "URL",
-      "links" : null
+      "links" : { }
     } ],
     "effectors" : [ {
       "name" : "deploy",
@@ -9137,6 +10349,26 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "entity.running",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, if service already running",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "entity.started",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, for running services",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "defaultValue" : null,
@@ -9147,10 +10379,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "files.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of files, to be copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "files.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of files to be copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of files, to be copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -9199,7 +10441,7 @@
     }, {
       "name" : "install.skip",
       "type" : "java.lang.Boolean",
-      "defaultValue" : false,
+      "defaultValue" : null,
       "description" : "Skip the driver install commands entirely, for pre-installed software",
       "reconfigurable" : false,
       "label" : null,
@@ -9267,6 +10509,16 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "jmx.agent.local.path",
+      "type" : "java.lang.String",
+      "defaultValue" : null,
+      "description" : "Path to JMX driver on the local machine",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "jmx.agent.mode",
       "type" : "java.lang.Enum",
       "defaultValue" : "AUTODETECT",
@@ -9309,6 +10561,16 @@
       "type" : "brooklyn.location.PortRange",
       "defaultValue" : "31001-65535",
       "description" : "JMX direct/private port (e.g. JMX RMI server port, or JMXMP port, but not RMI registry port)",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "jmx.direct.port.legacy.NOT_USED",
+      "type" : "brooklyn.location.PortRange",
+      "defaultValue" : null,
+      "description" : "Legacy definition JMX direct/private port (e.g. JMX RMI server port, or JMXMP port, but not RMI registry port)",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -9435,10 +10697,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
-      "name" : "resources.latch",
+      "name" : "resources.install.latch",
       "type" : "java.lang.Boolean",
       "defaultValue" : null,
-      "description" : "Latch for blocking resources until ready",
+      "description" : "Latch for blocking install resources until ready",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "resources.runtime.latch",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Latch for blocking runtime resources until ready",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -9515,10 +10787,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "templates.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of templates, to be filled in and copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "templates.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of templates to be filled in and copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of templates, to be filled in and copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -9579,192 +10861,202 @@
       "name" : "download.addon.urls",
       "type" : "java.util.Map",
       "description" : "URL patterns for downloading named add-ons (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "download.url",
       "type" : "java.lang.String",
       "description" : "URL pattern for downloading the installer (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "description" : "Directory for installed artifacts (e.g. expanded dir after unpacking .tgz)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.address",
       "type" : "java.lang.String",
       "description" : "Host IP address",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.name",
       "type" : "java.lang.String",
       "description" : "Host name",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.address",
       "type" : "java.lang.String",
       "description" : "Host address as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.hostname",
       "type" : "java.lang.String",
       "description" : "Host name as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "http.port",
       "type" : "java.lang.Integer",
       "description" : "HTTP port",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "https.port",
       "type" : "java.lang.Integer",
       "description" : "HTTP port (with SSL/TLS)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "install.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be installed in",
-      "links" : null
+      "links" : { }
+    }, {
+      "name" : "jmx.agent.local.path",
+      "type" : "java.lang.String",
+      "description" : "Path to JMX driver on the local machine",
+      "links" : { }
     }, {
       "name" : "jmx.context",
       "type" : "java.lang.String",
       "description" : "JMX context path",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "jmx.direct.port",
       "type" : "java.lang.Integer",
       "description" : "JMX direct/private port (e.g. JMX RMI server port, or JMXMP port, but not RMI registry port)",
-      "links" : null
+      "links" : { }
+    }, {
+      "name" : "jmx.direct.port.legacy.NOT_USED",
+      "type" : "java.lang.Integer",
+      "description" : "Legacy definition JMX direct/private port (e.g. JMX RMI server port, or JMXMP port, but not RMI registry port)",
+      "links" : { }
     }, {
       "name" : "jmx.password",
       "type" : "java.lang.String",
       "description" : "JMX password",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "jmx.service.url",
       "type" : "java.lang.String",
       "description" : "The URL for connecting to the MBean Server",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "jmx.user",
       "type" : "java.lang.String",
       "description" : "JMX username",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "rmi.registry.port",
       "type" : "java.lang.Integer",
       "description" : "RMI registry port, used for discovering JMX (private) port",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "run.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be run from",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.isUp",
       "type" : "java.lang.Boolean",
       "description" : "Whether the service is active and availability (confirmed and monitored)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.process.isRunning",
       "type" : "java.lang.Boolean",
       "description" : "Whether the process for the service is confirmed as running",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.state",
       "type" : "brooklyn.entity.basic.Lifecycle",
       "description" : "Actual lifecycle state of the service",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareprocess.pid.file",
       "type" : "java.lang.String",
       "description" : "PID file",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareservice.provisioningLocation",
       "type" : "brooklyn.location.MachineProvisioningLocation",
       "description" : "Location used to provision a machine where this is running",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.deployedWars",
       "type" : "java.util.Set",
       "description" : "Names of archives/contexts that are currently deployed",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.enabledProtocols",
       "type" : "java.util.Set",
       "description" : "List of enabled protocols (e.g. http, https)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.https.ssl",
       "type" : "brooklyn.entity.webapp.HttpsSslConfig",
       "description" : "SSL Configuration for HTTPS",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.bytes.received",
       "type" : "java.lang.Long",
       "description" : "Total bytes received by the webserver",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.bytes.sent",
       "type" : "java.lang.Long",
       "description" : "Total bytes sent by the webserver",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.errors",
       "type" : "java.lang.Integer",
       "description" : "Request errors",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.perSec.last",
       "type" : "java.lang.Double",
       "description" : "Reqs/sec (last datapoint)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.perSec.windowed",
       "type" : "java.lang.Double",
       "description" : "Reqs/sec (over time window)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.processingTime.fraction.last",
       "type" : "java.lang.Double",
       "description" : "Fraction of time spent processing, reported by webserver (percentage, last datapoint)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.processingTime.fraction.windowed",
       "type" : "java.lang.Double",
       "description" : "Fraction of time spent processing, reported by webserver (percentage, over time window)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.processingTime.max",
       "type" : "java.lang.Integer",
       "description" : "Max processing time for any single request, reported by webserver (millis)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.processingTime.total",
       "type" : "java.lang.Integer",
       "description" : "Total processing time, reported by webserver (millis)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.total",
       "type" : "java.lang.Integer",
       "description" : "Request count",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.responses.4xx",
       "type" : "java.lang.Integer",
       "description" : "Responses in the 400's",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.responses.5xx",
       "type" : "java.lang.Integer",
       "description" : "Responses in the 500's",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.url",
       "type" : "java.lang.String",
       "description" : "URL",
-      "links" : null
+      "links" : { }
     } ],
     "effectors" : [ {
       "name" : "deploy",
@@ -9877,27 +11169,27 @@
       "name" : "kafka.cluster.brokerCluster",
       "type" : "brooklyn.entity.group.DynamicCluster",
       "description" : "Underlying Kafka broker cluster",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "kafka.cluster.brokerSpec",
       "type" : "brooklyn.entity.proxying.EntitySpec",
       "description" : "Spec for Kafka broker entiites to be created",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "kafka.cluster.zookeeper",
       "type" : "brooklyn.entity.zookeeper.ZooKeeperNode",
       "description" : "The zookeeper for the cluster; if null a default be will created",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "kafka.cluster.zookeeperSpec",
       "type" : "brooklyn.entity.proxying.EntitySpec",
       "description" : "Spec for creating the kafka zookeeper",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.isUp",
       "type" : "java.lang.Boolean",
       "description" : "Whether the service is active and availability (confirmed and monitored)",
-      "links" : null
+      "links" : { }
     } ],
     "effectors" : [ {
       "name" : "resize",
@@ -9996,6 +11288,26 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "entity.running",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, if service already running",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "entity.started",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, for running services",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "defaultValue" : null,
@@ -10006,10 +11318,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "files.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of files, to be copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "files.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of files to be copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of files, to be copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -10038,7 +11360,7 @@
     }, {
       "name" : "install.skip",
       "type" : "java.lang.Boolean",
-      "defaultValue" : false,
+      "defaultValue" : null,
       "description" : "Skip the driver install commands entirely, for pre-installed software",
       "reconfigurable" : false,
       "label" : null,
@@ -10096,6 +11418,16 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "jmx.agent.local.path",
+      "type" : "java.lang.String",
+      "defaultValue" : null,
+      "description" : "Path to JMX driver on the local machine",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "jmx.agent.mode",
       "type" : "java.lang.Enum",
       "defaultValue" : "AUTODETECT",
@@ -10138,6 +11470,16 @@
       "type" : "brooklyn.location.PortRange",
       "defaultValue" : "44444-65535",
       "description" : "JMX direct/private port (e.g. JMX RMI server port, or JMXMP port, but not RMI registry port)",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "jmx.direct.port.legacy.NOT_USED",
+      "type" : "brooklyn.location.PortRange",
+      "defaultValue" : null,
+      "description" : "Legacy definition JMX direct/private port (e.g. JMX RMI server port, or JMXMP port, but not RMI registry port)",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -10284,10 +11626,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
-      "name" : "resources.latch",
+      "name" : "resources.install.latch",
       "type" : "java.lang.Boolean",
       "defaultValue" : null,
-      "description" : "Latch for blocking resources until ready",
+      "description" : "Latch for blocking install resources until ready",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "resources.runtime.latch",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Latch for blocking runtime resources until ready",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -10364,10 +11716,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "templates.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of templates, to be filled in and copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "templates.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of templates to be filled in and copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of templates, to be filled in and copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -10378,152 +11740,162 @@
       "name" : "download.addon.urls",
       "type" : "java.util.Map",
       "description" : "URL patterns for downloading named add-ons (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "download.url",
       "type" : "java.lang.String",
       "description" : "URL pattern for downloading the installer (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "description" : "Directory for installed artifacts (e.g. expanded dir after unpacking .tgz)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.address",
       "type" : "java.lang.String",
       "description" : "Host IP address",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.name",
       "type" : "java.lang.String",
       "description" : "Host name",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.address",
       "type" : "java.lang.String",
       "description" : "Host address as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.hostname",
       "type" : "java.lang.String",
       "description" : "Host name as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "install.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be installed in",
-      "links" : null
+      "links" : { }
+    }, {
+      "name" : "jmx.agent.local.path",
+      "type" : "java.lang.String",
+      "description" : "Path to JMX driver on the local machine",
+      "links" : { }
     }, {
       "name" : "jmx.context",
       "type" : "java.lang.String",
       "description" : "JMX context path",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "jmx.direct.port",
       "type" : "java.lang.Integer",
       "description" : "JMX direct/private port (e.g. JMX RMI server port, or JMXMP port, but not RMI registry port)",
-      "links" : null
+      "links" : { }
+    }, {
+      "name" : "jmx.direct.port.legacy.NOT_USED",
+      "type" : "java.lang.Integer",
+      "description" : "Legacy definition JMX direct/private port (e.g. JMX RMI server port, or JMXMP port, but not RMI registry port)",
+      "links" : { }
     }, {
       "name" : "jmx.password",
       "type" : "java.lang.String",
       "description" : "JMX password",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "jmx.service.url",
       "type" : "java.lang.String",
       "description" : "The URL for connecting to the MBean Server",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "jmx.user",
       "type" : "java.lang.String",
       "description" : "JMX username",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "karaf.admin.instances",
       "type" : "java.util.Map",
       "description" : "Karaf admin instances",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "karaf.admin.isRoot",
       "type" : "java.lang.Boolean",
       "description" : "Karaf admin isRoot",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "karaf.admin.java_opts",
       "type" : "java.lang.String",
       "description" : "Karaf Java opts",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "karaf.admin.location",
       "type" : "java.lang.String",
       "description" : "Karaf install location",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "karaf.admin.pid",
       "type" : "java.lang.Integer",
       "description" : "Karaf instance PID",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "karaf.admin.rmi_registry_port",
       "type" : "java.lang.Integer",
       "description" : "Karaf instance RMI registry port",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "karaf.admin.rmi_server_port",
       "type" : "java.lang.Integer",
       "description" : "Karaf RMI (JMX) server port",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "karaf.admin.ssh_port",
       "type" : "java.lang.Integer",
       "description" : "Karaf SSH Port",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "karaf.admin.state",
       "type" : "java.lang.String",
       "description" : "Karaf instance state",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "karaf.name",
       "type" : "java.lang.String",
       "description" : "Karaf instance name",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "rmi.registry.port",
       "type" : "java.lang.Integer",
       "description" : "RMI registry port, used for discovering JMX (private) port",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "run.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be run from",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.isUp",
       "type" : "java.lang.Boolean",
       "description" : "Whether the service is active and availability (confirmed and monitored)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.process.isRunning",
       "type" : "java.lang.Boolean",
       "description" : "Whether the process for the service is confirmed as running",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.state",
       "type" : "brooklyn.entity.basic.Lifecycle",
       "description" : "Actual lifecycle state of the service",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareprocess.pid.file",
       "type" : "java.lang.String",
       "description" : "PID file",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareservice.provisioningLocation",
       "type" : "brooklyn.location.MachineProvisioningLocation",
       "description" : "Location used to provision a machine where this is running",
-      "links" : null
+      "links" : { }
     } ],
     "effectors" : [ {
       "name" : "installBundle",
@@ -10608,7 +11980,7 @@
     "type" : "brooklyn.entity.machine.MachineEntity",
     "defaultVersion" : null,
     "name" : "Machine Entity",
-    "description" : "Represents a machine, providing metrics (normally optained of ssh) about it",
+    "description" : "Represents a machine, providing metrics about it (e.g. obtained from ssh)",
     "iconUrl" : "",
     "config" : [ {
       "name" : "children.startable.mode",
@@ -10666,6 +12038,26 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "entity.running",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, if service already running",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "entity.started",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, for running services",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "defaultValue" : null,
@@ -10676,10 +12068,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "files.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of files, to be copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "files.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of files to be copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of files, to be copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -10708,7 +12110,7 @@
     }, {
       "name" : "install.skip",
       "type" : "java.lang.Boolean",
-      "defaultValue" : false,
+      "defaultValue" : null,
       "description" : "Skip the driver install commands entirely, for pre-installed software",
       "reconfigurable" : false,
       "label" : null,
@@ -10796,10 +12198,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
-      "name" : "resources.latch",
+      "name" : "resources.install.latch",
       "type" : "java.lang.Boolean",
       "defaultValue" : null,
-      "description" : "Latch for blocking resources until ready",
+      "description" : "Latch for blocking install resources until ready",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "resources.runtime.latch",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Latch for blocking runtime resources until ready",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -10866,10 +12278,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "templates.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of templates, to be filled in and copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "templates.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of templates to be filled in and copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of templates, to be filled in and copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -10880,102 +12302,102 @@
       "name" : "download.addon.urls",
       "type" : "java.util.Map",
       "description" : "URL patterns for downloading named add-ons (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "download.url",
       "type" : "java.lang.String",
       "description" : "URL pattern for downloading the installer (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "description" : "Directory for installed artifacts (e.g. expanded dir after unpacking .tgz)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.address",
       "type" : "java.lang.String",
       "description" : "Host IP address",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.name",
       "type" : "java.lang.String",
       "description" : "Host name",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.address",
       "type" : "java.lang.String",
       "description" : "Host address as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.hostname",
       "type" : "java.lang.String",
       "description" : "Host name as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "install.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be installed in",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "machine.cpu",
       "type" : "java.lang.Double",
       "description" : "Current CPU usage",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "machine.loadAverage",
       "type" : "java.lang.Double",
       "description" : "Current load average",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "machine.memory.free",
       "type" : "java.lang.Long",
       "description" : "Current free memory",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "machine.memory.total",
       "type" : "java.lang.Long",
       "description" : "Total memory",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "machine.memory.used",
       "type" : "java.lang.Long",
       "description" : "Current memory usage",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "machine.uptime",
       "type" : "brooklyn.util.time.Duration",
       "description" : "Current uptime",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "run.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be run from",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.isUp",
       "type" : "java.lang.Boolean",
       "description" : "Whether the service is active and availability (confirmed and monitored)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.process.isRunning",
       "type" : "java.lang.Boolean",
       "description" : "Whether the process for the service is confirmed as running",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.state",
       "type" : "brooklyn.entity.basic.Lifecycle",
       "description" : "Actual lifecycle state of the service",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareprocess.pid.file",
       "type" : "java.lang.String",
       "description" : "PID file",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareservice.provisioningLocation",
       "type" : "brooklyn.location.MachineProvisioningLocation",
       "description" : "Location used to provision a machine where this is running",
-      "links" : null
+      "links" : { }
     } ],
     "effectors" : [ {
       "name" : "execCommand",
@@ -11030,7 +12452,7 @@
     } ]
   }, {
     "type" : "brooklyn.entity.database.mariadb.MariaDbNode",
-    "defaultVersion" : "5.5.33a",
+    "defaultVersion" : "5.5.40",
     "name" : "MariaDB Node",
     "description" : "MariaDB is an open source relational database management system (RDBMS)",
     "iconUrl" : "classpath:///mariadb-logo-180x119.png",
@@ -11110,6 +12532,26 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "entity.running",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, if service already running",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "entity.started",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, for running services",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "defaultValue" : null,
@@ -11120,10 +12562,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "files.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of files, to be copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "files.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of files to be copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of files, to be copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -11152,7 +12604,7 @@
     }, {
       "name" : "install.skip",
       "type" : "java.lang.Boolean",
-      "defaultValue" : false,
+      "defaultValue" : null,
       "description" : "Skip the driver install commands entirely, for pre-installed software",
       "reconfigurable" : false,
       "label" : null,
@@ -11172,7 +12624,7 @@
     }, {
       "name" : "install.version",
       "type" : "java.lang.String",
-      "defaultValue" : "5.5.33a",
+      "defaultValue" : "5.5.40",
       "description" : "Suggested version",
       "reconfigurable" : false,
       "label" : null,
@@ -11320,10 +12772,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
-      "name" : "resources.latch",
+      "name" : "resources.install.latch",
       "type" : "java.lang.Boolean",
       "defaultValue" : null,
-      "description" : "Latch for blocking resources until ready",
+      "description" : "Latch for blocking install resources until ready",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "resources.runtime.latch",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Latch for blocking runtime resources until ready",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -11390,10 +12852,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "templates.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of templates, to be filled in and copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "templates.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of templates to be filled in and copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of templates, to be filled in and copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -11404,102 +12876,102 @@
       "name" : "datastore.url",
       "type" : "java.lang.String",
       "description" : "Primary contact URL for a datastore (e.g. mysql://localhost:3306/)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "download.addon.urls",
       "type" : "java.util.Map",
       "description" : "URL patterns for downloading named add-ons (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "download.url",
       "type" : "java.lang.String",
       "description" : "URL pattern for downloading the installer (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "description" : "Directory for installed artifacts (e.g. expanded dir after unpacking .tgz)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.address",
       "type" : "java.lang.String",
       "description" : "Host IP address",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.name",
       "type" : "java.lang.String",
       "description" : "Host name",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.address",
       "type" : "java.lang.String",
       "description" : "Host address as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.hostname",
       "type" : "java.lang.String",
       "description" : "Host name as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "install.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be installed in",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "mariadb.password",
       "type" : "java.lang.String",
       "description" : "Database admin password (or randomly generated if not set)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "mariadb.port",
       "type" : "java.lang.Integer",
       "description" : "MariaDB port",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "mariadb.queries.perSec.fromMariadb",
       "type" : "java.lang.Double",
       "description" : "mariadb.queries.perSec.fromMariadb",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "mariadb.socketUid",
       "type" : "java.lang.String",
       "description" : "Socket uid, for use in file /tmp/mysql.sock.<uid>.3306 (or randomly generated if not set)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "mariadb.template.configuration.url",
       "type" : "java.lang.String",
       "description" : "Template file (in freemarker format) for the my.cnf file",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "run.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be run from",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.isUp",
       "type" : "java.lang.Boolean",
       "description" : "Whether the service is active and availability (confirmed and monitored)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.process.isRunning",
       "type" : "java.lang.Boolean",
       "description" : "Whether the process for the service is confirmed as running",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.state",
       "type" : "brooklyn.entity.basic.Lifecycle",
       "description" : "Actual lifecycle state of the service",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareprocess.pid.file",
       "type" : "java.lang.String",
       "description" : "PID file",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareservice.provisioningLocation",
       "type" : "brooklyn.location.MachineProvisioningLocation",
       "description" : "Location used to provision a machine where this is running",
-      "links" : null
+      "links" : { }
     } ],
     "effectors" : [ {
       "name" : "executeScript",
@@ -11538,7 +13010,7 @@
     } ]
   }, {
     "type" : "brooklyn.entity.nosql.mongodb.sharding.MongoDBRouter",
-    "defaultVersion" : "2.5.4",
+    "defaultVersion" : "2.6.5",
     "name" : "MongoDB Router",
     "description" : "MongoDB (from \"humongous\") is a scalable, high-performance, open source NoSQL database",
     "iconUrl" : "classpath:///mongodb-logo.png",
@@ -11598,6 +13070,26 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "entity.running",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, if service already running",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "entity.started",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, for running services",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "defaultValue" : null,
@@ -11608,10 +13100,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "files.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of files, to be copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "files.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of files to be copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of files, to be copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -11640,7 +13142,7 @@
     }, {
       "name" : "install.skip",
       "type" : "java.lang.Boolean",
-      "defaultValue" : false,
+      "defaultValue" : null,
       "description" : "Skip the driver install commands entirely, for pre-installed software",
       "reconfigurable" : false,
       "label" : null,
@@ -11660,7 +13162,7 @@
     }, {
       "name" : "install.version",
       "type" : "java.lang.String",
-      "defaultValue" : "2.5.4",
+      "defaultValue" : "2.6.5",
       "description" : "Suggested version",
       "reconfigurable" : false,
       "label" : null,
@@ -11680,7 +13182,7 @@
     }, {
       "name" : "mongodb.config.url",
       "type" : "java.lang.String",
-      "defaultValue" : "classpath://brooklyn/entity/nosql/mongodb/default-mongodb.conf",
+      "defaultValue" : "classpath://brooklyn/entity/nosql/mongodb/default.conf",
       "description" : "Template file (in freemarker format) for a MongoDB configuration file",
       "reconfigurable" : false,
       "label" : null,
@@ -11768,10 +13270,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
-      "name" : "resources.latch",
+      "name" : "resources.install.latch",
       "type" : "java.lang.Boolean",
       "defaultValue" : null,
-      "description" : "Latch for blocking resources until ready",
+      "description" : "Latch for blocking install resources until ready",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "resources.runtime.latch",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Latch for blocking runtime resources until ready",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -11838,10 +13350,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "templates.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of templates, to be filled in and copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "templates.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of templates to be filled in and copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of templates, to be filled in and copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -11852,87 +13374,87 @@
       "name" : "download.addon.urls",
       "type" : "java.util.Map",
       "description" : "URL patterns for downloading named add-ons (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "download.url",
       "type" : "java.lang.String",
       "description" : "URL pattern for downloading the installer (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "description" : "Directory for installed artifacts (e.g. expanded dir after unpacking .tgz)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.address",
       "type" : "java.lang.String",
       "description" : "Host IP address",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.name",
       "type" : "java.lang.String",
       "description" : "Host name",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.address",
       "type" : "java.lang.String",
       "description" : "Host address as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.hostname",
       "type" : "java.lang.String",
       "description" : "Host name as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "install.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be installed in",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "mongodb.router.config.shard.count",
       "type" : "java.lang.Integer",
       "description" : "Number of shards that have been added",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "mongodb.router.running",
       "type" : "java.lang.Boolean",
       "description" : "Indicates that the router is running, and can be used to add shards, but is not necessarity available for CRUD operations (e.g. if no shards have been added)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "mongodb.server.port",
       "type" : "java.lang.Integer",
       "description" : "Server port",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "run.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be run from",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.isUp",
       "type" : "java.lang.Boolean",
       "description" : "Whether the service is active and availability (confirmed and monitored)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.process.isRunning",
       "type" : "java.lang.Boolean",
       "description" : "Whether the process for the service is confirmed as running",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.state",
       "type" : "brooklyn.entity.basic.Lifecycle",
       "description" : "Actual lifecycle state of the service",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareprocess.pid.file",
       "type" : "java.lang.String",
       "description" : "PID file",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareservice.provisioningLocation",
       "type" : "brooklyn.location.MachineProvisioningLocation",
       "description" : "Location used to provision a machine where this is running",
-      "links" : null
+      "links" : { }
     } ],
     "effectors" : [ {
       "name" : "restart",
@@ -11960,7 +13482,7 @@
     } ]
   }, {
     "type" : "brooklyn.entity.nosql.mongodb.MongoDBServer",
-    "defaultVersion" : "2.5.4",
+    "defaultVersion" : "2.6.5",
     "name" : "MongoDB Server",
     "description" : "MongoDB (from \"humongous\") is a scalable, high-performance, open source NoSQL database",
     "iconUrl" : "classpath:///mongodb-logo.png",
@@ -12020,6 +13542,26 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "entity.running",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, if service already running",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "entity.started",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, for running services",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "defaultValue" : null,
@@ -12030,10 +13572,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "files.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of files, to be copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "files.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of files to be copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of files, to be copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -12062,7 +13614,7 @@
     }, {
       "name" : "install.skip",
       "type" : "java.lang.Boolean",
-      "defaultValue" : false,
+      "defaultValue" : null,
       "description" : "Skip the driver install commands entirely, for pre-installed software",
       "reconfigurable" : false,
       "label" : null,
@@ -12082,7 +13634,7 @@
     }, {
       "name" : "install.version",
       "type" : "java.lang.String",
-      "defaultValue" : "2.5.4",
+      "defaultValue" : "2.6.5",
       "description" : "Suggested version",
       "reconfigurable" : false,
       "label" : null,
@@ -12112,7 +13664,7 @@
     }, {
       "name" : "mongodb.config.url",
       "type" : "java.lang.String",
-      "defaultValue" : "classpath://brooklyn/entity/nosql/mongodb/default-mongodb.conf",
+      "defaultValue" : "classpath://brooklyn/entity/nosql/mongodb/default-mongod.conf",
       "description" : "Template file (in freemarker format) for a MongoDB configuration file",
       "reconfigurable" : false,
       "label" : null,
@@ -12210,10 +13762,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
-      "name" : "resources.latch",
+      "name" : "resources.install.latch",
       "type" : "java.lang.Boolean",
       "defaultValue" : null,
-      "description" : "Latch for blocking resources until ready",
+      "description" : "Latch for blocking install resources until ready",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "resources.runtime.latch",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Latch for blocking runtime resources until ready",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -12280,10 +13842,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "templates.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of templates, to be filled in and copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "templates.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of templates to be filled in and copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of templates, to be filled in and copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -12294,167 +13866,167 @@
       "name" : "download.addon.urls",
       "type" : "java.util.Map",
       "description" : "URL patterns for downloading named add-ons (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "download.url",
       "type" : "java.lang.String",
       "description" : "URL pattern for downloading the installer (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "description" : "Directory for installed artifacts (e.g. expanded dir after unpacking .tgz)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.address",
       "type" : "java.lang.String",
       "description" : "Host IP address",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.name",
       "type" : "java.lang.String",
       "description" : "Host name",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.address",
       "type" : "java.lang.String",
       "description" : "Host address as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.hostname",
       "type" : "java.lang.String",
       "description" : "Host name as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "install.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be installed in",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "mongodb.server.endpoint",
       "type" : "java.lang.String",
       "description" : "The host:port where this server is listening",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "mongodb.server.httpPort",
       "type" : "java.lang.Integer",
       "description" : "HTTP port for the server (estimated)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "mongodb.server.http_interface",
       "type" : "java.lang.String",
       "description" : "URL of the server's HTTP console",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "mongodb.server.network.bytesIn",
       "type" : "java.lang.Long",
       "description" : "Server incoming network traffic (in bytes)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "mongodb.server.network.bytesOut",
       "type" : "java.lang.Long",
       "description" : "Server outgoing network traffic (in bytes)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "mongodb.server.network.numRequests",
       "type" : "java.lang.Long",
       "description" : "Server network requests",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "mongodb.server.opcounters.command",
       "type" : "java.lang.Long",
       "description" : "Server commands",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "mongodb.server.opcounters.delete",
       "type" : "java.lang.Long",
       "description" : "Server deletes",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "mongodb.server.opcounters.getmore",
       "type" : "java.lang.Long",
       "description" : "Server getmores",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "mongodb.server.opcounters.insert",
       "type" : "java.lang.Long",
       "description" : "Server inserts",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "mongodb.server.opcounters.query",
       "type" : "java.lang.Long",
       "description" : "Server queries",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "mongodb.server.opcounters.update",
       "type" : "java.lang.Long",
       "description" : "Server updates",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "mongodb.server.port",
       "type" : "java.lang.Integer",
       "description" : "Server port",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "mongodb.server.replicaSet.isPrimary",
       "type" : "java.lang.Boolean",
       "description" : "True if this server is the write master for the replica set",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "mongodb.server.replicaSet.isSecondary",
       "type" : "java.lang.Boolean",
       "description" : "True if this server is a secondary server in the replica set",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "mongodb.server.replicaSet.memberStatus",
       "type" : "brooklyn.entity.nosql.mongodb.ReplicaSetMemberStatus",
       "description" : "The status of this server in the replica set",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "mongodb.server.replicaSet.primary.endpoint",
       "type" : "java.lang.String",
       "description" : "The host:port of the server which is acting as primary (master) for the replica set",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "mongodb.server.status.bson",
       "type" : "org.bson.BasicBSONObject",
       "description" : "Server status (BSON/JSON map ojbect)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "mongodb.server.uptime",
       "type" : "java.lang.Double",
       "description" : "Server uptime in seconds",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "run.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be run from",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.isUp",
       "type" : "java.lang.Boolean",
       "description" : "Whether the service is active and availability (confirmed and monitored)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.process.isRunning",
       "type" : "java.lang.Boolean",
       "description" : "Whether the process for the service is confirmed as running",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.state",
       "type" : "brooklyn.entity.basic.Lifecycle",
       "description" : "Actual lifecycle state of the service",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareprocess.pid.file",
       "type" : "java.lang.String",
       "description" : "PID file",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareservice.provisioningLocation",
       "type" : "brooklyn.location.MachineProvisioningLocation",
       "description" : "Location used to provision a machine where this is running",
-      "links" : null
+      "links" : { }
     } ],
     "effectors" : [ {
       "name" : "restart",
@@ -12506,10 +14078,40 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "mongodb.configserver.spec",
+      "type" : "brooklyn.entity.proxying.EntitySpec",
+      "defaultValue" : "EntitySpec{type=interface brooklyn.entity.nosql.mongodb.sharding.MongoDBConfigServer}",
+      "description" : "Spec for Config Server instances",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "mongodb.replicaset.spec",
+      "type" : "brooklyn.entity.proxying.EntitySpec",
+      "defaultValue" : "EntitySpec{type=interface brooklyn.entity.nosql.mongodb.MongoDBReplicaSet}",
+      "description" : "Spec for Replica Set",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "mongodb.router.cluster.initial.size",
       "type" : "java.lang.Integer",
       "defaultValue" : 0,
       "description" : "Initial number of routers (mongos)",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "mongodb.router.spec",
+      "type" : "brooklyn.entity.proxying.EntitySpec",
+      "defaultValue" : "EntitySpec{type=interface brooklyn.entity.nosql.mongodb.sharding.MongoDBRouter}",
+      "description" : "Spec for Router instances",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -12550,22 +14152,22 @@
       "name" : "mongodbshardeddeployment.configservers",
       "type" : "brooklyn.entity.nosql.mongodb.sharding.MongoDBConfigServerCluster",
       "description" : "Config servers",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "mongodbshardeddeployment.routers",
       "type" : "brooklyn.entity.nosql.mongodb.sharding.MongoDBRouterCluster",
       "description" : "Routers",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "mongodbshardeddeployment.shards",
       "type" : "brooklyn.entity.nosql.mongodb.sharding.MongoDBShardCluster",
       "description" : "Shards",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.isUp",
       "type" : "java.lang.Boolean",
       "description" : "Whether the service is active and availability (confirmed and monitored)",
-      "links" : null
+      "links" : { }
     } ],
     "effectors" : [ {
       "name" : "restart",
@@ -12593,7 +14195,7 @@
     } ]
   }, {
     "type" : "brooklyn.entity.monitoring.monit.MonitNode",
-    "defaultVersion" : "5.6",
+    "defaultVersion" : "5.9",
     "name" : "Monit Node",
     "description" : "Monit is a free open source utility for managing and monitoring, processes, programs, files, directories and filesystems on a UNIX system",
     "iconUrl" : "",
@@ -12653,6 +14255,26 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "entity.running",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, if service already running",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "entity.started",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, for running services",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "defaultValue" : null,
@@ -12663,10 +14285,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "files.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of files, to be copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "files.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of files to be copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of files, to be copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -12695,7 +14327,7 @@
     }, {
       "name" : "install.skip",
       "type" : "java.lang.Boolean",
-      "defaultValue" : false,
+      "defaultValue" : null,
       "description" : "Skip the driver install commands entirely, for pre-installed software",
       "reconfigurable" : false,
       "label" : null,
@@ -12715,7 +14347,7 @@
     }, {
       "name" : "install.version",
       "type" : "java.lang.String",
-      "defaultValue" : "5.6",
+      "defaultValue" : "5.9",
       "description" : "Suggested version",
       "reconfigurable" : false,
       "label" : null,
@@ -12803,10 +14435,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
-      "name" : "resources.latch",
+      "name" : "resources.install.latch",
       "type" : "java.lang.Boolean",
       "defaultValue" : null,
-      "description" : "Latch for blocking resources until ready",
+      "description" : "Latch for blocking install resources until ready",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "resources.runtime.latch",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Latch for blocking runtime resources until ready",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -12873,10 +14515,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "templates.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of templates, to be filled in and copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "templates.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of templates to be filled in and copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of templates, to be filled in and copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -12887,82 +14539,82 @@
       "name" : "download.addon.urls",
       "type" : "java.util.Map",
       "description" : "URL patterns for downloading named add-ons (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "download.url",
       "type" : "java.lang.String",
       "description" : "URL pattern for downloading the installer (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "description" : "Directory for installed artifacts (e.g. expanded dir after unpacking .tgz)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.address",
       "type" : "java.lang.String",
       "description" : "Host IP address",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.name",
       "type" : "java.lang.String",
       "description" : "Host name",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.address",
       "type" : "java.lang.String",
       "description" : "Host address as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.hostname",
       "type" : "java.lang.String",
       "description" : "Host name as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "install.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be installed in",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "monit.target.process.name",
       "type" : "java.lang.String",
       "description" : "monit.target.process.name",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "monit.target.process.status",
       "type" : "java.lang.String",
       "description" : "monit.target.process.status",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "run.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be run from",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.isUp",
       "type" : "java.lang.Boolean",
       "description" : "Whether the service is active and availability (confirmed and monitored)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.process.isRunning",
       "type" : "java.lang.Boolean",
       "description" : "Whether the process for the service is confirmed as running",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.state",
       "type" : "brooklyn.entity.basic.Lifecycle",
       "description" : "Actual lifecycle state of the service",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareprocess.pid.file",
       "type" : "java.lang.String",
       "description" : "PID file",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareservice.provisioningLocation",
       "type" : "brooklyn.location.MachineProvisioningLocation",
       "description" : "Location used to provision a machine where this is running",
-      "links" : null
+      "links" : { }
     } ],
     "effectors" : [ {
       "name" : "restart",
@@ -13070,6 +14722,26 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "entity.running",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, if service already running",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "entity.started",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, for running services",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "defaultValue" : null,
@@ -13080,10 +14752,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "files.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of files, to be copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "files.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of files to be copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of files, to be copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -13112,7 +14794,7 @@
     }, {
       "name" : "install.skip",
       "type" : "java.lang.Boolean",
-      "defaultValue" : false,
+      "defaultValue" : null,
       "description" : "Skip the driver install commands entirely, for pre-installed software",
       "reconfigurable" : false,
       "label" : null,
@@ -13280,10 +14962,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
-      "name" : "resources.latch",
+      "name" : "resources.install.latch",
       "type" : "java.lang.Boolean",
       "defaultValue" : null,
-      "description" : "Latch for blocking resources until ready",
+      "description" : "Latch for blocking install resources until ready",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "resources.runtime.latch",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Latch for blocking runtime resources until ready",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -13350,10 +15042,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "templates.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of templates, to be filled in and copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "templates.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of templates to be filled in and copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of templates, to be filled in and copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -13364,102 +15066,102 @@
       "name" : "datastore.url",
       "type" : "java.lang.String",
       "description" : "Primary contact URL for a datastore (e.g. mysql://localhost:3306/)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "download.addon.urls",
       "type" : "java.util.Map",
       "description" : "URL patterns for downloading named add-ons (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "download.url",
       "type" : "java.lang.String",
       "description" : "URL pattern for downloading the installer (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "description" : "Directory for installed artifacts (e.g. expanded dir after unpacking .tgz)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.address",
       "type" : "java.lang.String",
       "description" : "Host IP address",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.name",
       "type" : "java.lang.String",
       "description" : "Host name",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.address",
       "type" : "java.lang.String",
       "description" : "Host address as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.hostname",
       "type" : "java.lang.String",
       "description" : "Host name as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "install.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be installed in",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "mysql.password",
       "type" : "java.lang.String",
       "description" : "Database admin password (or randomly generated if not set)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "mysql.port",
       "type" : "java.lang.Integer",
       "description" : "MySQL port",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "mysql.queries.perSec.fromMysql",
       "type" : "java.lang.Double",
       "description" : "mysql.queries.perSec.fromMysql",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "mysql.socketUid",
       "type" : "java.lang.String",
       "description" : "Socket uid, for use in file /tmp/mysql.sock.<uid>.3306 (or randomly generated if not set)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "mysql.template.configuration.url",
       "type" : "java.lang.String",
       "description" : "Template file (in freemarker format) for the mysql.conf file",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "run.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be run from",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.isUp",
       "type" : "java.lang.Boolean",
       "description" : "Whether the service is active and availability (confirmed and monitored)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.process.isRunning",
       "type" : "java.lang.Boolean",
       "description" : "Whether the process for the service is confirmed as running",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.state",
       "type" : "brooklyn.entity.basic.Lifecycle",
       "description" : "Actual lifecycle state of the service",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareprocess.pid.file",
       "type" : "java.lang.String",
       "description" : "PID file",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareservice.provisioningLocation",
       "type" : "brooklyn.location.MachineProvisioningLocation",
       "description" : "Location used to provision a machine where this is running",
-      "links" : null
+      "links" : { }
     } ],
     "effectors" : [ {
       "name" : "executeScript",
@@ -13571,6 +15273,26 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "entity.running",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, if service already running",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "entity.started",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, for running services",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "defaultValue" : null,
@@ -13581,10 +15303,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "files.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of files, to be copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "files.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of files to be copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of files, to be copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -13613,7 +15345,7 @@
     }, {
       "name" : "install.skip",
       "type" : "java.lang.Boolean",
-      "defaultValue" : false,
+      "defaultValue" : null,
       "description" : "Skip the driver install commands entirely, for pre-installed software",
       "reconfigurable" : false,
       "label" : null,
@@ -13683,8 +15415,8 @@
     }, {
       "name" : "member.sensor.hostname",
       "type" : "brooklyn.event.AttributeSensor",
-      "defaultValue" : "Sensor: host.name (java.lang.String)",
-      "description" : "Hostname/IP sensor on members (defaults to host.name; not supported in all implementations)",
+      "defaultValue" : "Sensor: host.subnet.hostname (java.lang.String)",
+      "description" : "Hostname/IP sensor on members (defaults to host.subnet.hostname; not supported in all implementations)",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -13695,6 +15427,16 @@
       "type" : "brooklyn.event.AttributeSensor",
       "defaultValue" : "Sensor: http.port (java.lang.Integer)",
       "description" : "Port number sensor on members (defaults to http.port; not supported in all implementations)",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "nginx.config.generator",
+      "type" : "brooklyn.entity.proxy.nginx.NginxConfigFileGenerator",
+      "defaultValue" : "brooklyn.entity.proxy.nginx.NginxDefaultConfigGenerator@6057af75",
+      "description" : "The server.conf generator class",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -13713,8 +15455,8 @@
     }, {
       "name" : "nginx.config.templateUrl",
       "type" : "java.lang.String",
-      "defaultValue" : null,
-      "description" : "The server.conf configuration file URL (FreeMarker template)",
+      "defaultValue" : "classpath://brooklyn/entity/proxy/nginx/server.conf",
+      "description" : "The server.conf configuration file URL (FreeMarker template). Only applies if 'nginx.config.generator' specifies a generator which uses a template.",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -13864,7 +15606,17 @@
       "name" : "proxy.http.port",
       "type" : "brooklyn.location.PortRange",
       "defaultValue" : "8000,8001-65535",
-      "description" : "Main HTTP port where this proxy listens",
+      "description" : "Main port where this proxy listens if using HTTP",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "proxy.https.port",
+      "type" : "brooklyn.location.PortRange",
+      "defaultValue" : "8443,8443-65535",
+      "description" : "Main port where this proxy listens if using HTTPS",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -13884,17 +15636,27 @@
       "name" : "proxy.ssl.config",
       "type" : "brooklyn.entity.proxy.ProxySslConfig",
       "defaultValue" : null,
-      "description" : "configuration (e.g. certificates) for SSL; will use SSL if set, not use SSL if not set",
+      "description" : "Configuration (e.g. certificates) for SSL; causes server to run with HTTPS instead of HTTP",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
       "possibleValues" : null,
       "links" : null
     }, {
-      "name" : "resources.latch",
+      "name" : "resources.install.latch",
       "type" : "java.lang.Boolean",
       "defaultValue" : null,
-      "description" : "Latch for blocking resources until ready",
+      "description" : "Latch for blocking install resources until ready",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "resources.runtime.latch",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Latch for blocking runtime resources until ready",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -13961,10 +15723,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "templates.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of templates, to be filled in and copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "templates.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of templates to be filled in and copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of templates, to be filled in and copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -13975,127 +15747,142 @@
       "name" : "download.addon.urls",
       "type" : "java.util.Map",
       "description" : "URL patterns for downloading named add-ons (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "download.url",
       "type" : "java.lang.String",
       "description" : "URL pattern for downloading the installer (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "description" : "Directory for installed artifacts (e.g. expanded dir after unpacking .tgz)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.address",
       "type" : "java.lang.String",
       "description" : "Host IP address",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.name",
       "type" : "java.lang.String",
       "description" : "Host name",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.address",
       "type" : "java.lang.String",
       "description" : "Host address as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.hostname",
       "type" : "java.lang.String",
       "description" : "Host name as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "install.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be installed in",
-      "links" : null
+      "links" : { }
+    }, {
+      "name" : "main.uri",
+      "type" : "java.net.URI",
+      "description" : "Main URI for contacting the service/endpoint offered by this entity",
+      "links" : { }
     }, {
       "name" : "member.sensor.hostandport",
       "type" : "brooklyn.event.AttributeSensor",
       "description" : "host:port sensor on members (invalid to configure this and the portNumber or hostname sensors)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "member.sensor.hostname",
       "type" : "brooklyn.event.AttributeSensor",
-      "description" : "Hostname/IP sensor on members (defaults to host.name; not supported in all implementations)",
-      "links" : null
+      "description" : "Hostname/IP sensor on members (defaults to host.subnet.hostname; not supported in all implementations)",
+      "links" : { }
     }, {
       "name" : "member.sensor.portNumber",
       "type" : "brooklyn.event.AttributeSensor",
       "description" : "Port number sensor on members (defaults to http.port; not supported in all implementations)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "nginx.log.access",
       "type" : "java.lang.String",
       "description" : "Nginx access log file location",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "nginx.log.error",
       "type" : "java.lang.String",
       "description" : "Nginx error log file location",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "nginx.pid.file",
       "type" : "java.lang.String",
       "description" : "PID file",
-      "links" : null
+      "links" : { }
+    }, {
+      "name" : "nginx.url.answers.nicely",
+      "type" : "java.lang.Boolean",
+      "description" : "nginx.url.answers.nicely",
+      "links" : { }
     }, {
       "name" : "proxy.domainName",
       "type" : "java.lang.String",
       "description" : "Domain name that this controller responds to, or null if it responds to all domains",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "proxy.http.port",
       "type" : "java.lang.Integer",
-      "description" : "Main HTTP port where this proxy listens",
-      "links" : null
+      "description" : "Main port where this proxy listens if using HTTP",
+      "links" : { }
+    }, {
+      "name" : "proxy.https.port",
+      "type" : "java.lang.Integer",
+      "description" : "Main port where this proxy listens if using HTTPS",
+      "links" : { }
     }, {
       "name" : "proxy.protocol",
       "type" : "java.lang.String",
       "description" : "Main URL protocol this proxy answers (typically http or https)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "proxy.serverpool.targets",
       "type" : "java.util.Map",
       "description" : "The downstream targets in the server pool",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "run.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be run from",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.isUp",
       "type" : "java.lang.Boolean",
       "description" : "Whether the service is active and availability (confirmed and monitored)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.process.isRunning",
       "type" : "java.lang.Boolean",
       "description" : "Whether the process for the service is confirmed as running",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.state",
       "type" : "brooklyn.entity.basic.Lifecycle",
       "description" : "Actual lifecycle state of the service",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareprocess.pid.file",
       "type" : "java.lang.String",
       "description" : "PID file",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareservice.provisioningLocation",
       "type" : "brooklyn.location.MachineProvisioningLocation",
       "description" : "Location used to provision a machine where this is running",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.url",
       "type" : "java.lang.String",
       "description" : "URL",
-      "links" : null
+      "links" : { }
     } ],
     "effectors" : [ {
       "name" : "deploy",
@@ -14154,7 +15941,7 @@
     "type" : "brooklyn.entity.webapp.nodejs.NodeJsWebAppService",
     "defaultVersion" : "stable",
     "name" : "Node.JS Application",
-    "description" : "Node.JS Web Application",
+    "description" : "Node.js is a cross-platform runtime environment for server-side and networking applications. Node.js applications are written in JavaScriptq",
     "iconUrl" : "classpath:///nodejs-logo.png",
     "config" : [ {
       "name" : "children.startable.mode",
@@ -14212,6 +15999,26 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "entity.running",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, if service already running",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "entity.started",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, for running services",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "defaultValue" : null,
@@ -14222,10 +16029,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "files.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of files, to be copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "files.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of files to be copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of files, to be copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -14274,7 +16091,7 @@
     }, {
       "name" : "install.skip",
       "type" : "java.lang.Boolean",
-      "defaultValue" : false,
+      "defaultValue" : null,
       "description" : "Skip the driver install commands entirely, for pre-installed software",
       "reconfigurable" : false,
       "label" : null,
@@ -14442,10 +16259,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
-      "name" : "resources.latch",
+      "name" : "resources.install.latch",
       "type" : "java.lang.Boolean",
       "defaultValue" : null,
-      "description" : "Latch for blocking resources until ready",
+      "description" : "Latch for blocking install resources until ready",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "resources.runtime.latch",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Latch for blocking runtime resources until ready",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -14512,10 +16339,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "templates.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of templates, to be filled in and copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "templates.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of templates to be filled in and copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of templates, to be filled in and copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -14546,147 +16383,147 @@
       "name" : "download.addon.urls",
       "type" : "java.util.Map",
       "description" : "URL patterns for downloading named add-ons (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "download.url",
       "type" : "java.lang.String",
       "description" : "URL pattern for downloading the installer (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "description" : "Directory for installed artifacts (e.g. expanded dir after unpacking .tgz)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.address",
       "type" : "java.lang.String",
       "description" : "Host IP address",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.name",
       "type" : "java.lang.String",
       "description" : "Host name",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.address",
       "type" : "java.lang.String",
       "description" : "Host address as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.hostname",
       "type" : "java.lang.String",
       "description" : "Host name as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "http.port",
       "type" : "java.lang.Integer",
       "description" : "HTTP port",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "https.port",
       "type" : "java.lang.Integer",
       "description" : "HTTP port (with SSL/TLS)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "install.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be installed in",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "run.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be run from",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.isUp",
       "type" : "java.lang.Boolean",
       "description" : "Whether the service is active and availability (confirmed and monitored)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.process.isRunning",
       "type" : "java.lang.Boolean",
       "description" : "Whether the process for the service is confirmed as running",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.state",
       "type" : "brooklyn.entity.basic.Lifecycle",
       "description" : "Actual lifecycle state of the service",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareprocess.pid.file",
       "type" : "java.lang.String",
       "description" : "PID file",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareservice.provisioningLocation",
       "type" : "brooklyn.location.MachineProvisioningLocation",
       "description" : "Location used to provision a machine where this is running",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.enabledProtocols",
       "type" : "java.util.Set",
       "description" : "List of enabled protocols (e.g. http, https)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.https.ssl",
       "type" : "brooklyn.entity.webapp.HttpsSslConfig",
       "description" : "SSL Configuration for HTTPS",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.bytes.received",
       "type" : "java.lang.Long",
       "description" : "Total bytes received by the webserver",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.bytes.sent",
       "type" : "java.lang.Long",
       "description" : "Total bytes sent by the webserver",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.errors",
       "type" : "java.lang.Integer",
       "description" : "Request errors",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.perSec.last",
       "type" : "java.lang.Double",
       "description" : "Reqs/sec (last datapoint)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.perSec.windowed",
       "type" : "java.lang.Double",
       "description" : "Reqs/sec (over time window)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.processingTime.fraction.last",
       "type" : "java.lang.Double",
       "description" : "Fraction of time spent processing, reported by webserver (percentage, last datapoint)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.processingTime.fraction.windowed",
       "type" : "java.lang.Double",
       "description" : "Fraction of time spent processing, reported by webserver (percentage, over time window)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.processingTime.max",
       "type" : "java.lang.Integer",
       "description" : "Max processing time for any single request, reported by webserver (millis)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.processingTime.total",
       "type" : "java.lang.Integer",
       "description" : "Total processing time, reported by webserver (millis)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.total",
       "type" : "java.lang.Integer",
       "description" : "Request count",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.url",
       "type" : "java.lang.String",
       "description" : "URL",
-      "links" : null
+      "links" : { }
     } ],
     "effectors" : [ {
       "name" : "restart",
@@ -14794,6 +16631,26 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "entity.running",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, if service already running",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "entity.started",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, for running services",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "defaultValue" : null,
@@ -14804,10 +16661,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "files.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of files, to be copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "files.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of files to be copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of files, to be copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -14836,7 +16703,7 @@
     }, {
       "name" : "install.skip",
       "type" : "java.lang.Boolean",
-      "defaultValue" : false,
+      "defaultValue" : null,
       "description" : "Skip the driver install commands entirely, for pre-installed software",
       "reconfigurable" : false,
       "label" : null,
@@ -14994,10 +16861,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
-      "name" : "resources.latch",
+      "name" : "resources.install.latch",
       "type" : "java.lang.Boolean",
       "defaultValue" : null,
-      "description" : "Latch for blocking resources until ready",
+      "description" : "Latch for blocking install resources until ready",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "resources.runtime.latch",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Latch for blocking runtime resources until ready",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -15064,10 +16941,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "templates.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of templates, to be filled in and copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "templates.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of templates to be filled in and copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of templates, to be filled in and copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -15078,82 +16965,82 @@
       "name" : "datastore.url",
       "type" : "java.lang.String",
       "description" : "Primary contact URL for a datastore (e.g. mysql://localhost:3306/)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "download.addon.urls",
       "type" : "java.util.Map",
       "description" : "URL patterns for downloading named add-ons (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "download.url",
       "type" : "java.lang.String",
       "description" : "URL pattern for downloading the installer (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "description" : "Directory for installed artifacts (e.g. expanded dir after unpacking .tgz)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.address",
       "type" : "java.lang.String",
       "description" : "Host IP address",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.name",
       "type" : "java.lang.String",
       "description" : "Host name",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.address",
       "type" : "java.lang.String",
       "description" : "Host address as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.hostname",
       "type" : "java.lang.String",
       "description" : "Host name as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "install.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be installed in",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "postgresql.port",
       "type" : "java.lang.Integer",
       "description" : "PostgreSQL port",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "run.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be run from",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.isUp",
       "type" : "java.lang.Boolean",
       "description" : "Whether the service is active and availability (confirmed and monitored)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.process.isRunning",
       "type" : "java.lang.Boolean",
       "description" : "Whether the process for the service is confirmed as running",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.state",
       "type" : "brooklyn.entity.basic.Lifecycle",
       "description" : "Actual lifecycle state of the service",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareprocess.pid.file",
       "type" : "java.lang.String",
       "description" : "PID file",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareservice.provisioningLocation",
       "type" : "brooklyn.location.MachineProvisioningLocation",
       "description" : "Location used to provision a machine where this is running",
-      "links" : null
+      "links" : { }
     } ],
     "effectors" : [ {
       "name" : "executeScript",
@@ -15282,6 +17169,26 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "entity.running",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, if service already running",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "entity.started",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, for running services",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "defaultValue" : null,
@@ -15292,10 +17199,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "files.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of files, to be copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "files.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of files to be copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of files, to be copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -15324,7 +17241,7 @@
     }, {
       "name" : "install.skip",
       "type" : "java.lang.Boolean",
-      "defaultValue" : false,
+      "defaultValue" : null,
       "description" : "Skip the driver install commands entirely, for pre-installed software",
       "reconfigurable" : false,
       "label" : null,
@@ -15382,6 +17299,16 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "jmx.agent.local.path",
+      "type" : "java.lang.String",
+      "defaultValue" : null,
+      "description" : "Path to JMX driver on the local machine",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "jmx.agent.mode",
       "type" : "java.lang.Enum",
       "defaultValue" : "AUTODETECT",
@@ -15424,6 +17351,16 @@
       "type" : "brooklyn.location.PortRange",
       "defaultValue" : "31001-65535",
       "description" : "JMX direct/private port (e.g. JMX RMI server port, or JMXMP port, but not RMI registry port)",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "jmx.direct.port.legacy.NOT_USED",
+      "type" : "brooklyn.location.PortRange",
+      "defaultValue" : null,
+      "description" : "Legacy definition JMX direct/private port (e.g. JMX RMI server port, or JMXMP port, but not RMI registry port)",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -15560,10 +17497,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
-      "name" : "resources.latch",
+      "name" : "resources.install.latch",
       "type" : "java.lang.Boolean",
       "defaultValue" : null,
-      "description" : "Latch for blocking resources until ready",
+      "description" : "Latch for blocking install resources until ready",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "resources.runtime.latch",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Latch for blocking runtime resources until ready",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -15640,10 +17587,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "templates.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of templates, to be filled in and copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "templates.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of templates to be filled in and copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of templates, to be filled in and copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -15654,127 +17611,137 @@
       "name" : "amqp.port",
       "type" : "java.lang.Integer",
       "description" : "AMQP port",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "amqp.version",
       "type" : "java.lang.String",
       "description" : "AMQP protocol version",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "amqp.virtualHost",
       "type" : "java.lang.String",
       "description" : "AMQP virtual host name",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "broker.url",
       "type" : "java.lang.String",
       "description" : "Broker Connection URL",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "download.addon.urls",
       "type" : "java.util.Map",
       "description" : "URL patterns for downloading named add-ons (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "download.url",
       "type" : "java.lang.String",
       "description" : "URL pattern for downloading the installer (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "description" : "Directory for installed artifacts (e.g. expanded dir after unpacking .tgz)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.address",
       "type" : "java.lang.String",
       "description" : "Host IP address",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.name",
       "type" : "java.lang.String",
       "description" : "Host name",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.address",
       "type" : "java.lang.String",
       "description" : "Host address as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.hostname",
       "type" : "java.lang.String",
       "description" : "Host name as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "install.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be installed in",
-      "links" : null
+      "links" : { }
+    }, {
+      "name" : "jmx.agent.local.path",
+      "type" : "java.lang.String",
+      "description" : "Path to JMX driver on the local machine",
+      "links" : { }
     }, {
       "name" : "jmx.context",
       "type" : "java.lang.String",
       "description" : "JMX context path",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "jmx.direct.port",
       "type" : "java.lang.Integer",
       "description" : "JMX direct/private port (e.g. JMX RMI server port, or JMXMP port, but not RMI registry port)",
-      "links" : null
+      "links" : { }
+    }, {
+      "name" : "jmx.direct.port.legacy.NOT_USED",
+      "type" : "java.lang.Integer",
+      "description" : "Legacy definition JMX direct/private port (e.g. JMX RMI server port, or JMXMP port, but not RMI registry port)",
+      "links" : { }
     }, {
       "name" : "jmx.password",
       "type" : "java.lang.String",
       "description" : "JMX password",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "jmx.service.url",
       "type" : "java.lang.String",
       "description" : "The URL for connecting to the MBean Server",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "jmx.user",
       "type" : "java.lang.String",
       "description" : "JMX username",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "qpid.http-management.port",
       "type" : "java.lang.Integer",
       "description" : "Qpid HTTP management plugin port",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "rmi.registry.port",
       "type" : "java.lang.Integer",
       "description" : "RMI registry port, used for discovering JMX (private) port",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "run.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be run from",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.isUp",
       "type" : "java.lang.Boolean",
       "description" : "Whether the service is active and availability (confirmed and monitored)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.process.isRunning",
       "type" : "java.lang.Boolean",
       "description" : "Whether the process for the service is confirmed as running",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.state",
       "type" : "brooklyn.entity.basic.Lifecycle",
       "description" : "Actual lifecycle state of the service",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareprocess.pid.file",
       "type" : "java.lang.String",
       "description" : "PID file",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareservice.provisioningLocation",
       "type" : "brooklyn.location.MachineProvisioningLocation",
       "description" : "Location used to provision a machine where this is running",
-      "links" : null
+      "links" : { }
     } ],
     "effectors" : [ {
       "name" : "restart",
@@ -15892,6 +17859,26 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "entity.running",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, if service already running",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "entity.started",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, for running services",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "erlang.version",
       "type" : "java.lang.String",
       "defaultValue" : "R15B",
@@ -15912,10 +17899,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "files.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of files, to be copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "files.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of files to be copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of files, to be copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -15944,7 +17941,7 @@
     }, {
       "name" : "install.skip",
       "type" : "java.lang.Boolean",
-      "defaultValue" : false,
+      "defaultValue" : null,
       "description" : "Skip the driver install commands entirely, for pre-installed software",
       "reconfigurable" : false,
       "label" : null,
@@ -16032,10 +18029,50 @@
       "possibleValues" : null,
       "links" : null
     }, {
-      "name" : "resources.latch",
+      "name" : "rabbitmq.management.plugin",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : false,
+      "description" : "Management plugin will be enabled",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "rabbitmq.management.port",
+      "type" : "brooklyn.location.PortRange",
+      "defaultValue" : "15672-65535",
+      "description" : "Port on which management interface will be available",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "rabbitmq.templateUrl",
+      "type" : "java.lang.String",
+      "defaultValue" : "classpath://brooklyn/entity/messaging/rabbit/rabbitmq.config",
+      "description" : "Template file (in freemarker format) for the rabbitmq.config config file",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "resources.install.latch",
       "type" : "java.lang.Boolean",
       "defaultValue" : null,
-      "description" : "Latch for blocking resources until ready",
+      "description" : "Latch for blocking install resources until ready",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "resources.runtime.latch",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Latch for blocking runtime resources until ready",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -16102,10 +18139,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "templates.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of templates, to be filled in and copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "templates.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of templates to be filled in and copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of templates, to be filled in and copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -16116,92 +18163,102 @@
       "name" : "amqp.port",
       "type" : "java.lang.Integer",
       "description" : "AMQP port",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "amqp.version",
       "type" : "java.lang.String",
       "description" : "AMQP protocol version",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "amqp.virtualHost",
       "type" : "java.lang.String",
       "description" : "AMQP virtual host name",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "broker.url",
       "type" : "java.lang.String",
       "description" : "Broker Connection URL",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "download.addon.urls",
       "type" : "java.util.Map",
       "description" : "URL patterns for downloading named add-ons (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "download.url",
       "type" : "java.lang.String",
       "description" : "URL pattern for downloading the installer (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "description" : "Directory for installed artifacts (e.g. expanded dir after unpacking .tgz)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.address",
       "type" : "java.lang.String",
       "description" : "Host IP address",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.name",
       "type" : "java.lang.String",
       "description" : "Host name",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.address",
       "type" : "java.lang.String",
       "description" : "Host address as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.hostname",
       "type" : "java.lang.String",
       "description" : "Host name as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "install.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be installed in",
-      "links" : null
+      "links" : { }
+    }, {
+      "name" : "rabbitmq.management.port",
+      "type" : "java.lang.Integer",
+      "description" : "Port on which management interface will be available",
+      "links" : { }
+    }, {
+      "name" : "rabbitmq.management.url",
+      "type" : "java.lang.String",
+      "description" : "Management URL is only available if management plugin flag is true",
+      "links" : { }
     }, {
       "name" : "run.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be run from",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.isUp",
       "type" : "java.lang.Boolean",
       "description" : "Whether the service is active and availability (confirmed and monitored)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.process.isRunning",
       "type" : "java.lang.Boolean",
       "description" : "Whether the process for the service is confirmed as running",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.state",
       "type" : "brooklyn.entity.basic.Lifecycle",
       "description" : "Actual lifecycle state of the service",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareprocess.pid.file",
       "type" : "java.lang.String",
       "description" : "PID file",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareservice.provisioningLocation",
       "type" : "brooklyn.location.MachineProvisioningLocation",
       "description" : "Location used to provision a machine where this is running",
-      "links" : null
+      "links" : { }
     } ],
     "effectors" : [ {
       "name" : "restart",
@@ -16237,7 +18294,7 @@
       "name" : "service.isUp",
       "type" : "java.lang.Boolean",
       "description" : "Whether the service is active and availability (confirmed and monitored)",
-      "links" : null
+      "links" : { }
     } ],
     "effectors" : [ {
       "name" : "restart",
@@ -16325,6 +18382,26 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "entity.running",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, if service already running",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "entity.started",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, for running services",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "defaultValue" : null,
@@ -16335,10 +18412,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "files.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of files, to be copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "files.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of files to be copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of files, to be copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -16367,7 +18454,7 @@
     }, {
       "name" : "install.skip",
       "type" : "java.lang.Boolean",
-      "defaultValue" : false,
+      "defaultValue" : null,
       "description" : "Skip the driver install commands entirely, for pre-installed software",
       "reconfigurable" : false,
       "label" : null,
@@ -16475,10 +18562,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
-      "name" : "resources.latch",
+      "name" : "resources.install.latch",
       "type" : "java.lang.Boolean",
       "defaultValue" : null,
-      "description" : "Latch for blocking resources until ready",
+      "description" : "Latch for blocking install resources until ready",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "resources.runtime.latch",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Latch for blocking runtime resources until ready",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -16545,10 +18642,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "templates.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of templates, to be filled in and copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "templates.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of templates to be filled in and copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of templates, to be filled in and copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -16559,112 +18666,112 @@
       "name" : "download.addon.urls",
       "type" : "java.util.Map",
       "description" : "URL patterns for downloading named add-ons (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "download.url",
       "type" : "java.lang.String",
       "description" : "URL pattern for downloading the installer (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "description" : "Directory for installed artifacts (e.g. expanded dir after unpacking .tgz)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.address",
       "type" : "java.lang.String",
       "description" : "Host IP address",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.name",
       "type" : "java.lang.String",
       "description" : "Host name",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.address",
       "type" : "java.lang.String",
       "description" : "Host address as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.hostname",
       "type" : "java.lang.String",
       "description" : "Host name as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "install.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be installed in",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "redis.commands.processed.total",
       "type" : "java.lang.Integer",
       "description" : "Total number of commands processed by the server",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "redis.connections.received.total",
       "type" : "java.lang.Integer",
       "description" : "Total number of connections accepted by the server",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "redis.keys.evicted",
       "type" : "java.lang.Integer",
       "description" : "Number of evicted keys due to maxmemory limit",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "redis.keys.expired",
       "type" : "java.lang.Integer",
       "description" : "Total number of key expiration events",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "redis.keyspace.hits",
       "type" : "java.lang.Integer",
       "description" : "Number of successful lookup of keys in the main dictionary",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "redis.keyspace.misses",
       "type" : "java.lang.Integer",
       "description" : "Number of failed lookup of keys in the main dictionary",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "redis.port",
       "type" : "java.lang.Integer",
       "description" : "Redis port number",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "redis.uptime",
       "type" : "java.lang.Integer",
       "description" : "Redis uptime in seconds",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "run.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be run from",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.isUp",
       "type" : "java.lang.Boolean",
       "description" : "Whether the service is active and availability (confirmed and monitored)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.process.isRunning",
       "type" : "java.lang.Boolean",
       "description" : "Whether the process for the service is confirmed as running",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.state",
       "type" : "brooklyn.entity.basic.Lifecycle",
       "description" : "Actual lifecycle state of the service",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareprocess.pid.file",
       "type" : "java.lang.String",
       "description" : "PID file",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareservice.provisioningLocation",
       "type" : "brooklyn.location.MachineProvisioningLocation",
       "description" : "Location used to provision a machine where this is running",
-      "links" : null
+      "links" : { }
     } ],
     "effectors" : [ {
       "name" : "restart",
@@ -16692,8 +18799,8 @@
     } ]
   }, {
     "type" : "brooklyn.entity.nosql.riak.RiakCluster",
-    "name" : "Riak Node",
-    "description" : "Riak is...",
+    "name" : "Riak Cluster",
+    "description" : "Riak is a distributed NoSQL key-value data store that offers extremely high availability, fault tolerance, operational simplicity and scalability.",
     "iconUrl" : "",
     "config" : [ {
       "name" : "cluster.initial.quorumSize",
@@ -16740,6 +18847,16 @@
       "type" : "brooklyn.entity.basic.EntityFactory",
       "defaultValue" : null,
       "description" : "factory for creating new cluster members",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "dynamiccluster.firstmemberspec",
+      "type" : "brooklyn.entity.proxying.EntitySpec",
+      "defaultValue" : null,
+      "description" : "entity spec for creating new cluster members, used for the very first member if different",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -16798,7 +18915,7 @@
     }, {
       "name" : "dynamiccluster.zone.failureDetector",
       "type" : "brooklyn.entity.group.DynamicCluster$ZoneFailureDetector",
-      "defaultValue" : "brooklyn.entity.group.zoneaware.ProportionalZoneFailureDetector@b7193fc",
+      "defaultValue" : "brooklyn.entity.group.zoneaware.ProportionalZoneFailureDetector@77acc39c",
       "description" : "Zone failure detector",
       "reconfigurable" : false,
       "label" : null,
@@ -16808,7 +18925,7 @@
     }, {
       "name" : "dynamiccluster.zone.placementStrategy",
       "type" : "brooklyn.entity.group.DynamicCluster$NodePlacementStrategy",
-      "defaultValue" : "brooklyn.entity.group.zoneaware.BalancingNodePlacementStrategy@37f02eaa",
+      "defaultValue" : "brooklyn.entity.group.zoneaware.BalancingNodePlacementStrategy@45498134",
       "description" : "Node placement strategy",
       "reconfigurable" : false,
       "label" : null,
@@ -16817,8 +18934,8 @@
       "links" : null
     }, {
       "name" : "enricher.service_state.children_and_members.quorum.running",
-      "type" : "brooklyn.entity.basic.QuorumCheck",
-      "defaultValue" : "QuorumCheck[require=0,100.0%]",
+      "type" : "brooklyn.util.collections.QuorumCheck",
+      "defaultValue" : "QuorumCheck[all;require=0,100.0%]",
       "description" : "Problems check from children actual states (lifecycle), applied by default to members and children, not checking upness, but requiring by default that none are on-fire",
       "reconfigurable" : false,
       "label" : null,
@@ -16827,8 +18944,8 @@
       "links" : null
     }, {
       "name" : "enricher.service_state.children_and_members.quorum.up",
-      "type" : "brooklyn.entity.basic.QuorumCheck",
-      "defaultValue" : "QuorumCheck[require=1,0.0%]",
+      "type" : "brooklyn.util.collections.QuorumCheck",
+      "defaultValue" : "QuorumCheck[atLeastOne;require=1,0.0%]",
       "description" : "Up check, applied by default to members, requiring at least one present and up",
       "reconfigurable" : false,
       "label" : null,
@@ -16870,82 +18987,97 @@
       "name" : "cluster.entity",
       "type" : "brooklyn.entity.Entity",
       "description" : "The cluster an entity is a member of",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cluster.first",
       "type" : "java.lang.Boolean",
       "description" : "Set on an entity if it is the first member of a cluster",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cluster.first.entity",
       "type" : "brooklyn.entity.Entity",
       "description" : "The first member of the cluster",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cluster.member",
       "type" : "java.lang.Boolean",
       "description" : "Set on an entity if it is a member of a cluster",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "dynamiccluster.entityQuarantined",
       "type" : "brooklyn.entity.Entity",
       "description" : "Entity failed to start, and has been quarantined",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "dynamiccluster.failedSubLocations",
       "type" : "java.util.Set",
       "description" : "Sub locations that seem to have failed",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "dynamiccluster.quarantineGroup",
       "type" : "brooklyn.entity.group.QuarantineGroup",
       "description" : "Group of quarantined entities that failed to start",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "dynamiccluster.subLocations",
       "type" : "java.util.List",
       "description" : "Locations for each availability zone to use",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "group.members",
       "type" : "java.util.Collection",
       "description" : "Members of the group",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "group.members.added",
       "type" : "brooklyn.entity.Entity",
       "description" : "Entity added to group members",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "group.members.count",
       "type" : "java.lang.Integer",
       "description" : "Number of members",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "group.members.removed",
       "type" : "brooklyn.entity.Entity",
       "description" : "Entity removed from group members",
-      "links" : null
+      "links" : { }
+    }, {
+      "name" : "main.uri",
+      "type" : "java.net.URI",
+      "description" : "Main URI for contacting the service/endpoint offered by this entity",
+      "links" : { }
     }, {
       "name" : "riak.cluster.isClusterInit",
       "type" : "java.lang.Boolean",
-      "description" : "flag to determine if the cluster was already initialized",
-      "links" : null
+      "description" : "Flag to determine if the cluster was already initialized",
+      "links" : { }
+    }, {
+      "name" : "riak.cluster.isFirstNodeSet",
+      "type" : "java.lang.Boolean",
+      "description" : "Flag to determine if the first node has been set",
+      "links" : { }
+    }, {
+      "name" : "riak.cluster.nodeList",
+      "type" : "java.lang.String",
+      "description" : "List of nodes (including ports), comma separated",
+      "links" : { }
     }, {
       "name" : "riak.cluster.nodes",
       "type" : "java.util.Map",
       "description" : "Names of all active Riak nodes in the cluster <Entity,Riak Name>",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.isUp",
       "type" : "java.lang.Boolean",
       "description" : "Whether the service is active and availability (confirmed and monitored)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.state",
       "type" : "brooklyn.entity.basic.Lifecycle",
       "description" : "Actual lifecycle state of the service",
-      "links" : null
+      "links" : { }
     } ],
     "effectors" : [ {
       "name" : "replaceMember",
@@ -17006,9 +19138,9 @@
     } ]
   }, {
     "type" : "brooklyn.entity.nosql.riak.RiakNode",
-    "defaultVersion" : "1.4.8",
+    "defaultVersion" : "2.1.0",
     "name" : "Riak Node",
-    "description" : "Riak is...",
+    "description" : "Riak is a distributed NoSQL key-value data store that offers extremely high availability, fault tolerance, operational simplicity and scalability.",
     "iconUrl" : "",
     "config" : [ {
       "name" : "children.startable.mode",
@@ -17066,6 +19198,96 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "download.url.debian",
+      "type" : "java.lang.String",
+      "defaultValue" : "http://s3.amazonaws.com/downloads.basho.com/riak/${entity.majorVersion}/${entity.fullVersion}/debian/$OS_RELEASE/riak_${entity.fullVersion}-1_amd64.deb",
+      "description" : "URL pattern for downloading the linux Debian installer (will substitute things like ${version} automatically)",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "download.url.mac",
+      "type" : "java.lang.String",
+      "defaultValue" : "http://s3.amazonaws.com/downloads.basho.com/riak/${entity.majorVersion}/${entity.fullVersion}/osx/10.8/riak-${entity.fullVersion}-OSX-x86_64.tar.gz",
+      "description" : "URL pattern for downloading the MAC binaries tarball (will substitute things like ${version} automatically)",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "download.url.rhelcentos",
+      "type" : "java.lang.String",
+      "defaultValue" : "http://s3.amazonaws.com/downloads.basho.com/riak/${entity.majorVersion}/${entity.fullVersion}/rhel/${entity.osMajorVersion}/riak-${entity.fullVersion}-1.el${entity.osMajorVersion}.x86_64.rpm",
+      "description" : "URL pattern for downloading the linux RPM installer (will substitute things like ${version} automatically)",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "download.url.ubuntu",
+      "type" : "java.lang.String",
+      "defaultValue" : "http://s3.amazonaws.com/downloads.basho.com/riak/${entity.majorVersion}/${entity.fullVersion}/ubuntu/$OS_RELEASE/riak_${entity.fullVersion}-1_amd64.deb",
+      "description" : "URL pattern for downloading the linux Ubuntu installer (will substitute things like ${version} automatically)",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "entity.running",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, if service already running",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "entity.started",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, for running services",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "epmdListenerPort",
+      "type" : "brooklyn.location.PortRange",
+      "defaultValue" : "4369",
+      "description" : "Erlang Port Mapper Daemon Listener Port",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "erlangPortRangeEnd",
+      "type" : "brooklyn.location.PortRange",
+      "defaultValue" : "7999-65535",
+      "description" : "Erlang Port Range End",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "erlangPortRangeStart",
+      "type" : "brooklyn.location.PortRange",
+      "defaultValue" : "6000-65535",
+      "description" : "Erlang Port Range Start",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "defaultValue" : null,
@@ -17076,10 +19298,30 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "files.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of files, to be copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "files.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of files to be copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of files, to be copied before customisation, to destination name relative to runDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "handoffListenerPort",
+      "type" : "brooklyn.location.PortRange",
+      "defaultValue" : "8099-65535",
+      "description" : "Handoff Listener Port",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -17108,7 +19350,7 @@
     }, {
       "name" : "install.skip",
       "type" : "java.lang.Boolean",
-      "defaultValue" : false,
+      "defaultValue" : null,
       "description" : "Skip the driver install commands entirely, for pre-installed software",
       "reconfigurable" : false,
       "label" : null,
@@ -17128,8 +19370,8 @@
     }, {
       "name" : "install.version",
       "type" : "java.lang.String",
-      "defaultValue" : "1.4.8",
-      "description" : "Suggested version",
+      "defaultValue" : "2.1.0",
+      "description" : "Version to install (Default 2.1.0)",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -17196,10 +19438,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
-      "name" : "resources.latch",
+      "name" : "resources.install.latch",
       "type" : "java.lang.Boolean",
       "defaultValue" : null,
-      "description" : "Latch for blocking resources until ready",
+      "description" : "Latch for blocking install resources until ready",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "resources.runtime.latch",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Latch for blocking runtime resources until ready",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -17216,40 +19468,10 @@
       "possibleValues" : null,
       "links" : null
     }, {
-      "name" : "riak.epmdListenerPort",
-      "type" : "brooklyn.location.PortRange",
-      "defaultValue" : "4369",
-      "description" : "Erlang Port Mapper Daemon Listener Port",
-      "reconfigurable" : false,
-      "label" : null,
-      "priority" : null,
-      "possibleValues" : null,
-      "links" : null
-    }, {
-      "name" : "riak.erlangPortRangeEnd",
-      "type" : "brooklyn.location.PortRange",
-      "defaultValue" : "7999-65535",
-      "description" : "Erlang Port Range End",
-      "reconfigurable" : false,
-      "label" : null,
-      "priority" : null,
-      "possibleValues" : null,
-      "links" : null
-    }, {
-      "name" : "riak.erlangPortRangeStart",
-      "type" : "brooklyn.location.PortRange",
-      "defaultValue" : "6000-65535",
-      "description" : "Erlang Port Range Start",
-      "reconfigurable" : false,
-      "label" : null,
-      "priority" : null,
-      "possibleValues" : null,
-      "links" : null
-    }, {
-      "name" : "riak.handoffListenerPort",
-      "type" : "brooklyn.location.PortRange",
-      "defaultValue" : "8099-65535",
-      "description" : "Handoff Listener Port",
+      "name" : "riak.networking.optimize",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : true,
+      "description" : "Optimize host networking when running in a VM",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -17260,6 +19482,36 @@
       "type" : "brooklyn.location.PortRange",
       "defaultValue" : "8087-65535",
       "description" : "Riak Protocol Buffers Port",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "riak.riakConf.additionalContent",
+      "type" : "java.lang.String",
+      "defaultValue" : "",
+      "description" : "Template file (in freemarker format) for setting up additional settings in the riak.conf file",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "riak.riakConf.templateUrl.linux",
+      "type" : "java.lang.String",
+      "defaultValue" : "classpath://brooklyn/entity/nosql/riak/riak.conf",
+      "description" : "Template file (in freemarker format) for the app.config config file",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "riak.riakConf.templateUrl.mac",
+      "type" : "java.lang.String",
+      "defaultValue" : "classpath://brooklyn/entity/nosql/riak/riak-mac.conf",
+      "description" : "Template file (in freemarker format) for the app.config config file",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -17290,6 +19542,26 @@
       "type" : "java.lang.String",
       "defaultValue" : "${config['onbox.base.dir']!config['brooklyn.datadir']!'/<ERROR>-ONBOX_BASE_DIR-not-set'}/apps/${entity.applicationId}/entities/${entity.entityType.simpleName}_${entity.id}",
       "description" : "Directory for this software to be run from",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "search.solr.jmx_port",
+      "type" : "brooklyn.location.PortRange",
+      "defaultValue" : "8985-65535",
+      "description" : "Solr port",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "search.solr.port",
+      "type" : "brooklyn.location.PortRange",
+      "defaultValue" : "8093-65535",
+      "description" : "Solr port",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -17346,10 +19618,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "templates.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of templates, to be filled in and copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "templates.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of templates to be filled in and copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of templates, to be filled in and copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -17357,196 +19639,330 @@
       "links" : null
     } ],
     "sensors" : [ {
-      "name" : "coord.redirs.total",
-      "type" : "java.lang.Integer",
-      "description" : "coord.redirs.total",
-      "links" : null
-    }, {
       "name" : "download.addon.urls",
       "type" : "java.util.Map",
       "description" : "URL patterns for downloading named add-ons (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "download.url",
       "type" : "java.lang.String",
       "description" : "URL pattern for downloading the installer (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
+    }, {
+      "name" : "download.url.debian",
+      "type" : "java.lang.String",
+      "description" : "URL pattern for downloading the linux Debian installer (will substitute things like ${version} automatically)",
+      "links" : { }
+    }, {
+      "name" : "download.url.mac",
+      "type" : "java.lang.String",
+      "description" : "URL pattern for downloading the MAC binaries tarball (will substitute things like ${version} automatically)",
+      "links" : { }
+    }, {
+      "name" : "download.url.rhelcentos",
+      "type" : "java.lang.String",
+      "description" : "URL pattern for downloading the linux RPM installer (will substitute things like ${version} automatically)",
+      "links" : { }
+    }, {
+      "name" : "download.url.ubuntu",
+      "type" : "java.lang.String",
+      "description" : "URL pattern for downloading the linux Ubuntu installer (will substitute things like ${version} automatically)",
+      "links" : { }
+    }, {
+      "name" : "epmdListenerPort",
+      "type" : "java.lang.Integer",
+      "description" : "Erlang Port Mapper Daemon Listener Port",
+      "links" : { }
+    }, {
+      "name" : "erlangPortRangeEnd",
+      "type" : "java.lang.Integer",
+      "description" : "Erlang Port Range End",
+      "links" : { }
+    }, {
+      "name" : "erlangPortRangeStart",
+      "type" : "java.lang.Integer",
+      "description" : "Erlang Port Range Start",
+      "links" : { }
     }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "description" : "Directory for installed artifacts (e.g. expanded dir after unpacking .tgz)",
-      "links" : null
+      "links" : { }
+    }, {
+      "name" : "handoffListenerPort",
+      "type" : "java.lang.Integer",
+      "description" : "Handoff Listener Port",
+      "links" : { }
     }, {
       "name" : "host.address",
       "type" : "java.lang.String",
       "description" : "Host IP address",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.name",
       "type" : "java.lang.String",
       "description" : "Host name",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.address",
       "type" : "java.lang.String",
       "description" : "Host address as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.hostname",
       "type" : "java.lang.String",
       "description" : "Host name as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "install.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be installed in",
-      "links" : null
+      "links" : { }
     }, {
-      "name" : "memory.processes.used",
-      "type" : "java.lang.Integer",
-      "description" : "memory.processes.used",
-      "links" : null
+      "name" : "main.uri",
+      "type" : "java.net.URI",
+      "description" : "Main URI for contacting the service/endpoint offered by this entity",
+      "links" : { }
     }, {
-      "name" : "node.gets",
+      "name" : "riak.consistent_get_time_mean",
       "type" : "java.lang.Integer",
-      "description" : "node.gets",
-      "links" : null
+      "description" : "Strongly consistent read latency",
+      "links" : { }
     }, {
-      "name" : "node.gets.total",
+      "name" : "riak.consistent_put_time_mean",
       "type" : "java.lang.Integer",
-      "description" : "node.gets.total",
-      "links" : null
+      "description" : "Strongly consistent write latency",
+      "links" : { }
     }, {
-      "name" : "node.puts",
+      "name" : "riak.coord.redirs.total",
       "type" : "java.lang.Integer",
-      "description" : "node.puts",
-      "links" : null
+      "description" : "riak.coord.redirs.total",
+      "links" : { }
     }, {
-      "name" : "node.puts.total",
-      "type" : "java.lang.Integer",
-      "description" : "node.puts.total",
-      "links" : null
+      "name" : "riak.install.onPath",
+      "type" : "java.lang.Boolean",
+      "description" : "Flag to indicate whether Riak is available on the PATH",
+      "links" : { }
     }, {
-      "name" : "pbc.active",
-      "type" : "java.lang.Integer",
-      "description" : "pbc.active",
-      "links" : null
+      "name" : "riak.install.package",
+      "type" : "java.lang.Boolean",
+      "description" : "Flag to indicate whether Riak was installed using an OS package",
+      "links" : { }
     }, {
-      "name" : "pbc.connects",
+      "name" : "riak.memory.processes.used",
       "type" : "java.lang.Integer",
-      "description" : "pbc.connects",
-      "links" : null
-    }, {
-      "name" : "read.repairs.total",
-      "type" : "java.lang.Integer",
-      "description" : "read.repairs.total",
-      "links" : null
-    }, {
-      "name" : "riak.epmdListenerPort",
-      "type" : "java.lang.Integer",
-      "description" : "Erlang Port Mapper Daemon Listener Port",
-      "links" : null
-    }, {
-      "name" : "riak.erlangPortRangeEnd",
-      "type" : "java.lang.Integer",
-      "description" : "Erlang Port Range End",
-      "links" : null
-    }, {
-      "name" : "riak.erlangPortRangeStart",
-      "type" : "java.lang.Integer",
-      "description" : "Erlang Port Range Start",
-      "links" : null
-    }, {
-      "name" : "riak.handoffListenerPort",
-      "type" : "java.lang.Integer",
-      "description" : "Handoff Listener Port",
-      "links" : null
+      "description" : "riak.memory.processes.used",
+      "links" : { }
     }, {
       "name" : "riak.node",
       "type" : "java.lang.String",
       "description" : "Returns the riak node name as defined in vm.args",
-      "links" : null
+      "links" : { }
+    }, {
+      "name" : "riak.node.gets",
+      "type" : "java.lang.Integer",
+      "description" : "riak.node.gets",
+      "links" : { }
+    }, {
+      "name" : "riak.node.gets.total",
+      "type" : "java.lang.Integer",
+      "description" : "riak.node.gets.total",
+      "links" : { }
+    }, {
+      "name" : "riak.node.puts",
+      "type" : "java.lang.Integer",
+      "description" : "riak.node.puts",
+      "links" : { }
+    }, {
+      "name" : "riak.node.puts.total",
+      "type" : "java.lang.Integer",
+      "description" : "riak.node.puts.total",
+      "links" : { }
     }, {
       "name" : "riak.node.riakNodeHasJoinedCluster",
       "type" : "java.lang.Boolean",
-      "description" : "Flag to indicate wether the Riak node has joined a cluster member",
-      "links" : null
+      "description" : "Flag to indicate whether the Riak node has joined a cluster member",
+      "links" : { }
+    }, {
+      "name" : "riak.node_get_fsm_time_mean",
+      "type" : "java.lang.Integer",
+      "description" : "Time between reception of client read request and subsequent response to client",
+      "links" : { }
+    }, {
+      "name" : "riak.node_put_fsm_time_mean",
+      "type" : "java.lang.Integer",
+      "description" : "Time between reception of client write request and subsequent response to client",
+      "links" : { }
+    }, {
+      "name" : "riak.object_counter_merge_time_mean",
+      "type" : "java.lang.Integer",
+      "description" : "Time it takes to perform an Update Counter operation",
+      "links" : { }
+    }, {
+      "name" : "riak.object_map_merge_time_mean",
+      "type" : "java.lang.Integer",
+      "description" : "Time it takes to perform an Update Map operation",
+      "links" : { }
+    }, {
+      "name" : "riak.object_set_merge_time_mean",
+      "type" : "java.lang.Integer",
+      "description" : "Time it takes to perform an Update Set operation",
+      "links" : { }
     }, {
       "name" : "riak.pbPort",
       "type" : "java.lang.Integer",
       "description" : "Riak Protocol Buffers Port",
-      "links" : null
+      "links" : { }
+    }, {
+      "name" : "riak.pbc.active",
+      "type" : "java.lang.Integer",
+      "description" : "riak.pbc.active",
+      "links" : { }
+    }, {
+      "name" : "riak.pbc.connects",
+      "type" : "java.lang.Integer",
+      "description" : "riak.pbc.connects",
+      "links" : { }
+    }, {
+      "name" : "riak.read.repairs.total",
+      "type" : "java.lang.Integer",
+      "description" : "riak.read.repairs.total",
+      "links" : { }
+    }, {
+      "name" : "riak.sys.process.count",
+      "type" : "java.lang.Integer",
+      "description" : "riak.sys.process.count",
+      "links" : { }
+    }, {
+      "name" : "riak.vnode.gets",
+      "type" : "java.lang.Integer",
+      "description" : "riak.vnode.gets",
+      "links" : { }
+    }, {
+      "name" : "riak.vnode.gets.total",
+      "type" : "java.lang.Integer",
+      "description" : "riak.vnode.gets.total",
+      "links" : { }
+    }, {
+      "name" : "riak.vnode.puts",
+      "type" : "java.lang.Integer",
+      "description" : "riak.vnode.puts",
+      "links" : { }
+    }, {
+      "name" : "riak.vnode.puts.total",
+      "type" : "java.lang.Integer",
+      "description" : "riak.vnode.puts.total",
+      "links" : { }
     }, {
       "name" : "riak.webPort",
       "type" : "java.lang.Integer",
       "description" : "Riak Web Port",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "ring.members",
       "type" : "java.util.List",
       "description" : "all the riak nodes in the ring",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "run.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be run from",
-      "links" : null
+      "links" : { }
+    }, {
+      "name" : "search.solr.jmx_port",
+      "type" : "java.lang.Integer",
+      "description" : "Solr port",
+      "links" : { }
+    }, {
+      "name" : "search.solr.port",
+      "type" : "java.lang.Integer",
+      "description" : "Solr port",
+      "links" : { }
     }, {
       "name" : "service.isUp",
       "type" : "java.lang.Boolean",
       "description" : "Whether the service is active and availability (confirmed and monitored)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.process.isRunning",
       "type" : "java.lang.Boolean",
       "description" : "Whether the process for the service is confirmed as running",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.state",
       "type" : "brooklyn.entity.basic.Lifecycle",
       "description" : "Actual lifecycle state of the service",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareprocess.pid.file",
       "type" : "java.lang.String",
       "description" : "PID file",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareservice.provisioningLocation",
       "type" : "brooklyn.location.MachineProvisioningLocation",
       "description" : "Location used to provision a machine where this is running",
-      "links" : null
-    }, {
-      "name" : "sys.process.count",
-      "type" : "java.lang.Integer",
-      "description" : "sys.process.count",
-      "links" : null
-    }, {
-      "name" : "vnode.gets",
-      "type" : "java.lang.Integer",
-      "description" : "vnode.gets",
-      "links" : null
-    }, {
-      "name" : "vnode.gets.total",
-      "type" : "java.lang.Integer",
-      "description" : "vnode.gets.total",
-      "links" : null
-    }, {
-      "name" : "vnode.puts",
-      "type" : "java.lang.Integer",
-      "description" : "vnode.puts",
-      "links" : null
-    }, {
-      "name" : "vnode.puts.total",
-      "type" : "java.lang.Integer",
-      "description" : "vnode.puts.total",
-      "links" : null
+      "links" : { }
     } ],
     "effectors" : [ {
-      "name" : "commitCluster",
+      "name" : "bucketTypeActivate",
       "returnType" : "void",
+      "parameters" : [ {
+        "name" : "bucketTypeName",
+        "type" : "java.lang.String",
+        "description" : null,
+        "defaultValue" : null
+      } ],
+      "description" : "Activate a bucket type",
+      "links" : null
+    }, {
+      "name" : "bucketTypeCreate",
+      "returnType" : "void",
+      "parameters" : [ {
+        "name" : "bucketTypeName",
+        "type" : "java.lang.String",
+        "description" : null,
+        "defaultValue" : null
+      }, {
+        "name" : "bucketTypeProperties",
+        "type" : "java.lang.String",
+        "description" : null,
+        "defaultValue" : null
+      } ],
+      "description" : "Create or modify a bucket type before activation",
+      "links" : null
+    }, {
+      "name" : "bucketTypeList",
+      "returnType" : "java.util.List",
       "parameters" : [ ],
-      "description" : "commit changes made to a Riak cluster",
+      "description" : "List all currently available bucket types and their activation status",
+      "links" : null
+    }, {
+      "name" : "bucketTypeStatus",
+      "returnType" : "java.util.List",
+      "parameters" : [ {
+        "name" : "bucketTypeName",
+        "type" : "java.lang.String",
+        "description" : null,
+        "defaultValue" : null
+      } ],
+      "description" : "Display the status and properties of a specific bucket type",
+      "links" : null
+    }, {
+      "name" : "bucketTypeUpdate",
+      "returnType" : "void",
+      "parameters" : [ {
+        "name" : "bucketTypeName",
+        "type" : "java.lang.String",
+        "description" : null,
+        "defaultValue" : null
+      }, {
+        "name" : "bucketTypeProperties",
+        "type" : "java.lang.String",
+        "description" : null,
+        "defaultValue" : null
+      } ],
+      "description" : "Update a bucket type after activation",
       "links" : null
     }, {
       "name" : "joinCluster",
@@ -17557,13 +19973,13 @@
         "description" : null,
         "defaultValue" : null
       } ],
-      "description" : "add this riak node to the riak cluster",
+      "description" : "Join the Riak cluster on the given node",
       "links" : null
     }, {
       "name" : "leaveCluster",
       "returnType" : "void",
       "parameters" : [ ],
-      "description" : "remove this riak node from the cluster",
+      "description" : "Leave the Riak cluster",
       "links" : null
     }, {
       "name" : "recoverFailedNode",
@@ -17574,7 +19990,18 @@
         "description" : null,
         "defaultValue" : null
       } ],
-      "description" : "recover a failed riak node and join it back to the cluster (by passing it a working node on the cluster 'node')",
+      "description" : "Recover and join the Riak cluster on the given node",
+      "links" : null
+    }, {
+      "name" : "removeNode",
+      "returnType" : "void",
+      "parameters" : [ {
+        "name" : "nodeName",
+        "type" : "java.lang.String",
+        "description" : null,
+        "defaultValue" : null
+      } ],
+      "description" : "Remove the given node from the Riak cluster",
       "links" : null
     }, {
       "name" : "restart",
@@ -17792,6 +20219,26 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "entity.running",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, if service already running",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "entity.started",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, for running services",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "defaultValue" : null,
@@ -17802,10 +20249,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "files.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of files, to be copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "files.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of files to be copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of files, to be copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -17834,7 +20291,7 @@
     }, {
       "name" : "install.skip",
       "type" : "java.lang.Boolean",
-      "defaultValue" : false,
+      "defaultValue" : null,
       "description" : "Skip the driver install commands entirely, for pre-installed software",
       "reconfigurable" : false,
       "label" : null,
@@ -17922,10 +20379,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
-      "name" : "resources.latch",
+      "name" : "resources.install.latch",
       "type" : "java.lang.Boolean",
       "defaultValue" : null,
-      "description" : "Latch for blocking resources until ready",
+      "description" : "Latch for blocking install resources until ready",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "resources.runtime.latch",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Latch for blocking runtime resources until ready",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -17992,10 +20459,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "templates.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of templates, to be filled in and copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "templates.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of templates to be filled in and copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of templates, to be filled in and copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -18006,82 +20483,82 @@
       "name" : "download.addon.urls",
       "type" : "java.util.Map",
       "description" : "URL patterns for downloading named add-ons (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "download.url",
       "type" : "java.lang.String",
       "description" : "URL pattern for downloading the installer (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "description" : "Directory for installed artifacts (e.g. expanded dir after unpacking .tgz)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.address",
       "type" : "java.lang.String",
       "description" : "Host IP address",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.name",
       "type" : "java.lang.String",
       "description" : "Host name",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.address",
       "type" : "java.lang.String",
       "description" : "Host address as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.hostname",
       "type" : "java.lang.String",
       "description" : "Host name as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "install.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be installed in",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "leftdatastore.url",
       "type" : "java.lang.String",
       "description" : "Primary contact URL for a datastore (e.g. mysql://localhost:3306/)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "rightdatastore.url",
       "type" : "java.lang.String",
       "description" : "Primary contact URL for a datastore (e.g. mysql://localhost:3306/)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "run.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be run from",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.isUp",
       "type" : "java.lang.Boolean",
       "description" : "Whether the service is active and availability (confirmed and monitored)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.process.isRunning",
       "type" : "java.lang.Boolean",
       "description" : "Whether the process for the service is confirmed as running",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.state",
       "type" : "brooklyn.entity.basic.Lifecycle",
       "description" : "Actual lifecycle state of the service",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareprocess.pid.file",
       "type" : "java.lang.String",
       "description" : "PID file",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareservice.provisioningLocation",
       "type" : "brooklyn.location.MachineProvisioningLocation",
       "description" : "Location used to provision a machine where this is running",
-      "links" : null
+      "links" : { }
     } ],
     "effectors" : [ {
       "name" : "restart",
@@ -18163,6 +20640,16 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "dynamiccluster.firstmemberspec",
+      "type" : "brooklyn.entity.proxying.EntitySpec",
+      "defaultValue" : null,
+      "description" : "entity spec for creating new cluster members, used for the very first member if different",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "dynamiccluster.memberspec",
       "type" : "brooklyn.entity.proxying.EntitySpec",
       "defaultValue" : "EntitySpec{type=interface brooklyn.entity.machine.MachineEntity}",
@@ -18215,7 +20702,7 @@
     }, {
       "name" : "dynamiccluster.zone.failureDetector",
       "type" : "brooklyn.entity.group.DynamicCluster$ZoneFailureDetector",
-      "defaultValue" : "brooklyn.entity.group.zoneaware.ProportionalZoneFailureDetector@b7193fc",
+      "defaultValue" : "brooklyn.entity.group.zoneaware.ProportionalZoneFailureDetector@77acc39c",
       "description" : "Zone failure detector",
       "reconfigurable" : false,
       "label" : null,
@@ -18225,7 +20712,7 @@
     }, {
       "name" : "dynamiccluster.zone.placementStrategy",
       "type" : "brooklyn.entity.group.DynamicCluster$NodePlacementStrategy",
-      "defaultValue" : "brooklyn.entity.group.zoneaware.BalancingNodePlacementStrategy@37f02eaa",
+      "defaultValue" : "brooklyn.entity.group.zoneaware.BalancingNodePlacementStrategy@45498134",
       "description" : "Node placement strategy",
       "reconfigurable" : false,
       "label" : null,
@@ -18234,8 +20721,8 @@
       "links" : null
     }, {
       "name" : "enricher.service_state.children_and_members.quorum.running",
-      "type" : "brooklyn.entity.basic.QuorumCheck",
-      "defaultValue" : "QuorumCheck[require=0,100.0%]",
+      "type" : "brooklyn.util.collections.QuorumCheck",
+      "defaultValue" : "QuorumCheck[all;require=0,100.0%]",
       "description" : "Problems check from children actual states (lifecycle), applied by default to members and children, not checking upness, but requiring by default that none are on-fire",
       "reconfigurable" : false,
       "label" : null,
@@ -18244,8 +20731,8 @@
       "links" : null
     }, {
       "name" : "enricher.service_state.children_and_members.quorum.up",
-      "type" : "brooklyn.entity.basic.QuorumCheck",
-      "defaultValue" : "QuorumCheck[require=1,0.0%]",
+      "type" : "brooklyn.util.collections.QuorumCheck",
+      "defaultValue" : "QuorumCheck[atLeastOne;require=1,0.0%]",
       "description" : "Up check, applied by default to members, requiring at least one present and up",
       "reconfigurable" : false,
       "label" : null,
@@ -18317,102 +20804,107 @@
       "name" : "cluster.entity",
       "type" : "brooklyn.entity.Entity",
       "description" : "The cluster an entity is a member of",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cluster.first",
       "type" : "java.lang.Boolean",
       "description" : "Set on an entity if it is the first member of a cluster",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cluster.first.entity",
       "type" : "brooklyn.entity.Entity",
       "description" : "The first member of the cluster",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cluster.member",
       "type" : "java.lang.Boolean",
       "description" : "Set on an entity if it is a member of a cluster",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "dynamiccluster.entityQuarantined",
       "type" : "brooklyn.entity.Entity",
       "description" : "Entity failed to start, and has been quarantined",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "dynamiccluster.failedSubLocations",
       "type" : "java.util.Set",
       "description" : "Sub locations that seem to have failed",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "dynamiccluster.quarantineGroup",
       "type" : "brooklyn.entity.group.QuarantineGroup",
       "description" : "Group of quarantined entities that failed to start",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "dynamiccluster.subLocations",
       "type" : "java.util.List",
       "description" : "Locations for each availability zone to use",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "entity.dynamicLocation",
       "type" : "brooklyn.location.Location",
       "description" : "The location owned by this entity",
-      "links" : null
+      "links" : { }
+    }, {
+      "name" : "entity.dynamicLocation.definition",
+      "type" : "brooklyn.location.LocationDefinition",
+      "description" : "The location definition for the location owned by this entity",
+      "links" : { }
     }, {
       "name" : "entity.dynamicLocation.name",
       "type" : "java.lang.String",
       "description" : "The name of the location owned by this entity (default is auto-generated using prefix and suffix keys)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "entity.dynamicLocation.spec",
       "type" : "java.lang.String",
       "description" : "The specification string for the location owned by this entity",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "entity.dynamicLocation.status",
       "type" : "java.lang.Boolean",
       "description" : "The status of the location owned by this entity",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "group.members",
       "type" : "java.util.Collection",
       "description" : "Members of the group",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "group.members.added",
       "type" : "brooklyn.entity.Entity",
       "description" : "Entity added to group members",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "group.members.count",
       "type" : "java.lang.Integer",
       "description" : "Number of members",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "group.members.removed",
       "type" : "brooklyn.entity.Entity",
       "description" : "Entity removed from group members",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "pool.available",
       "type" : "java.lang.Integer",
       "description" : "The number of locations in the pool that are unused",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "pool.claimed",
       "type" : "java.lang.Integer",
       "description" : "The number of locations in the pool that are in use",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.isUp",
       "type" : "java.lang.Boolean",
       "description" : "Whether the service is active and availability (confirmed and monitored)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.state",
       "type" : "brooklyn.entity.basic.Lifecycle",
       "description" : "Actual lifecycle state of the service",
-      "links" : null
+      "links" : { }
     } ],
     "effectors" : [ {
       "name" : "addExistingMachinesFromSpec",
@@ -18485,7 +20977,7 @@
   }, {
     "type" : "brooklyn.entity.messaging.storm.StormDeployment",
     "name" : "Storm Deployment",
-    "description" : "Storm is...",
+    "description" : "A Storm cluster. Apache Storm is a distributed realtime computation system. Storm makes it easy to reliably process unbounded streams of data, doing for realtime processing what Hadoop did for batch processing",
     "iconUrl" : "",
     "config" : [ {
       "name" : "storm.supervisors.count",
@@ -18512,7 +21004,7 @@
       "name" : "service.isUp",
       "type" : "java.lang.Boolean",
       "description" : "Whether the service is active and availability (confirmed and monitored)",
-      "links" : null
+      "links" : { }
     } ],
     "effectors" : [ {
       "name" : "restart",
@@ -18542,7 +21034,7 @@
     "type" : "brooklyn.entity.messaging.storm.Storm",
     "defaultVersion" : "0.8.2",
     "name" : "Storm Node",
-    "description" : "Storm is...",
+    "description" : "Apache Storm is a distributed realtime computation system. Storm makes it easy to reliably process unbounded streams of data, doing for realtime processing what Hadoop did for batch processing",
     "iconUrl" : "",
     "config" : [ {
       "name" : "children.startable.mode",
@@ -18600,6 +21092,26 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "entity.running",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, if service already running",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "entity.started",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, for running services",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "defaultValue" : null,
@@ -18610,10 +21122,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "files.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of files, to be copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "files.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of files to be copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of files, to be copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -18642,7 +21164,7 @@
     }, {
       "name" : "install.skip",
       "type" : "java.lang.Boolean",
-      "defaultValue" : false,
+      "defaultValue" : null,
       "description" : "Skip the driver install commands entirely, for pre-installed software",
       "reconfigurable" : false,
       "label" : null,
@@ -18700,6 +21222,16 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "jmx.agent.local.path",
+      "type" : "java.lang.String",
+      "defaultValue" : null,
+      "description" : "Path to JMX driver on the local machine",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "jmx.agent.mode",
       "type" : "java.lang.Enum",
       "defaultValue" : "AUTODETECT",
@@ -18742,6 +21274,16 @@
       "type" : "brooklyn.location.PortRange",
       "defaultValue" : "31001-65535",
       "description" : "JMX direct/private port (e.g. JMX RMI server port, or JMXMP port, but not RMI registry port)",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "jmx.direct.port.legacy.NOT_USED",
+      "type" : "brooklyn.location.PortRange",
+      "defaultValue" : null,
+      "description" : "Legacy definition JMX direct/private port (e.g. JMX RMI server port, or JMXMP port, but not RMI registry port)",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -18868,10 +21410,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
-      "name" : "resources.latch",
+      "name" : "resources.install.latch",
       "type" : "java.lang.Boolean",
       "defaultValue" : null,
-      "description" : "Latch for blocking resources until ready",
+      "description" : "Latch for blocking install resources until ready",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "resources.runtime.latch",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Latch for blocking runtime resources until ready",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -19057,10 +21609,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "templates.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of templates, to be filled in and copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "templates.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of templates to be filled in and copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of templates, to be filled in and copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -19071,122 +21633,132 @@
       "name" : "download.addon.urls",
       "type" : "java.util.Map",
       "description" : "URL patterns for downloading named add-ons (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "download.url",
       "type" : "java.lang.String",
       "description" : "URL pattern for downloading the installer (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "description" : "Directory for installed artifacts (e.g. expanded dir after unpacking .tgz)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.address",
       "type" : "java.lang.String",
       "description" : "Host IP address",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.name",
       "type" : "java.lang.String",
       "description" : "Host name",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.address",
       "type" : "java.lang.String",
       "description" : "Host address as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.hostname",
       "type" : "java.lang.String",
       "description" : "Host name as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "install.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be installed in",
-      "links" : null
+      "links" : { }
+    }, {
+      "name" : "jmx.agent.local.path",
+      "type" : "java.lang.String",
+      "description" : "Path to JMX driver on the local machine",
+      "links" : { }
     }, {
       "name" : "jmx.context",
       "type" : "java.lang.String",
       "description" : "JMX context path",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "jmx.direct.port",
       "type" : "java.lang.Integer",
       "description" : "JMX direct/private port (e.g. JMX RMI server port, or JMXMP port, but not RMI registry port)",
-      "links" : null
+      "links" : { }
+    }, {
+      "name" : "jmx.direct.port.legacy.NOT_USED",
+      "type" : "java.lang.Integer",
+      "description" : "Legacy definition JMX direct/private port (e.g. JMX RMI server port, or JMXMP port, but not RMI registry port)",
+      "links" : { }
     }, {
       "name" : "jmx.password",
       "type" : "java.lang.String",
       "description" : "JMX password",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "jmx.service.url",
       "type" : "java.lang.String",
       "description" : "The URL for connecting to the MBean Server",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "jmx.user",
       "type" : "java.lang.String",
       "description" : "JMX username",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "rmi.registry.port",
       "type" : "java.lang.Integer",
       "description" : "RMI registry port, used for discovering JMX (private) port",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "run.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be run from",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.isUp",
       "type" : "java.lang.Boolean",
       "description" : "Whether the service is active and availability (confirmed and monitored)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.process.isRunning",
       "type" : "java.lang.Boolean",
       "description" : "Whether the process for the service is confirmed as running",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.state",
       "type" : "brooklyn.entity.basic.Lifecycle",
       "description" : "Actual lifecycle state of the service",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareprocess.pid.file",
       "type" : "java.lang.String",
       "description" : "PID file",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareservice.provisioningLocation",
       "type" : "brooklyn.location.MachineProvisioningLocation",
       "description" : "Location used to provision a machine where this is running",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "storm.service.jmx.up",
       "type" : "java.lang.Boolean",
       "description" : "Whether JMX is up for this service",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "storm.thrift.port",
       "type" : "java.lang.Integer",
       "description" : "Storm Thrift port",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "storm.ui.port",
       "type" : "java.lang.Integer",
       "description" : "Storm UI port",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "storm.ui.url",
       "type" : "java.lang.String",
       "description" : "URL",
-      "links" : null
+      "links" : { }
     } ],
     "effectors" : [ {
       "name" : "restart",
@@ -19214,7 +21786,7 @@
     } ]
   }, {
     "type" : "brooklyn.entity.webapp.tomcat.TomcatServer",
-    "defaultVersion" : "7.0.53",
+    "defaultVersion" : "7.0.56",
     "name" : "Tomcat Server",
     "description" : "Apache Tomcat is an open source software implementation of the Java Servlet and JavaServer Pages technologies",
     "iconUrl" : "classpath:///tomcat-logo.png",
@@ -19274,6 +21846,26 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "entity.running",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, if service already running",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "entity.started",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, for running services",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "defaultValue" : null,
@@ -19284,10 +21876,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "files.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of files, to be copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "files.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of files to be copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of files, to be copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -19336,7 +21938,7 @@
     }, {
       "name" : "install.skip",
       "type" : "java.lang.Boolean",
-      "defaultValue" : false,
+      "defaultValue" : null,
       "description" : "Skip the driver install commands entirely, for pre-installed software",
       "reconfigurable" : false,
       "label" : null,
@@ -19356,7 +21958,7 @@
     }, {
       "name" : "install.version",
       "type" : "java.lang.String",
-      "defaultValue" : "7.0.53",
+      "defaultValue" : "7.0.56",
       "description" : "Suggested version",
       "reconfigurable" : false,
       "label" : null,
@@ -19388,6 +21990,16 @@
       "type" : "java.util.Map",
       "defaultValue" : { },
       "description" : "Java command line system properties",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "jmx.agent.local.path",
+      "type" : "java.lang.String",
+      "defaultValue" : null,
+      "description" : "Path to JMX driver on the local machine",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -19436,6 +22048,16 @@
       "type" : "brooklyn.location.PortRange",
       "defaultValue" : "31001-65535",
       "description" : "JMX direct/private port (e.g. JMX RMI server port, or JMXMP port, but not RMI registry port)",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "jmx.direct.port.legacy.NOT_USED",
+      "type" : "brooklyn.location.PortRange",
+      "defaultValue" : null,
+      "description" : "Legacy definition JMX direct/private port (e.g. JMX RMI server port, or JMXMP port, but not RMI registry port)",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -19562,10 +22184,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
-      "name" : "resources.latch",
+      "name" : "resources.install.latch",
       "type" : "java.lang.Boolean",
       "defaultValue" : null,
-      "description" : "Latch for blocking resources until ready",
+      "description" : "Latch for blocking install resources until ready",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "resources.runtime.latch",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Latch for blocking runtime resources until ready",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -19642,10 +22274,30 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "templates.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of templates, to be filled in and copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "templates.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of templates to be filled in and copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of templates, to be filled in and copied before customisation, to destination name relative to runDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "tomcat.serverxml",
+      "type" : "java.lang.String",
+      "defaultValue" : "classpath://brooklyn/entity/webapp/tomcat/server.xml",
+      "description" : "The file to template and use as the Tomcat process' server.xml",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -19656,6 +22308,16 @@
       "type" : "brooklyn.location.PortRange",
       "defaultValue" : "31880-65535",
       "description" : "Suggested shutdown port",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "tomcat.webxml",
+      "type" : "java.lang.String",
+      "defaultValue" : "classpath://brooklyn/entity/webapp/tomcat/web.xml",
+      "description" : "The file to template and use as the Tomcat process' web.xml",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -19716,192 +22378,202 @@
       "name" : "download.addon.urls",
       "type" : "java.util.Map",
       "description" : "URL patterns for downloading named add-ons (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "download.url",
       "type" : "java.lang.String",
       "description" : "URL pattern for downloading the installer (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "description" : "Directory for installed artifacts (e.g. expanded dir after unpacking .tgz)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.address",
       "type" : "java.lang.String",
       "description" : "Host IP address",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.name",
       "type" : "java.lang.String",
       "description" : "Host name",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.address",
       "type" : "java.lang.String",
       "description" : "Host address as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.hostname",
       "type" : "java.lang.String",
       "description" : "Host name as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "http.port",
       "type" : "java.lang.Integer",
       "description" : "HTTP port",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "https.port",
       "type" : "java.lang.Integer",
       "description" : "HTTP port (with SSL/TLS)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "install.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be installed in",
-      "links" : null
+      "links" : { }
+    }, {
+      "name" : "jmx.agent.local.path",
+      "type" : "java.lang.String",
+      "description" : "Path to JMX driver on the local machine",
+      "links" : { }
     }, {
       "name" : "jmx.context",
       "type" : "java.lang.String",
       "description" : "JMX context path",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "jmx.direct.port",
       "type" : "java.lang.Integer",
       "description" : "JMX direct/private port (e.g. JMX RMI server port, or JMXMP port, but not RMI registry port)",
-      "links" : null
+      "links" : { }
+    }, {
+      "name" : "jmx.direct.port.legacy.NOT_USED",
+      "type" : "java.lang.Integer",
+      "description" : "Legacy definition JMX direct/private port (e.g. JMX RMI server port, or JMXMP port, but not RMI registry port)",
+      "links" : { }
     }, {
       "name" : "jmx.password",
       "type" : "java.lang.String",
       "description" : "JMX password",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "jmx.service.url",
       "type" : "java.lang.String",
       "description" : "The URL for connecting to the MBean Server",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "jmx.user",
       "type" : "java.lang.String",
       "description" : "JMX username",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "rmi.registry.port",
       "type" : "java.lang.Integer",
       "description" : "RMI registry port, used for discovering JMX (private) port",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "run.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be run from",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.isUp",
       "type" : "java.lang.Boolean",
       "description" : "Whether the service is active and availability (confirmed and monitored)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.process.isRunning",
       "type" : "java.lang.Boolean",
       "description" : "Whether the process for the service is confirmed as running",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.state",
       "type" : "brooklyn.entity.basic.Lifecycle",
       "description" : "Actual lifecycle state of the service",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareprocess.pid.file",
       "type" : "java.lang.String",
       "description" : "PID file",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareservice.provisioningLocation",
       "type" : "brooklyn.location.MachineProvisioningLocation",
       "description" : "Location used to provision a machine where this is running",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "tomcat.shutdownport",
       "type" : "java.lang.Integer",
       "description" : "Suggested shutdown port",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.deployedWars",
       "type" : "java.util.Set",
       "description" : "Names of archives/contexts that are currently deployed",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.enabledProtocols",
       "type" : "java.util.Set",
       "description" : "List of enabled protocols (e.g. http, https)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.https.ssl",
       "type" : "brooklyn.entity.webapp.HttpsSslConfig",
       "description" : "SSL Configuration for HTTPS",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.bytes.received",
       "type" : "java.lang.Long",
       "description" : "Total bytes received by the webserver",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.bytes.sent",
       "type" : "java.lang.Long",
       "description" : "Total bytes sent by the webserver",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.errors",
       "type" : "java.lang.Integer",
       "description" : "Request errors",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.perSec.last",
       "type" : "java.lang.Double",
       "description" : "Reqs/sec (last datapoint)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.perSec.windowed",
       "type" : "java.lang.Double",
       "description" : "Reqs/sec (over time window)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.processingTime.fraction.last",
       "type" : "java.lang.Double",
       "description" : "Fraction of time spent processing, reported by webserver (percentage, last datapoint)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.processingTime.fraction.windowed",
       "type" : "java.lang.Double",
       "description" : "Fraction of time spent processing, reported by webserver (percentage, over time window)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.processingTime.max",
       "type" : "java.lang.Integer",
       "description" : "Max processing time for any single request, reported by webserver (millis)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.processingTime.total",
       "type" : "java.lang.Integer",
       "description" : "Total processing time, reported by webserver (millis)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.reqs.total",
       "type" : "java.lang.Integer",
       "description" : "Request count",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.tomcat.connectorStatus",
       "type" : "java.lang.String",
       "description" : "Catalina connector state name",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "webapp.url",
       "type" : "java.lang.String",
       "description" : "URL",
-      "links" : null
+      "links" : { }
     } ],
     "effectors" : [ {
       "name" : "deploy",
@@ -20026,6 +22698,26 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "entity.running",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, if service already running",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "entity.started",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, for running services",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "defaultValue" : null,
@@ -20036,10 +22728,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "files.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of files, to be copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "files.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of files to be copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of files, to be copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -20068,7 +22770,7 @@
     }, {
       "name" : "install.skip",
       "type" : "java.lang.Boolean",
-      "defaultValue" : false,
+      "defaultValue" : null,
       "description" : "Skip the driver install commands entirely, for pre-installed software",
       "reconfigurable" : false,
       "label" : null,
@@ -20166,10 +22868,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
-      "name" : "resources.latch",
+      "name" : "resources.install.latch",
       "type" : "java.lang.Boolean",
       "defaultValue" : null,
-      "description" : "Latch for blocking resources until ready",
+      "description" : "Latch for blocking install resources until ready",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "resources.runtime.latch",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Latch for blocking runtime resources until ready",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -20246,10 +22958,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "templates.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of templates, to be filled in and copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "templates.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of templates to be filled in and copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of templates, to be filled in and copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -20260,72 +22982,72 @@
       "name" : "download.addon.urls",
       "type" : "java.util.Map",
       "description" : "URL patterns for downloading named add-ons (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "download.url",
       "type" : "java.lang.String",
       "description" : "URL pattern for downloading the installer (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "description" : "Directory for installed artifacts (e.g. expanded dir after unpacking .tgz)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.address",
       "type" : "java.lang.String",
       "description" : "Host IP address",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.name",
       "type" : "java.lang.String",
       "description" : "Host name",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.address",
       "type" : "java.lang.String",
       "description" : "Host address as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.hostname",
       "type" : "java.lang.String",
       "description" : "Host name as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "install.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be installed in",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "run.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be run from",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.isUp",
       "type" : "java.lang.Boolean",
       "description" : "Whether the service is active and availability (confirmed and monitored)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.process.isRunning",
       "type" : "java.lang.Boolean",
       "description" : "Whether the process for the service is confirmed as running",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.state",
       "type" : "brooklyn.entity.basic.Lifecycle",
       "description" : "Actual lifecycle state of the service",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareprocess.pid.file",
       "type" : "java.lang.String",
       "description" : "PID file",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareservice.provisioningLocation",
       "type" : "brooklyn.location.MachineProvisioningLocation",
       "description" : "Location used to provision a machine where this is running",
-      "links" : null
+      "links" : { }
     } ],
     "effectors" : [ {
       "name" : "restart",
@@ -20355,7 +23077,7 @@
     "type" : "brooklyn.entity.zookeeper.ZooKeeperNode",
     "defaultVersion" : "3.4.5",
     "name" : "ZooKeeper Node",
-    "description" : "ZooKeeper is...",
+    "description" : "Apache ZooKeeper is a server which enables highly reliable distributed coordination.",
     "iconUrl" : "",
     "config" : [ {
       "name" : "children.startable.mode",
@@ -20413,6 +23135,26 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "entity.running",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, if service already running",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "entity.started",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Skip the startup process entirely, for running services",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "defaultValue" : null,
@@ -20423,10 +23165,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "files.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of files, to be copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "files.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of files to be copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of files, to be copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -20455,7 +23207,7 @@
     }, {
       "name" : "install.skip",
       "type" : "java.lang.Boolean",
-      "defaultValue" : false,
+      "defaultValue" : null,
       "description" : "Skip the driver install commands entirely, for pre-installed software",
       "reconfigurable" : false,
       "label" : null,
@@ -20543,10 +23295,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
-      "name" : "resources.latch",
+      "name" : "resources.install.latch",
       "type" : "java.lang.Boolean",
       "defaultValue" : null,
-      "description" : "Latch for blocking resources until ready",
+      "description" : "Latch for blocking install resources until ready",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "resources.runtime.latch",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : null,
+      "description" : "Latch for blocking runtime resources until ready",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -20613,10 +23375,20 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "templates.install",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Mapping of templates, to be filled in and copied before install, to destination name relative to installDir",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "templates.runtime",
       "type" : "java.util.Map",
       "defaultValue" : null,
-      "description" : "Map of templates to be filled in and copied, keyed by destination name relative to runDir",
+      "description" : "Mapping of templates, to be filled in and copied before customisation, to destination name relative to runDir",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -20667,107 +23439,107 @@
       "name" : "download.addon.urls",
       "type" : "java.util.Map",
       "description" : "URL patterns for downloading named add-ons (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "download.url",
       "type" : "java.lang.String",
       "description" : "URL pattern for downloading the installer (will substitute things like ${version} automatically)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "expandedinstall.dir",
       "type" : "java.lang.String",
       "description" : "Directory for installed artifacts (e.g. expanded dir after unpacking .tgz)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.address",
       "type" : "java.lang.String",
       "description" : "Host IP address",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.name",
       "type" : "java.lang.String",
       "description" : "Host name",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.address",
       "type" : "java.lang.String",
       "description" : "Host address as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "host.subnet.hostname",
       "type" : "java.lang.String",
       "description" : "Host name as known internally in the subnet where it is running (if different to host.name)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "install.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be installed in",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "run.dir",
       "type" : "java.lang.String",
       "description" : "Directory for this software to be run from",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.isUp",
       "type" : "java.lang.Boolean",
       "description" : "Whether the service is active and availability (confirmed and monitored)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.process.isRunning",
       "type" : "java.lang.Boolean",
       "description" : "Whether the process for the service is confirmed as running",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.state",
       "type" : "brooklyn.entity.basic.Lifecycle",
       "description" : "Actual lifecycle state of the service",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareprocess.pid.file",
       "type" : "java.lang.String",
       "description" : "PID file",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "softwareservice.provisioningLocation",
       "type" : "brooklyn.location.MachineProvisioningLocation",
       "description" : "Location used to provision a machine where this is running",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "zookeeper.election.port",
       "type" : "java.lang.Integer",
       "description" : "Zookeeper election ports",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "zookeeper.leader.port",
       "type" : "java.lang.Integer",
       "description" : "Zookeeper leader ports",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "zookeeper.myid",
       "type" : "java.lang.Integer",
       "description" : "ZooKeeper node's myId",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "zookeeper.outstandingRequests",
       "type" : "java.lang.Long",
       "description" : "Outstanding request count",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "zookeeper.packets.received",
       "type" : "java.lang.Long",
       "description" : "Total packets received",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "zookeeper.packets.sent",
       "type" : "java.lang.Long",
       "description" : "Total packets sent",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "zookeeper.port",
       "type" : "java.lang.Integer",
       "description" : "Zookeeper port",
-      "links" : null
+      "links" : { }
     } ],
     "effectors" : [ {
       "name" : "restart",
@@ -20796,7 +23568,7 @@
   }, {
     "type" : "brooklyn.entity.zookeeper.ZooKeeperEnsemble",
     "name" : "ZooKeeper ensemble",
-    "description" : "ZooKeeper is...",
+    "description" : "A cluster of ZooKeeper servers. Apache ZooKeeper enables highly reliable distributed coordination.",
     "iconUrl" : "",
     "config" : [ {
       "name" : "cluster.initial.quorumSize",
@@ -20843,6 +23615,16 @@
       "type" : "brooklyn.entity.basic.EntityFactory",
       "defaultValue" : null,
       "description" : "factory for creating new cluster members",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "dynamiccluster.firstmemberspec",
+      "type" : "brooklyn.entity.proxying.EntitySpec",
+      "defaultValue" : null,
+      "description" : "entity spec for creating new cluster members, used for the very first member if different",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -20901,7 +23683,7 @@
     }, {
       "name" : "dynamiccluster.zone.failureDetector",
       "type" : "brooklyn.entity.group.DynamicCluster$ZoneFailureDetector",
-      "defaultValue" : "brooklyn.entity.group.zoneaware.ProportionalZoneFailureDetector@b7193fc",
+      "defaultValue" : "brooklyn.entity.group.zoneaware.ProportionalZoneFailureDetector@77acc39c",
       "description" : "Zone failure detector",
       "reconfigurable" : false,
       "label" : null,
@@ -20911,7 +23693,7 @@
     }, {
       "name" : "dynamiccluster.zone.placementStrategy",
       "type" : "brooklyn.entity.group.DynamicCluster$NodePlacementStrategy",
-      "defaultValue" : "brooklyn.entity.group.zoneaware.BalancingNodePlacementStrategy@37f02eaa",
+      "defaultValue" : "brooklyn.entity.group.zoneaware.BalancingNodePlacementStrategy@45498134",
       "description" : "Node placement strategy",
       "reconfigurable" : false,
       "label" : null,
@@ -20920,8 +23702,8 @@
       "links" : null
     }, {
       "name" : "enricher.service_state.children_and_members.quorum.running",
-      "type" : "brooklyn.entity.basic.QuorumCheck",
-      "defaultValue" : "QuorumCheck[require=0,100.0%]",
+      "type" : "brooklyn.util.collections.QuorumCheck",
+      "defaultValue" : "QuorumCheck[all;require=0,100.0%]",
       "description" : "Problems check from children actual states (lifecycle), applied by default to members and children, not checking upness, but requiring by default that none are on-fire",
       "reconfigurable" : false,
       "label" : null,
@@ -20930,8 +23712,8 @@
       "links" : null
     }, {
       "name" : "enricher.service_state.children_and_members.quorum.up",
-      "type" : "brooklyn.entity.basic.QuorumCheck",
-      "defaultValue" : "QuorumCheck[require=1,0.0%]",
+      "type" : "brooklyn.util.collections.QuorumCheck",
+      "defaultValue" : "QuorumCheck[atLeastOne;require=1,0.0%]",
       "description" : "Up check, applied by default to members, requiring at least one present and up",
       "reconfigurable" : false,
       "label" : null,
@@ -20973,82 +23755,82 @@
       "name" : "cluster.entity",
       "type" : "brooklyn.entity.Entity",
       "description" : "The cluster an entity is a member of",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cluster.first",
       "type" : "java.lang.Boolean",
       "description" : "Set on an entity if it is the first member of a cluster",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cluster.first.entity",
       "type" : "brooklyn.entity.Entity",
       "description" : "The first member of the cluster",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "cluster.member",
       "type" : "java.lang.Boolean",
       "description" : "Set on an entity if it is a member of a cluster",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "dynamiccluster.entityQuarantined",
       "type" : "brooklyn.entity.Entity",
       "description" : "Entity failed to start, and has been quarantined",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "dynamiccluster.failedSubLocations",
       "type" : "java.util.Set",
       "description" : "Sub locations that seem to have failed",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "dynamiccluster.quarantineGroup",
       "type" : "brooklyn.entity.group.QuarantineGroup",
       "description" : "Group of quarantined entities that failed to start",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "dynamiccluster.subLocations",
       "type" : "java.util.List",
       "description" : "Locations for each availability zone to use",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "group.members",
       "type" : "java.util.Collection",
       "description" : "Members of the group",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "group.members.added",
       "type" : "brooklyn.entity.Entity",
       "description" : "Entity added to group members",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "group.members.count",
       "type" : "java.lang.Integer",
       "description" : "Number of members",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "group.members.removed",
       "type" : "brooklyn.entity.Entity",
       "description" : "Entity removed from group members",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.isUp",
       "type" : "java.lang.Boolean",
       "description" : "Whether the service is active and availability (confirmed and monitored)",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "service.state",
       "type" : "brooklyn.entity.basic.Lifecycle",
       "description" : "Actual lifecycle state of the service",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "zookeeper.cluster.name",
       "type" : "java.lang.String",
       "description" : "Name of the Zookeeper cluster",
-      "links" : null
+      "links" : { }
     }, {
       "name" : "zookeeper.servers",
       "type" : "java.util.List",
       "description" : "Hostnames to connect to cluster with",
-      "links" : null
+      "links" : { }
     } ],
     "effectors" : [ {
       "name" : "replaceMember",
@@ -21116,7 +23898,7 @@
     "config" : [ {
       "name" : "autoscaler.currentSizeOperator",
       "type" : "com.google.common.base.Function",
-      "defaultValue" : "brooklyn.policy.autoscaling.AutoScalerPolicy$5@65f39cb2",
+      "defaultValue" : "brooklyn.policy.autoscaling.AutoScalerPolicy$4@57bba615",
       "description" : null,
       "reconfigurable" : false,
       "label" : null,
@@ -21146,7 +23928,7 @@
     }, {
       "name" : "autoscaler.maxReachedNotificationDelay",
       "type" : "brooklyn.util.time.Duration",
-      "defaultValue" : "0",
+      "defaultValue" : "0ms",
       "description" : "Time that we consistently wanted to go above the maxPoolSize for, after which the maxSizeReachedSensor (if any) will be emitted",
       "reconfigurable" : false,
       "label" : null,
@@ -21246,7 +24028,7 @@
     }, {
       "name" : "autoscaler.resizeDownStabilizationDelay",
       "type" : "brooklyn.util.time.Duration",
-      "defaultValue" : "0",
+      "defaultValue" : "0ms",
       "description" : null,
       "reconfigurable" : true,
       "label" : null,
@@ -21256,7 +24038,7 @@
     }, {
       "name" : "autoscaler.resizeOperator",
       "type" : "brooklyn.policy.autoscaling.ResizeOperator",
-      "defaultValue" : "brooklyn.policy.autoscaling.AutoScalerPolicy$3@560bed64",
+      "defaultValue" : "brooklyn.policy.autoscaling.AutoScalerPolicy$3@46eb524e",
       "description" : null,
       "reconfigurable" : false,
       "label" : null,
@@ -21266,7 +24048,7 @@
     }, {
       "name" : "autoscaler.resizeUpStabilizationDelay",
       "type" : "brooklyn.util.time.Duration",
-      "defaultValue" : "0",
+      "defaultValue" : "0ms",
       "description" : null,
       "reconfigurable" : true,
       "label" : null,
@@ -21302,7 +24084,7 @@
     }, {
       "name" : "connectionFailureDetector.serviceFailedStabilizationDelay",
       "type" : "brooklyn.util.time.Duration",
-      "defaultValue" : "0",
+      "defaultValue" : "0ms",
       "description" : "Time period for which the connection must be consistently down for (e.g. doesn't report down-up-down) before concluding failure. Note that long TCP timeouts mean there can be long (e.g. 70 second) delays in noticing a connection refused condition.",
       "reconfigurable" : false,
       "label" : null,
@@ -21312,8 +24094,58 @@
     }, {
       "name" : "connectionFailureDetector.serviceRecoveredStabilizationDelay",
       "type" : "brooklyn.util.time.Duration",
-      "defaultValue" : "0",
+      "defaultValue" : "0ms",
       "description" : "For a failed connection, time period for which the connection must be consistently up for (e.g. doesn't report up-down-up) before concluding recovered",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "failureDetector.pollPeriod",
+      "type" : "brooklyn.util.time.Duration",
+      "defaultValue" : "1s",
+      "description" : "",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "failureDetector.sensor.fail",
+      "type" : "brooklyn.event.Sensor",
+      "defaultValue" : "Sensor: ha.entityFailed (brooklyn.policy.ha.HASensors$FailureDescriptor)",
+      "description" : "A sensor which will indicate failure when set",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "failureDetector.sensor.recover",
+      "type" : "brooklyn.event.Sensor",
+      "defaultValue" : "Sensor: ha.entityRecovered (brooklyn.policy.ha.HASensors$FailureDescriptor)",
+      "description" : "A sensor which will indicate recovery from failure when set",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "failureDetector.serviceFailedStabilizationDelay",
+      "type" : "brooklyn.util.time.Duration",
+      "defaultValue" : "0ms",
+      "description" : "Time period for which the health check consistently fails (e.g. doesn't report failed-ok-faled) before concluding failure.",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "failureDetector.serviceRecoveredStabilizationDelay",
+      "type" : "brooklyn.util.time.Duration",
+      "defaultValue" : "0ms",
+      "description" : "Time period for which the health check succeeds continiually (e.g. doesn't report ok-failed-ok) before concluding recovered",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -21424,537 +24256,66 @@
       "possibleValues" : null,
       "links" : null
     } ]
-  } ],
-  "enrichers" : [ {
-    "type" : "brooklyn.enricher.basic.Aggregator",
-    "name" : "Aggregator",
-    "description" : "Aggregates attributes from multiple entities into a single attribute value; see Enrichers.builder().aggregating(...)",
-    "iconUrl" : "",
-    "config" : [ {
-      "name" : "enricher.aggregating.entityFilter",
-      "type" : "com.google.common.base.Predicate",
-      "defaultValue" : null,
-      "description" : "enricher.aggregating.entityFilter",
-      "reconfigurable" : false,
-      "label" : null,
-      "priority" : null,
-      "possibleValues" : null,
-      "links" : null
-    }, {
-      "name" : "enricher.aggregating.fromChildren",
-      "type" : "java.lang.Boolean",
-      "defaultValue" : null,
-      "description" : "enricher.aggregating.fromChildren",
-      "reconfigurable" : false,
-      "label" : null,
-      "priority" : null,
-      "possibleValues" : null,
-      "links" : null
-    }, {
-      "name" : "enricher.aggregating.fromHardcodedProducers",
-      "type" : "java.util.Set",
-      "defaultValue" : null,
-      "description" : "enricher.aggregating.fromHardcodedProducers",
-      "reconfigurable" : false,
-      "label" : null,
-      "priority" : null,
-      "possibleValues" : null,
-      "links" : null
-    }, {
-      "name" : "enricher.aggregating.fromMembers",
-      "type" : "java.lang.Boolean",
-      "defaultValue" : null,
-      "description" : "enricher.aggregating.fromMembers",
-      "reconfigurable" : false,
-      "label" : null,
-      "priority" : null,
-      "possibleValues" : null,
-      "links" : null
-    }, {
-      "name" : "enricher.aggregating.valueFilter",
-      "type" : "com.google.common.base.Predicate",
-      "defaultValue" : null,
-      "description" : "enricher.aggregating.valueFilter",
-      "reconfigurable" : false,
-      "label" : null,
-      "priority" : null,
-      "possibleValues" : null,
-      "links" : null
-    }, {
-      "name" : "enricher.defaultMemberValue",
-      "type" : "java.lang.Object",
-      "defaultValue" : null,
-      "description" : "enricher.defaultMemberValue",
-      "reconfigurable" : false,
-      "label" : null,
-      "priority" : null,
-      "possibleValues" : null,
-      "links" : null
-    }, {
-      "name" : "enricher.producer",
-      "type" : "brooklyn.entity.Entity",
-      "defaultValue" : null,
-      "description" : "The entity whose children/members will be aggregated",
-      "reconfigurable" : false,
-      "label" : null,
-      "priority" : null,
-      "possibleValues" : null,
-      "links" : null
-    }, {
-      "name" : "enricher.sourceSensor",
-      "type" : "brooklyn.event.Sensor",
-      "defaultValue" : null,
-      "description" : "enricher.sourceSensor",
-      "reconfigurable" : false,
-      "label" : null,
-      "priority" : null,
-      "possibleValues" : null,
-      "links" : null
-    }, {
-      "name" : "enricher.suppressDuplicates",
-      "type" : "java.lang.Boolean",
-      "defaultValue" : null,
-      "description" : "Whether duplicate values published by this enricher should be suppressed",
-      "reconfigurable" : false,
-      "label" : null,
-      "priority" : null,
-      "possibleValues" : null,
-      "links" : null
-    }, {
-      "name" : "enricher.targetSensor",
-      "type" : "brooklyn.event.Sensor",
-      "defaultValue" : null,
-      "description" : "enricher.targetSensor",
-      "reconfigurable" : false,
-      "label" : null,
-      "priority" : null,
-      "possibleValues" : null,
-      "links" : null
-    }, {
-      "name" : "enricher.transformation",
-      "type" : "com.google.common.base.Function",
-      "defaultValue" : null,
-      "description" : "enricher.transformation",
-      "reconfigurable" : false,
-      "label" : null,
-      "priority" : null,
-      "possibleValues" : null,
-      "links" : null
-    } ]
   }, {
-    "type" : "brooklyn.enricher.basic.Combiner",
-    "name" : "Combiner",
-    "description" : "Combines attributes; see Enrichers.builder().combining(...)",
+    "type" : "brooklyn.policy.ha.SshMachineFailureDetector",
+    "name" : "Ssh Connectivity Failure Detector",
+    "description" : "HA policy for monitoring an SshMachine, emitting an event if the connection is lost/restored",
     "iconUrl" : "",
     "config" : [ {
-      "name" : "enricher.aggregating.valueFilter",
-      "type" : "com.google.common.base.Predicate",
-      "defaultValue" : null,
-      "description" : "enricher.aggregating.valueFilter",
-      "reconfigurable" : false,
-      "label" : null,
-      "priority" : null,
-      "possibleValues" : null,
-      "links" : null
-    }, {
-      "name" : "enricher.producer",
-      "type" : "brooklyn.entity.Entity",
-      "defaultValue" : null,
-      "description" : "enricher.producer",
-      "reconfigurable" : false,
-      "label" : null,
-      "priority" : null,
-      "possibleValues" : null,
-      "links" : null
-    }, {
-      "name" : "enricher.sourceSensors",
-      "type" : "java.util.Set",
-      "defaultValue" : null,
-      "description" : "enricher.sourceSensors",
-      "reconfigurable" : false,
-      "label" : null,
-      "priority" : null,
-      "possibleValues" : null,
-      "links" : null
-    }, {
-      "name" : "enricher.suppressDuplicates",
-      "type" : "java.lang.Boolean",
-      "defaultValue" : null,
-      "description" : "Whether duplicate values published by this enricher should be suppressed",
-      "reconfigurable" : false,
-      "label" : null,
-      "priority" : null,
-      "possibleValues" : null,
-      "links" : null
-    }, {
-      "name" : "enricher.targetSensor",
-      "type" : "brooklyn.event.Sensor",
-      "defaultValue" : null,
-      "description" : "enricher.targetSensor",
-      "reconfigurable" : false,
-      "label" : null,
-      "priority" : null,
-      "possibleValues" : null,
-      "links" : null
-    }, {
-      "name" : "enricher.transformation",
-      "type" : "com.google.common.base.Function",
-      "defaultValue" : null,
-      "description" : "enricher.transformation",
-      "reconfigurable" : false,
-      "label" : null,
-      "priority" : null,
-      "possibleValues" : null,
-      "links" : null
-    } ]
-  }, {
-    "type" : "brooklyn.enricher.DeltaEnricher",
-    "name" : "Delta",
-    "description" : "Converts an absolute sensor into a delta sensor (i.e. the diff between the current and previous value)",
-    "iconUrl" : "",
-    "config" : [ {
-      "name" : "enricher.suppressDuplicates",
-      "type" : "java.lang.Boolean",
-      "defaultValue" : null,
-      "description" : "Whether duplicate values published by this enricher should be suppressed",
-      "reconfigurable" : false,
-      "label" : null,
-      "priority" : null,
-      "possibleValues" : null,
-      "links" : null
-    } ]
-  }, {
-    "type" : "brooklyn.enricher.HttpLatencyDetector",
-    "name" : "HTTP Latency Detector",
-    "description" : "An Enricher which computes latency in accessing a URL, normally by periodically polling that URL",
-    "iconUrl" : "",
-    "config" : [ {
-      "name" : "enricher.suppressDuplicates",
-      "type" : "java.lang.Boolean",
-      "defaultValue" : null,
-      "description" : "Whether duplicate values published by this enricher should be suppressed",
-      "reconfigurable" : false,
-      "label" : null,
-      "priority" : null,
-      "possibleValues" : null,
-      "links" : null
-    }, {
-      "name" : "latencyDetector.period",
+      "name" : "failureDetector.pollPeriod",
       "type" : "brooklyn.util.time.Duration",
-      "defaultValue" : null,
-      "description" : "latencyDetector.period",
+      "defaultValue" : "1s",
+      "description" : "",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
       "possibleValues" : null,
       "links" : null
     }, {
-      "name" : "latencyDetector.requireServiceUp",
-      "type" : "java.lang.Boolean",
-      "defaultValue" : null,
-      "description" : "latencyDetector.requireServiceUp",
-      "reconfigurable" : false,
-      "label" : null,
-      "priority" : null,
-      "possibleValues" : null,
-      "links" : null
-    }, {
-      "name" : "latencyDetector.rollup",
-      "type" : "brooklyn.util.time.Duration",
-      "defaultValue" : null,
-      "description" : "latencyDetector.rollup",
-      "reconfigurable" : false,
-      "label" : null,
-      "priority" : null,
-      "possibleValues" : null,
-      "links" : null
-    }, {
-      "name" : "latencyDetector.url",
-      "type" : "java.lang.String",
-      "defaultValue" : null,
-      "description" : "latencyDetector.url",
-      "reconfigurable" : false,
-      "label" : null,
-      "priority" : null,
-      "possibleValues" : null,
-      "links" : null
-    }, {
-      "name" : "latencyDetector.urlPostProcessing",
-      "type" : "com.google.common.base.Function",
-      "defaultValue" : null,
-      "description" : "Function applied to the urlSensor value, to determine the URL to use",
-      "reconfigurable" : false,
-      "label" : null,
-      "priority" : null,
-      "possibleValues" : null,
-      "links" : null
-    }, {
-      "name" : "latencyDetector.urlSensor",
-      "type" : "brooklyn.event.AttributeSensor",
-      "defaultValue" : null,
-      "description" : "latencyDetector.urlSensor",
-      "reconfigurable" : false,
-      "label" : null,
-      "priority" : null,
-      "possibleValues" : null,
-      "links" : null
-    } ]
-  }, {
-    "type" : "brooklyn.enricher.basic.Propagator",
-    "name" : "Propagator",
-    "description" : "Propagates attributes from one entity to another; see Enrichers.builder().propagating(...)",
-    "iconUrl" : "",
-    "config" : [ {
-      "name" : "enricher.producer",
-      "type" : "brooklyn.entity.Entity",
-      "defaultValue" : null,
-      "description" : "enricher.producer",
-      "reconfigurable" : false,
-      "label" : null,
-      "priority" : null,
-      "possibleValues" : null,
-      "links" : null
-    }, {
-      "name" : "enricher.propagating.inclusions",
-      "type" : "java.util.Collection",
-      "defaultValue" : null,
-      "description" : "enricher.propagating.inclusions",
-      "reconfigurable" : false,
-      "label" : null,
-      "priority" : null,
-      "possibleValues" : null,
-      "links" : null
-    }, {
-      "name" : "enricher.propagating.propagatingAll",
-      "type" : "java.lang.Boolean",
-      "defaultValue" : null,
-      "description" : "enricher.propagating.propagatingAll",
-      "reconfigurable" : false,
-      "label" : null,
-      "priority" : null,
-      "possibleValues" : null,
-      "links" : null
-    }, {
-      "name" : "enricher.propagating.propagatingAllBut",
-      "type" : "java.util.Collection",
-      "defaultValue" : null,
-      "description" : "enricher.propagating.propagatingAllBut",
-      "reconfigurable" : false,
-      "label" : null,
-      "priority" : null,
-      "possibleValues" : null,
-      "links" : null
-    }, {
-      "name" : "enricher.propagating.sensorMapping",
-      "type" : "java.util.Map",
-      "defaultValue" : null,
-      "description" : "enricher.propagating.sensorMapping",
-      "reconfigurable" : false,
-      "label" : null,
-      "priority" : null,
-      "possibleValues" : null,
-      "links" : null
-    }, {
-      "name" : "enricher.suppressDuplicates",
-      "type" : "java.lang.Boolean",
-      "defaultValue" : null,
-      "description" : "Whether duplicate values published by this enricher should be suppressed",
-      "reconfigurable" : false,
-      "label" : null,
-      "priority" : null,
-      "possibleValues" : null,
-      "links" : null
-    } ]
-  }, {
-    "type" : "brooklyn.enricher.RollingMeanEnricher",
-    "name" : "Rolling Mean",
-    "description" : "Transforms a sensor into a rolling average based on a fixed window size. This is useful for smoothing sample type metrics, such as latency or CPU time",
-    "iconUrl" : "",
-    "config" : [ {
-      "name" : "enricher.suppressDuplicates",
-      "type" : "java.lang.Boolean",
-      "defaultValue" : null,
-      "description" : "Whether duplicate values published by this enricher should be suppressed",
-      "reconfigurable" : false,
-      "label" : null,
-      "priority" : null,
-      "possibleValues" : null,
-      "links" : null
-    } ]
-  }, {
-    "type" : "brooklyn.enricher.RollingTimeWindowMeanEnricher",
-    "name" : "Rolling Mean in Time Window",
-    "description" : "Transforms a sensor's data into a rolling average based on a time window.",
-    "iconUrl" : "",
-    "config" : [ {
-      "name" : "enricher.suppressDuplicates",
-      "type" : "java.lang.Boolean",
-      "defaultValue" : null,
-      "description" : "Whether duplicate values published by this enricher should be suppressed",
-      "reconfigurable" : false,
-      "label" : null,
-      "priority" : null,
-      "possibleValues" : null,
-      "links" : null
-    } ]
-  }, {
-    "type" : "brooklyn.policy.ha.ServiceFailureDetector",
-    "name" : "Service Failure Detector",
-    "description" : "HA policy for deteting failure of a service",
-    "iconUrl" : "",
-    "config" : [ {
-      "name" : "enricher.suppressDuplicates",
-      "type" : "java.lang.Boolean",
-      "defaultValue" : null,
-      "description" : "Whether duplicate values published by this enricher should be suppressed",
-      "reconfigurable" : false,
-      "label" : null,
-      "priority" : null,
-      "possibleValues" : null,
-      "links" : null
-    }, {
-      "name" : "entityFailed.stabilizationDelay",
-      "type" : "brooklyn.util.time.Duration",
-      "defaultValue" : "0",
-      "description" : "Time period for which the service must be consistently down for (e.g. doesn't report down-up-down) before emitting ENTITY_FAILED",
-      "reconfigurable" : false,
-      "label" : null,
-      "priority" : null,
-      "possibleValues" : null,
-      "links" : null
-    }, {
-      "name" : "entityRecovered.stabilizationDelay",
-      "type" : "brooklyn.util.time.Duration",
-      "defaultValue" : "0",
-      "description" : "For a failed entity, time period for which the service must be consistently up for (e.g. doesn't report up-down-up) before emitting ENTITY_RECOVERED",
-      "reconfigurable" : false,
-      "label" : null,
-      "priority" : null,
-      "possibleValues" : null,
-      "links" : null
-    }, {
-      "name" : "monitorServiceProblems",
-      "type" : "java.lang.Boolean",
-      "defaultValue" : true,
-      "description" : "Whether to monitor service problems, and emit on failures there (if set to false, this monitors only service up)",
-      "reconfigurable" : false,
-      "label" : null,
-      "priority" : null,
-      "possibleValues" : null,
-      "links" : null
-    }, {
-      "name" : "onlyReportIfPreviouslyUp",
-      "type" : "java.lang.Boolean",
-      "defaultValue" : true,
-      "description" : "Prevents the policy from emitting ENTITY_FAILED if the entity fails on startup (ie has never been up)",
-      "reconfigurable" : false,
-      "label" : null,
-      "priority" : null,
-      "possibleValues" : null,
-      "links" : null
-    }, {
-      "name" : "serviceOnFire.stabilizationDelay",
-      "type" : "brooklyn.util.time.Duration",
-      "defaultValue" : "0",
-      "description" : "Time period for which the service must be consistently down for (e.g. doesn't report down-up-down) before concluding ON_FIRE",
-      "reconfigurable" : false,
-      "label" : null,
-      "priority" : null,
-      "possibleValues" : null,
-      "links" : null
-    } ]
-  }, {
-    "type" : "brooklyn.enricher.TimeFractionDeltaEnricher",
-    "name" : "Time-fraction Delta",
-    "description" : "Converts an absolute measure of time into a fraction of time, based on the delta between consecutive values and the elapsed time between those values.",
-    "iconUrl" : "",
-    "config" : [ {
-      "name" : "enricher.suppressDuplicates",
-      "type" : "java.lang.Boolean",
-      "defaultValue" : null,
-      "description" : "Whether duplicate values published by this enricher should be suppressed",
-      "reconfigurable" : false,
-      "label" : null,
-      "priority" : null,
-      "possibleValues" : null,
-      "links" : null
-    } ]
-  }, {
-    "type" : "brooklyn.enricher.TimeWeightedDeltaEnricher",
-    "name" : "Time-weighted Delta",
-    "description" : "Converts an absolute sensor into a delta sensor (i.e. the diff between the current and previous value), presented as a units/timeUnit based on the event timing.",
-    "iconUrl" : "",
-    "config" : [ {
-      "name" : "enricher.suppressDuplicates",
-      "type" : "java.lang.Boolean",
-      "defaultValue" : null,
-      "description" : "Whether duplicate values published by this enricher should be suppressed",
-      "reconfigurable" : false,
-      "label" : null,
-      "priority" : null,
-      "possibleValues" : null,
-      "links" : null
-    } ]
-  }, {
-    "type" : "brooklyn.enricher.basic.Transformer",
-    "name" : "Transformer",
-    "description" : "Transformers attributes of an entity; see Enrichers.builder().transforming(...)",
-    "iconUrl" : "",
-    "config" : [ {
-      "name" : "enricher.producer",
-      "type" : "brooklyn.entity.Entity",
-      "defaultValue" : null,
-      "description" : "enricher.producer",
-      "reconfigurable" : false,
-      "label" : null,
-      "priority" : null,
-      "possibleValues" : null,
-      "links" : null
-    }, {
-      "name" : "enricher.sourceSensor",
+      "name" : "failureDetector.sensor.fail",
       "type" : "brooklyn.event.Sensor",
-      "defaultValue" : null,
-      "description" : "enricher.sourceSensor",
+      "defaultValue" : "Sensor: ha.entityFailed (brooklyn.policy.ha.HASensors$FailureDescriptor)",
+      "description" : "A sensor which will indicate failure when set",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
       "possibleValues" : null,
       "links" : null
     }, {
-      "name" : "enricher.suppressDuplicates",
-      "type" : "java.lang.Boolean",
-      "defaultValue" : null,
-      "description" : "Whether duplicate values published by this enricher should be suppressed",
-      "reconfigurable" : false,
-      "label" : null,
-      "priority" : null,
-      "possibleValues" : null,
-      "links" : null
-    }, {
-      "name" : "enricher.targetSensor",
+      "name" : "failureDetector.sensor.recover",
       "type" : "brooklyn.event.Sensor",
-      "defaultValue" : null,
-      "description" : "enricher.targetSensor",
+      "defaultValue" : "Sensor: ha.entityRecovered (brooklyn.policy.ha.HASensors$FailureDescriptor)",
+      "description" : "A sensor which will indicate recovery from failure when set",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
       "possibleValues" : null,
       "links" : null
     }, {
-      "name" : "enricher.transformation",
-      "type" : "com.google.common.base.Function",
-      "defaultValue" : null,
-      "description" : "enricher.transformation",
+      "name" : "failureDetector.serviceFailedStabilizationDelay",
+      "type" : "brooklyn.util.time.Duration",
+      "defaultValue" : "0ms",
+      "description" : "Time period for which the health check consistently fails (e.g. doesn't report failed-ok-faled) before concluding failure.",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
       "possibleValues" : null,
       "links" : null
     }, {
-      "name" : "enricher.transformation.fromevent",
-      "type" : "com.google.common.base.Function",
-      "defaultValue" : null,
-      "description" : "enricher.transformation.fromevent",
+      "name" : "failureDetector.serviceRecoveredStabilizationDelay",
+      "type" : "brooklyn.util.time.Duration",
+      "defaultValue" : "0ms",
+      "description" : "Time period for which the health check succeeds continiually (e.g. doesn't report ok-failed-ok) before concluding recovered",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "ha.sshConnection.timeout",
+      "type" : "brooklyn.util.time.Duration",
+      "defaultValue" : "10s",
+      "description" : "How long to wait for conneciton before declaring failure",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -21962,6 +24323,7 @@
       "links" : null
     } ]
   } ],
+  "enrichers" : [ ],
   "locations" : [ {
     "type" : "brooklyn.entity.pool.ServerPoolLocation",
     "config" : [ {
@@ -22055,6 +24417,193 @@
   }, {
     "type" : "brooklyn.location.MachineProvisioningLocation",
     "config" : [ ],
+    "sensors" : [ ],
+    "effectors" : [ ]
+  }, {
+    "type" : "brooklyn.location.ProvisioningLocation",
+    "config" : [ ],
+    "sensors" : [ ],
+    "effectors" : [ ]
+  }, {
+    "type" : "brooklyn.location.access.PortForwardManager",
+    "config" : [ {
+      "name" : "brooklyn.portForwardManager.startingPort",
+      "type" : "java.lang.Integer",
+      "defaultValue" : 11000,
+      "description" : "The starting port for assigning port numbers, such as for DNAT",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "scope",
+      "type" : "java.lang.String",
+      "defaultValue" : "global",
+      "description" : "The scope that this applies to, defaulting to global",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    } ],
+    "sensors" : [ ],
+    "effectors" : [ ]
+  }, {
+    "type" : "brooklyn.location.access.PortForwardManagerAuthority",
+    "deprecated" : true,
+    "config" : [ {
+      "name" : "brooklyn.portForwardManager.startingPort",
+      "type" : "java.lang.Integer",
+      "defaultValue" : 11000,
+      "description" : "The starting port for assigning port numbers, such as for DNAT",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "parentLocation",
+      "type" : "brooklyn.location.Location",
+      "defaultValue" : null,
+      "description" : "parentLocation",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "scope",
+      "type" : "java.lang.String",
+      "defaultValue" : "global",
+      "description" : "The scope that this applies to, defaulting to global",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "spec.final",
+      "type" : "java.lang.String",
+      "defaultValue" : null,
+      "description" : "The actual spec (in a chain) which instantiates a location",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "spec.named.name",
+      "type" : "java.lang.String",
+      "defaultValue" : null,
+      "description" : "The name on the (first) named spec in a chain",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "spec.original",
+      "type" : "java.lang.String",
+      "defaultValue" : null,
+      "description" : "The original spec used to instantiate a location",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    } ],
+    "sensors" : [ ],
+    "effectors" : [ ]
+  }, {
+    "type" : "brooklyn.location.access.PortForwardManagerClient",
+    "deprecated" : true,
+    "config" : [ {
+      "name" : "brooklyn.portForwardManager.startingPort",
+      "type" : "java.lang.Integer",
+      "defaultValue" : 11000,
+      "description" : "The starting port for assigning port numbers, such as for DNAT",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "scope",
+      "type" : "java.lang.String",
+      "defaultValue" : "global",
+      "description" : "The scope that this applies to, defaulting to global",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    } ],
+    "sensors" : [ ],
+    "effectors" : [ ]
+  }, {
+    "type" : "brooklyn.location.access.PortForwardManagerImpl",
+    "config" : [ {
+      "name" : "brooklyn.portForwardManager.startingPort",
+      "type" : "java.lang.Integer",
+      "defaultValue" : 11000,
+      "description" : "The starting port for assigning port numbers, such as for DNAT",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "parentLocation",
+      "type" : "brooklyn.location.Location",
+      "defaultValue" : null,
+      "description" : "parentLocation",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "scope",
+      "type" : "java.lang.String",
+      "defaultValue" : "global",
+      "description" : "The scope that this applies to, defaulting to global",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "spec.final",
+      "type" : "java.lang.String",
+      "defaultValue" : null,
+      "description" : "The actual spec (in a chain) which instantiates a location",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "spec.named.name",
+      "type" : "java.lang.String",
+      "defaultValue" : null,
+      "description" : "The name on the (first) named spec in a chain",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "spec.original",
+      "type" : "java.lang.String",
+      "defaultValue" : null,
+      "description" : "The original spec used to instantiate a location",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    } ],
     "sensors" : [ ],
     "effectors" : [ ]
   }, {
@@ -22290,6 +24839,16 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "detectMachineDetails",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : true,
+      "description" : "Attempt to detect machine details automatically. Works with SSH-accessible Linux instances.",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "env",
       "type" : "java.util.Map",
       "defaultValue" : null,
@@ -22312,7 +24871,7 @@
     }, {
       "name" : "localTempDir",
       "type" : "java.lang.String",
-      "defaultValue" : "/tmp/brooklyn-splodge-ssh-tmp",
+      "defaultValue" : "/tmp/brooklyn-valentin-ssh-tmp",
       "description" : "The directory on the local machine (i.e. running brooklyn) for writing temp files",
       "reconfigurable" : false,
       "label" : null,
@@ -22324,6 +24883,16 @@
       "type" : "java.lang.String",
       "defaultValue" : null,
       "description" : "logPrefix",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "machineDetails",
+      "type" : "brooklyn.location.MachineDetails",
+      "defaultValue" : null,
+      "description" : "machineDetails",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -22725,6 +25294,16 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "detectMachineDetails",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : true,
+      "description" : "Attempt to detect machine details automatically. Works with SSH-accessible Linux instances.",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "env",
       "type" : "java.util.Map",
       "defaultValue" : null,
@@ -22747,7 +25326,7 @@
     }, {
       "name" : "localTempDir",
       "type" : "java.lang.String",
-      "defaultValue" : "/tmp/brooklyn-splodge-ssh-tmp",
+      "defaultValue" : "/tmp/brooklyn-valentin-ssh-tmp",
       "description" : "The directory on the local machine (i.e. running brooklyn) for writing temp files",
       "reconfigurable" : false,
       "label" : null,
@@ -22759,6 +25338,16 @@
       "type" : "java.lang.String",
       "defaultValue" : null,
       "description" : "logPrefix",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "machineDetails",
+      "type" : "brooklyn.location.MachineDetails",
+      "defaultValue" : null,
+      "description" : "machineDetails",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -23000,6 +25589,16 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "logCredentials",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : false,
+      "description" : "Whether to log credentials of a new VM - strongly recommended never be used in production, as it is a big security hole!",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "minCores",
       "type" : "java.lang.Integer",
       "defaultValue" : null,
@@ -23011,9 +25610,9 @@
       "links" : null
     }, {
       "name" : "minDisk",
-      "type" : "java.lang.Double",
+      "type" : "java.lang.Object",
       "defaultValue" : null,
-      "description" : "Minimum size of disk (in GB), for use in selecting the machine/hardware profile",
+      "description" : "Minimum size of disk, either as string (100gb) or number of GB (100), for use in selecting the machine/hardware profile",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -23021,9 +25620,9 @@
       "links" : null
     }, {
       "name" : "minRam",
-      "type" : "java.lang.Integer",
+      "type" : "java.lang.Object",
       "defaultValue" : null,
-      "description" : "Minimum amount of RAM (in MB), for use in selecting the machine/hardware profile",
+      "description" : "Minimum amount of RAM, either as string (4gb) or number of MB (4096), for use in selecting the machine/hardware profile",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -23053,7 +25652,7 @@
       "name" : "password",
       "type" : "java.lang.String",
       "defaultValue" : null,
-      "description" : "password",
+      "description" : "password to use for ssh; note some images do not allow password-based ssh access",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -23072,7 +25671,7 @@
     }, {
       "name" : "private-key-file",
       "type" : "java.lang.String",
-      "defaultValue" : "/Users/splodge/.ssh/id_rsa:/Users/splodge/.ssh/id_dsa",
+      "defaultValue" : "/home/valentin/.ssh/id_rsa:/home/valentin/.ssh/id_dsa",
       "description" : "a ':' separated list of ssh private key files; uses first in list that can be read",
       "reconfigurable" : false,
       "label" : null,
@@ -23102,7 +25701,7 @@
     }, {
       "name" : "privateKeyFile",
       "type" : "java.lang.String",
-      "defaultValue" : "/Users/splodge/.ssh/id_rsa:/Users/splodge/.ssh/id_dsa",
+      "defaultValue" : "/home/valentin/.ssh/id_rsa:/home/valentin/.ssh/id_dsa",
       "description" : "a ':' separated list of ssh private key files; uses first in list that can be read",
       "reconfigurable" : false,
       "label" : null,
@@ -23133,7 +25732,7 @@
       "name" : "public-key-file",
       "type" : "java.lang.String",
       "defaultValue" : null,
-      "description" : "colon-separated list of ssh public key file(s) to use; if blank will infer from privateKeyFile by appending \".pub\"",
+      "description" : "ssh public key file to use; if blank will infer from privateKeyFile by appending \".pub\"",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -23153,7 +25752,7 @@
       "name" : "publicKeyFile",
       "type" : "java.lang.String",
       "defaultValue" : null,
-      "description" : "colon-separated list of ssh public key file(s) to use; if blank will infer from privateKeyFile by appending \".pub\"",
+      "description" : "ssh public key file to use; if blank will infer from privateKeyFile by appending \".pub\"",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -23164,6 +25763,16 @@
       "type" : "java.lang.String",
       "defaultValue" : null,
       "description" : "region",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "required.ports",
+      "type" : "java.lang.Object",
+      "defaultValue" : null,
+      "description" : "Required additional ports to be applied when creating a VM, on supported clouds (either a single port as an Integer, or an Iterable<Integer> or Integer[])",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -23202,7 +25811,7 @@
     }, {
       "name" : "user",
       "type" : "java.lang.String",
-      "defaultValue" : "splodge",
+      "defaultValue" : "valentin",
       "description" : "user account for normal access to the remote machine, defaulting to local user",
       "reconfigurable" : false,
       "label" : null,
@@ -23275,6 +25884,16 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "detectMachineDetails",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : true,
+      "description" : "Attempt to detect machine details automatically. Works with SSH-accessible Linux instances.",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "env",
       "type" : "java.util.Map",
       "defaultValue" : null,
@@ -23297,7 +25916,7 @@
     }, {
       "name" : "localTempDir",
       "type" : "java.lang.String",
-      "defaultValue" : "/tmp/brooklyn-splodge-ssh-tmp",
+      "defaultValue" : "/tmp/brooklyn-valentin-ssh-tmp",
       "description" : "The directory on the local machine (i.e. running brooklyn) for writing temp files",
       "reconfigurable" : false,
       "label" : null,
@@ -23309,6 +25928,16 @@
       "type" : "java.lang.String",
       "defaultValue" : null,
       "description" : "logPrefix",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "machineDetails",
+      "type" : "brooklyn.location.MachineDetails",
+      "defaultValue" : null,
+      "description" : "machineDetails",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -23540,6 +26169,16 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "customTemplateOptionsScriptContents",
+      "type" : "java.lang.String",
+      "defaultValue" : null,
+      "description" : "A custom script to pass to jclouds as part of template options, run after AdminAccess, for use primarily where a command which must run as root on first login before switching to the admin user, e.g. to customize sudoers; may start in an odd location (e.g. /tmp/bootstrap); NB: most commands should be run by entities, or if VM-specific but sudo is okay, then via setup.script, not via this",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "customizer",
       "type" : "brooklyn.location.jclouds.JcloudsLocationCustomizer",
       "defaultValue" : null,
@@ -23600,6 +26239,16 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "disableRootAndPasswordSsh",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : true,
+      "description" : "Whether to disable direct SSH access for root and disable password-based SSH, if creating a user with a key-based login; defaults to true (set false to leave root users alone)",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "dontCreateUser",
       "type" : "java.lang.Boolean",
       "defaultValue" : false,
@@ -23624,6 +26273,16 @@
       "type" : "java.lang.String",
       "defaultValue" : null,
       "description" : "Additional public key data to add to authorized_keys",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "extraSshPublicKeyUrls",
+      "type" : "java.util.List",
+      "defaultValue" : null,
+      "description" : "Additional public keys (files or URLs, in SSH2/RFC4716/id_rsa.pub format) to add to authorized_keys",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -23682,7 +26341,7 @@
     }, {
       "name" : "imageChooser",
       "type" : "com.google.common.base.Function",
-      "defaultValue" : "brooklyn.location.jclouds.BrooklynImageChooser$3@58ca40be",
+      "defaultValue" : "brooklyn.location.jclouds.BrooklynImageChooser$ImageChooserFromOrdering@31d334b",
       "description" : "An image chooser function to control which images are preferred",
       "reconfigurable" : false,
       "label" : null,
@@ -23740,6 +26399,16 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "jclouds.computeServiceRegistry",
+      "type" : "brooklyn.location.jclouds.ComputeServiceRegistry",
+      "defaultValue" : "brooklyn.location.jclouds.ComputeServiceRegistryImpl@1aeb3154",
+      "description" : "Registry/Factory for creating jclouds ComputeService; default is almost always fine, except where tests want to customize behaviour",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "jclouds.endpoint",
       "type" : "java.lang.String",
       "defaultValue" : null,
@@ -23782,8 +26451,18 @@
     }, {
       "name" : "localTempDir",
       "type" : "java.lang.String",
-      "defaultValue" : "/tmp/brooklyn-splodge-ssh-tmp",
+      "defaultValue" : "/tmp/brooklyn-valentin-ssh-tmp",
       "description" : "The directory on the local machine (i.e. running brooklyn) for writing temp files",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "logCredentials",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : false,
+      "description" : "Whether to log credentials of a new VM - strongly recommended never be used in production, as it is a big security hole!",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -23871,9 +26550,9 @@
       "links" : null
     }, {
       "name" : "minDisk",
-      "type" : "java.lang.Double",
+      "type" : "java.lang.Object",
       "defaultValue" : null,
-      "description" : "Minimum size of disk (in GB), for use in selecting the machine/hardware profile",
+      "description" : "Minimum size of disk, either as string (100gb) or number of GB (100), for use in selecting the machine/hardware profile",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -23881,9 +26560,9 @@
       "links" : null
     }, {
       "name" : "minRam",
-      "type" : "java.lang.Integer",
+      "type" : "java.lang.Object",
       "defaultValue" : null,
-      "description" : "Minimum amount of RAM (in MB), for use in selecting the machine/hardware profile",
+      "description" : "Minimum amount of RAM, either as string (4gb) or number of MB (4096), for use in selecting the machine/hardware profile",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -24050,7 +26729,7 @@
       "name" : "password",
       "type" : "java.lang.String",
       "defaultValue" : null,
-      "description" : "password",
+      "description" : "password to use for ssh; note some images do not allow password-based ssh access",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -24089,7 +26768,7 @@
     }, {
       "name" : "private-key-file",
       "type" : "java.lang.String",
-      "defaultValue" : "/Users/splodge/.ssh/id_rsa:/Users/splodge/.ssh/id_dsa",
+      "defaultValue" : "/home/valentin/.ssh/id_rsa:/home/valentin/.ssh/id_dsa",
       "description" : "a ':' separated list of ssh private key files; uses first in list that can be read",
       "reconfigurable" : false,
       "label" : null,
@@ -24119,7 +26798,7 @@
     }, {
       "name" : "privateKeyFile",
       "type" : "java.lang.String",
-      "defaultValue" : "/Users/splodge/.ssh/id_rsa:/Users/splodge/.ssh/id_dsa",
+      "defaultValue" : "/home/valentin/.ssh/id_rsa:/home/valentin/.ssh/id_dsa",
       "description" : "a ':' separated list of ssh private key files; uses first in list that can be read",
       "reconfigurable" : false,
       "label" : null,
@@ -24160,7 +26839,7 @@
       "name" : "public-key-file",
       "type" : "java.lang.String",
       "defaultValue" : null,
-      "description" : "colon-separated list of ssh public key file(s) to use; if blank will infer from privateKeyFile by appending \".pub\"",
+      "description" : "ssh public key file to use; if blank will infer from privateKeyFile by appending \".pub\"",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -24180,7 +26859,7 @@
       "name" : "publicKeyFile",
       "type" : "java.lang.String",
       "defaultValue" : null,
-      "description" : "colon-separated list of ssh public key file(s) to use; if blank will infer from privateKeyFile by appending \".pub\"",
+      "description" : "ssh public key file to use; if blank will infer from privateKeyFile by appending \".pub\"",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -24191,6 +26870,16 @@
       "type" : "java.lang.String",
       "defaultValue" : null,
       "description" : "region",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "required.ports",
+      "type" : "java.lang.Object",
+      "defaultValue" : null,
+      "description" : "Required additional ports to be applied when creating a VM, on supported clouds (either a single port as an Integer, or an Iterable<Integer> or Integer[])",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -24297,6 +26986,16 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "templateOptions",
+      "type" : "java.util.Map",
+      "defaultValue" : null,
+      "description" : "Additional jclouds template options",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "templateSpec",
       "type" : "java.lang.String",
       "defaultValue" : null,
@@ -24307,9 +27006,19 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "useJcloudsSshInit",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : true,
+      "description" : "Whether to use jclouds for initial ssh-based setup (i.e. as part of the 'TemplateOptions'); if false will use core brooklyn ssh utilities. This config is beta; its default could be changed and/or the option removed in an upcoming release.",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "user",
       "type" : "java.lang.String",
-      "defaultValue" : "splodge",
+      "defaultValue" : "valentin",
       "description" : "user account for normal access to the remote machine, defaulting to local user",
       "reconfigurable" : false,
       "label" : null,
@@ -24422,6 +27131,16 @@
       "possibleValues" : null,
       "links" : null
     }, {
+      "name" : "detectMachineDetails",
+      "type" : "java.lang.Boolean",
+      "defaultValue" : true,
+      "description" : "Attempt to detect machine details automatically. Works with SSH-accessible Linux instances.",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
       "name" : "env",
       "type" : "java.util.Map",
       "defaultValue" : null,
@@ -24444,7 +27163,7 @@
     }, {
       "name" : "localTempDir",
       "type" : "java.lang.String",
-      "defaultValue" : "/tmp/brooklyn-splodge-ssh-tmp",
+      "defaultValue" : "/tmp/brooklyn-valentin-ssh-tmp",
       "description" : "The directory on the local machine (i.e. running brooklyn) for writing temp files",
       "reconfigurable" : false,
       "label" : null,
@@ -24456,6 +27175,16 @@
       "type" : "java.lang.String",
       "defaultValue" : null,
       "description" : "logPrefix",
+      "reconfigurable" : false,
+      "label" : null,
+      "priority" : null,
+      "possibleValues" : null,
+      "links" : null
+    }, {
+      "name" : "machineDetails",
+      "type" : "brooklyn.location.MachineDetails",
+      "defaultValue" : null,
+      "description" : "machineDetails",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -24670,5 +27399,6 @@
     "sensors" : [ ],
     "effectors" : [ ]
   } ],
-  "locationResolvers" : [ "byon", "host", "id", "jclouds", "jcloudsByon", "localhost", "multi", "named", "pool", "single" ]
+  "locationResolvers" : [ "brooklyn.catalog", "byon", "host", "id", "jclouds", "jcloudsByon", "localhost", "multi", "named", "pool", "portForwardManager", "single" ]
 }
+;
