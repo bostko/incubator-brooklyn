@@ -766,7 +766,7 @@ public class AutoScalerPolicy extends AbstractPolicy {
     }
 
     private void onMetricChanged(Number val) {
-        if (LOG.isTraceEnabled()) LOG.trace("{} recording pool-metric for {}: {}", new Object[] {this, poolEntity, val});
+        LOG.info("{} recording pool-metric for {}: {}", new Object[]{this, poolEntity, val});
 
         if (val==null) {
             // occurs e.g. if using an aggregating enricher who returns null when empty, the sensor has gone away
@@ -805,6 +805,7 @@ public class AutoScalerPolicy extends AbstractPolicy {
     }
     
     private void analyze(ScalingData data, String description) {
+        LOG.info("Analize hot or cold sensor: currentSize {}", data.currentSize);
         int desiredSizeUnconstrained;
         
         /* We always scale out (modulo stabilization delay) if:
@@ -917,6 +918,7 @@ public class AutoScalerPolicy extends AbstractPolicy {
      */
     private void scheduleResize(final int newSize) {
         recentDesiredResizes.add(newSize);
+        LOG.info("scheduleResize {}", newSize);
         
         scheduleResize();
     }
@@ -931,6 +933,7 @@ public class AutoScalerPolicy extends AbstractPolicy {
     private void onNewUnboundedPoolSize(final int val) {
         if (getMaxSizeReachedSensor() != null) {
             recentUnboundedResizes.add(val);
+            LOG.info("scheduleResize val {}", val);
             scheduleResize();
         }
     }
@@ -1047,6 +1050,7 @@ public class AutoScalerPolicy extends AbstractPolicy {
             // (note we continue now with as "good" a resize as we can given the instability)
             if (LOG.isTraceEnabled()) LOG.trace("{} re-scheduling resize check for {}, as desired size not stable (current {}, desired {}); continuing with resize...", 
                     new Object[] {this, poolEntity, currentPoolSize, desiredPoolSize});
+            LOG.info("resizeNow !stable");
             scheduleResize();
         }
         if (currentPoolSize == desiredPoolSize) {
