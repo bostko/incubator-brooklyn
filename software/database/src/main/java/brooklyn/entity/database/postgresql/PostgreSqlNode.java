@@ -22,6 +22,7 @@ import brooklyn.catalog.Catalog;
 import brooklyn.config.ConfigKey;
 import brooklyn.entity.Effector;
 import brooklyn.entity.basic.ConfigKeys;
+import brooklyn.entity.basic.MethodEffector;
 import brooklyn.entity.basic.SoftwareProcess;
 import brooklyn.entity.database.DatabaseNode;
 import brooklyn.entity.database.DatastoreMixins;
@@ -29,6 +30,7 @@ import brooklyn.entity.database.DatastoreMixins.DatastoreCommon;
 import brooklyn.entity.effector.Effectors;
 import brooklyn.entity.proxying.ImplementedBy;
 import brooklyn.entity.trait.HasShortName;
+import brooklyn.entity.trait.Startable;
 import brooklyn.event.basic.PortAttributeSensorAndConfigKey;
 import brooklyn.location.basic.PortRanges;
 import brooklyn.util.flags.SetFromFlag;
@@ -90,4 +92,5 @@ public interface PostgreSqlNode extends SoftwareProcess, HasShortName, Datastore
 
     String executeScript(String commands);
 
+    ConfigKey<StopSoftwareParameters.StopMode> STOP_PROCESS_MODE = ConfigKeys.newConfigKeyWithDefault(StopSoftwareParameters.STOP_MACHINE_MODE, StopSoftwareParameters.StopMode.NEVER);
 }

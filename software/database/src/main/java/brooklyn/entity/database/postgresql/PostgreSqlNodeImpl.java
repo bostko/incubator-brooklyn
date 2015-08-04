@@ -18,6 +18,10 @@
  */
 package brooklyn.entity.database.postgresql;
 
+import brooklyn.entity.Effector;
+import brooklyn.entity.basic.SoftwareProcessDriverLifecycleEffectorTasks;
+import brooklyn.entity.effector.Effectors;
+import brooklyn.entity.trait.Startable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,6 +50,19 @@ public class PostgreSqlNodeImpl extends SoftwareProcessImpl implements PostgreSq
     @Override
     public Integer getMaxConnections() { return getConfig(MAX_CONNECTIONS); }
 
+    private class PostgreSqlMachineLifeCyclyEffectorTasks extends SoftwareProcessDriverLifecycleEffectorTasks {
+        /** @see {@link #newStartEffector()} */
+        @Override
+        public Effector<Void> newStopEffector() {
+            return Effectors.effector(Startable.STOP)
+                    .parameter(STOP_PROCESS_MODE)
+                    .parameter(StopSoftwareParameters.STOP_MACHINE_MODE)
+                    .impl(newStopEffectorTask())
+                    .build();
+        }
+    }
+
+
     @Override
     public void init() {
         super.init();
@@ -55,6 +72,8 @@ public class PostgreSqlNodeImpl extends SoftwareProcessImpl implements PostgreSq
                 return executeScript((String) parameters.getStringKey("commands"));
             }
         });
+
+        new PostgreSqlMachineLifeCyclyEffectorTasks().attachLifecycleEffectors(this);
     }
 
     @Override
