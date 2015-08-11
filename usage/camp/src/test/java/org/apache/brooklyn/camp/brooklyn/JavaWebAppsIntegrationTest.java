@@ -32,8 +32,6 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.apache.brooklyn.camp.brooklyn.BrooklynCampPlatform;
-import org.apache.brooklyn.camp.brooklyn.BrooklynCampPlatformLauncherNoServer;
 import org.apache.brooklyn.test.EntityTestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,7 +51,7 @@ import brooklyn.entity.webapp.WebAppService;
 import brooklyn.management.ManagementContext;
 import brooklyn.management.Task;
 import brooklyn.policy.Policy;
-import brooklyn.policy.autoscaling.AutoScalerPolicy;
+import org.apache.brooklyn.policy.autoscaling.AutoScalerPolicy;
 import brooklyn.test.Asserts;
 import brooklyn.util.ResourceUtils;
 import brooklyn.util.collections.MutableMap;

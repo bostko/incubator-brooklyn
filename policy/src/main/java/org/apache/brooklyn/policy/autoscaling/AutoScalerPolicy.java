@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package brooklyn.policy.autoscaling;
+package org.apache.brooklyn.policy.autoscaling;
 
 import static brooklyn.util.JavaGroovyEquivalents.groovyTruth;
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -48,7 +48,6 @@ import brooklyn.event.SensorEventListener;
 import brooklyn.event.basic.BasicConfigKey;
 import brooklyn.event.basic.BasicNotificationSensor;
 import brooklyn.policy.PolicySpec;
-import brooklyn.policy.autoscaling.SizeHistory.WindowSummary;
 import brooklyn.policy.basic.AbstractPolicy;
 import brooklyn.policy.loadbalancing.LoadBalancingPolicy;
 import brooklyn.util.collections.MutableMap;
@@ -948,7 +947,7 @@ public class AutoScalerPolicy extends AbstractPolicy {
             return;
         }
         
-        WindowSummary valsSummary = recentUnboundedResizes.summarizeWindow(getMaxReachedNotificationDelay());
+        SizeHistory.WindowSummary valsSummary = recentUnboundedResizes.summarizeWindow(getMaxReachedNotificationDelay());
         long timeWindowSize = getMaxReachedNotificationDelay().toMilliseconds();
         long currentPoolSize = getCurrentSizeOperator().apply(poolEntity);
         int maxAllowedPoolSize = getMaxPoolSize();
@@ -1033,8 +1032,8 @@ public class AutoScalerPolicy extends AbstractPolicy {
      */
     private CalculatedDesiredPoolSize calculateDesiredPoolSize(long currentPoolSize) {
         long now = System.currentTimeMillis();
-        WindowSummary downsizeSummary = recentDesiredResizes.summarizeWindow(getResizeDownStabilizationDelay());
-        WindowSummary upsizeSummary = recentDesiredResizes.summarizeWindow(getResizeUpStabilizationDelay());
+        SizeHistory.WindowSummary downsizeSummary = recentDesiredResizes.summarizeWindow(getResizeDownStabilizationDelay());
+        SizeHistory.WindowSummary upsizeSummary = recentDesiredResizes.summarizeWindow(getResizeUpStabilizationDelay());
         
         // this is the _sustained_ growth value; the smallest size that has been requested in the "stable-for-growing" period
         long maxDesiredPoolSize = upsizeSummary.min;

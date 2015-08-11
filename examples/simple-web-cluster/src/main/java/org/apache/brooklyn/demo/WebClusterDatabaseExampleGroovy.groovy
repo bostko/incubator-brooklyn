@@ -32,7 +32,7 @@ import brooklyn.entity.proxying.EntitySpec
 import brooklyn.entity.webapp.ControlledDynamicWebAppCluster
 import brooklyn.entity.webapp.DynamicWebAppCluster
 import brooklyn.launcher.BrooklynLauncher
-import brooklyn.policy.autoscaling.AutoScalerPolicy
+import org.apache.brooklyn.policy.autoscaling.AutoScalerPolicy
 import brooklyn.util.CommandLineUtil
 
 import com.google.common.collect.Lists

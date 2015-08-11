@@ -188,7 +188,7 @@ brooklyn.catalog:
         initialSize:    3
         # and add a policy to scale based on ops per minute
         brooklyn.policies:
-        - type: brooklyn.policy.autoscaling.AutoScalerPolicy
+        - type: AutoScalerPolicy
           brooklyn.config:
             metric: riak.node.ops.1m.perNode
             # more than 100 ops per second (6k/min) scales out, less than 50 scales back
@@ -308,7 +308,7 @@ brooklyn.catalog:
         - type: brooklyn.policy.ha.ServiceReplacer
         
         # and scale based on reqs/sec
-        - type: brooklyn.policy.autoscaling.AutoScalerPolicy
+        - type: AutoScalerPolicy
           brooklyn.config:
             # scale based on reqs/sec (though in a real-world situation, 
             # reqs.per_sec.windowed_30s.per_node might be a better choice) 

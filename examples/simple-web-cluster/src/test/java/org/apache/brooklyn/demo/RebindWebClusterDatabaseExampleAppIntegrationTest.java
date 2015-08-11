@@ -18,7 +18,6 @@
  */
 package org.apache.brooklyn.demo;
 
-import org.apache.brooklyn.demo.WebClusterDatabaseExampleApp;
 import org.apache.brooklyn.test.EntityTestUtils;
 import org.apache.brooklyn.test.HttpTestUtils;
 import org.apache.brooklyn.test.WebAppMonitor;
@@ -57,7 +56,7 @@ import brooklyn.entity.webapp.DynamicWebAppCluster;
 import brooklyn.entity.webapp.tomcat.Tomcat8Server;
 import brooklyn.location.Location;
 import brooklyn.policy.Enricher;
-import brooklyn.policy.autoscaling.AutoScalerPolicy;
+import org.apache.brooklyn.policy.autoscaling.AutoScalerPolicy;
 import brooklyn.test.Asserts;
 import brooklyn.util.collections.MutableMap;
 import brooklyn.util.time.Duration;

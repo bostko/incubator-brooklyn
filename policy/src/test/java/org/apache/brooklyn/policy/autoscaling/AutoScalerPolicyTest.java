@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package brooklyn.policy.autoscaling;
+package org.apache.brooklyn.policy.autoscaling;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;

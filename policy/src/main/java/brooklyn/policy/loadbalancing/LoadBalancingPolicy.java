@@ -40,7 +40,7 @@ import brooklyn.event.AttributeSensor;
 import brooklyn.event.Sensor;
 import brooklyn.event.SensorEvent;
 import brooklyn.event.SensorEventListener;
-import brooklyn.policy.autoscaling.AutoScalerPolicy;
+import org.apache.brooklyn.policy.autoscaling.AutoScalerPolicy;
 import brooklyn.policy.basic.AbstractPolicy;
 import brooklyn.policy.loadbalancing.BalanceableWorkerPool.ContainerItemPair;
 import brooklyn.util.collections.MutableMap;
