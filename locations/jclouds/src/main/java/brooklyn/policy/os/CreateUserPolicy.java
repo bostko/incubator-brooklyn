@@ -117,7 +117,7 @@ public class CreateUserPolicy extends AbstractPolicy implements SensorEventListe
         int port = machine.getPort();
         String creds = user + " : " + password + " @ " +hostname + ":" + port;
         
-        LOG.info("Adding auto-generated user "+user+" @ "+hostname+":"+port);
+        LOG.info("Adding auto-generated password for user "+user+" @ "+hostname+":"+port);
         
         // Build the command to create the user
         // Note AdminAccess requires _all_ fields set, due to http://code.google.com/p/jclouds/issues/detail?id=1095
