@@ -18,10 +18,13 @@
  */
 package org.apache.brooklyn.util.core.internal.winrm;
 
+import java.io.InputStream;
 import java.util.Map;
 
-public interface NativeWindowsScriptRunner {
+public interface NaiveWindowsScriptRunner {
 
     /** Runs a command and returns the result code */
     Integer executeNativeOrPsCommand(Map flags, String regularCommand, String powershellCommand, String summaryForLogging, Boolean allowNoOp);
+
+    int copyTo(InputStream source, String destination);
 }

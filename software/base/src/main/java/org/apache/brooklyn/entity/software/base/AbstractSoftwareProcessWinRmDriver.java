@@ -27,7 +27,8 @@ import org.apache.brooklyn.core.entity.Entities;
 import org.apache.brooklyn.core.sensor.Sensors;
 import org.apache.brooklyn.entity.software.base.lifecycle.WinRmExecuteHelper;
 import org.apache.brooklyn.location.winrm.WinRmMachineLocation;
-import org.apache.brooklyn.util.core.internal.winrm.NativeWindowsScriptRunner;
+import org.apache.brooklyn.util.core.ResourceUtils;
+import org.apache.brooklyn.util.core.internal.winrm.NaiveWindowsScriptRunner;
 import org.apache.brooklyn.util.core.task.Tasks;
 import org.apache.brooklyn.util.exceptions.Exceptions;
 import org.apache.brooklyn.util.exceptions.ReferenceWithError;
@@ -47,7 +48,7 @@ import java.util.concurrent.TimeUnit;
 
 import static org.apache.brooklyn.util.JavaGroovyEquivalents.elvis;
 
-public abstract class AbstractSoftwareProcessWinRmDriver extends AbstractSoftwareProcessDriver implements NativeWindowsScriptRunner {
+public abstract class AbstractSoftwareProcessWinRmDriver extends AbstractSoftwareProcessDriver implements NaiveWindowsScriptRunner {
     private static final Logger LOG = LoggerFactory.getLogger(AbstractSoftwareProcessWinRmDriver.class);
 
     AttributeSensor<String> WINDOWS_USERNAME = Sensors.newStringSensor("windows.username",
@@ -153,36 +154,18 @@ public abstract class AbstractSoftwareProcessWinRmDriver extends AbstractSoftwar
     }
 
     @Override
-    public int copyResource(Map<Object, Object> sshFlags, String source, String target, boolean createParentDir) {
-        if (createParentDir) {
-            createDirectory(getDirectory(target), "Creating resource directory");
-        }
-        
-        InputStream stream = null;
-        try {
-            Tasks.setBlockingDetails("retrieving resource "+source+" for copying across");
-            stream = resource.getResourceFromUrl(source);
-            Tasks.setBlockingDetails("copying resource "+source+" to server");
-            return copyTo(stream, target);
-        } catch (Exception e) {
-            throw Exceptions.propagate(e);
-        } finally {
-            Tasks.setBlockingDetails(null);
-            if (stream != null) Streams.closeQuietly(stream);
-        }
+    public int copyResource(Map<Object, Object> flags, String source, String target, boolean createParentDir) {
+        return getLocation().copyResource(flags, source, target, createParentDir, resource);
     }
 
     @Override
-    public int copyResource(Map<Object, Object> sshFlags, InputStream source, String target, boolean createParentDir) {
-        if (createParentDir) {
-            createDirectory(getDirectory(target), "Creating resource directory");
-        }
-        return copyTo(source, target);
+    public int copyResource(Map<Object, Object> flags, InputStream source, String target, boolean createParentDir) {
+        return getLocation().copyResource(flags, source, target, createParentDir);
     }
 
     @Override
     protected void createDirectory(String directoryName, String summaryForLogging) {
-        getLocation().executePsCommand("New-Item -path \"" + directoryName + "\" -type directory -ErrorAction SilentlyContinue");
+        getLocation().createDirectory(directoryName, summaryForLogging);
     }
 
     @Override
@@ -232,10 +215,6 @@ public abstract class AbstractSoftwareProcessWinRmDriver extends AbstractSoftwar
         }
         waitForWinRmStatus(false, entity.getConfig(VanillaWindowsProcess.REBOOT_BEGUN_TIMEOUT));
         waitForWinRmStatus(true, entity.getConfig(VanillaWindowsProcess.REBOOT_COMPLETED_TIMEOUT)).getWithError();
-    }
-
-    private String getDirectory(String fileName) {
-        return fileName.substring(0, fileName.lastIndexOf("\\"));
     }
 
     private ReferenceWithError<Boolean> waitForWinRmStatus(final boolean requiredStatus, Duration timeout) {

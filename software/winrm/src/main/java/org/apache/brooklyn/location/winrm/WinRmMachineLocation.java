@@ -44,7 +44,10 @@ import org.apache.brooklyn.core.config.ConfigKeys;
 import org.apache.brooklyn.core.location.AbstractLocation;
 import org.apache.brooklyn.core.location.access.PortForwardManager;
 import org.apache.brooklyn.core.mgmt.BrooklynTaskTags;
-import org.apache.brooklyn.util.core.internal.winrm.NativeWindowsScriptRunner;
+import org.apache.brooklyn.util.collections.MutableMap;
+import org.apache.brooklyn.util.core.ResourceUtils;
+import org.apache.brooklyn.util.core.internal.winrm.NaiveWindowsScriptRunner;
+import org.apache.brooklyn.util.core.internal.winrm.WinRmScriptTool;
 import org.apache.brooklyn.util.core.task.Tasks;
 import org.apache.brooklyn.util.text.Strings;
 import org.apache.commons.codec.binary.Base64;
@@ -59,13 +62,15 @@ import com.google.common.collect.Lists;
 import com.google.common.net.HostAndPort;
 import com.google.common.reflect.TypeToken;
 
+import java.util.List;
+
 import org.apache.brooklyn.util.exceptions.Exceptions;
 import org.apache.brooklyn.util.stream.Streams;
 
 import io.cloudsoft.winrm4j.winrm.WinRmTool;
 import io.cloudsoft.winrm4j.winrm.WinRmToolResponse;
 
-public class WinRmMachineLocation extends AbstractLocation implements MachineLocation, NativeWindowsScriptRunner {
+public class WinRmMachineLocation extends AbstractLocation implements MachineLocation, NaiveWindowsScriptRunner {
 
     private static final Logger LOG = LoggerFactory.getLogger(WinRmMachineLocation.class);
 
@@ -177,6 +182,13 @@ public class WinRmMachineLocation extends AbstractLocation implements MachineLoc
 
     @Override
     public Integer executeNativeOrPsCommand(Map flags, String regularCommand, final String powerShellCommand, String summaryForLogging, Boolean allowNoOp) {
+        if (Strings.isBlank(regularCommand) && Strings.isBlank(powerShellCommand)) {
+            if (allowNoOp) {
+                return new WinRmToolResponse("", "", 0).getStatusCode();
+            } else {
+                throw new IllegalStateException(String.format("Exactly one of cmd or psCmd must be set for %s", summaryForLogging));
+            }
+        }
         ByteArrayOutputStream stdIn = new ByteArrayOutputStream();
         ByteArrayOutputStream stdOut = flags.get("out") != null ? (ByteArrayOutputStream)flags.get("out") : new ByteArrayOutputStream();
         ByteArrayOutputStream stdErr = flags.get("err") != null ? (ByteArrayOutputStream)flags.get("err") : new ByteArrayOutputStream();
@@ -210,6 +222,59 @@ public class WinRmMachineLocation extends AbstractLocation implements MachineLoc
         }
 
         return response.getStatusCode();
+    }
+
+    public int executeNativeOrPsScript(Map flags, List<String> regularCommands, final List<String> powerShellCommands, String summaryForLogging, Boolean allowNoOp) {
+        if ((regularCommands == null || regularCommands.size() == 0) && (powerShellCommands == null || powerShellCommands.size() == 0)) {
+            if (allowNoOp) {
+                return new WinRmToolResponse("", "", 0).getStatusCode();
+            } else {
+                throw new IllegalStateException(String.format("Exactly one of cmd or psCmd must be set for %s", summaryForLogging));
+            }
+        }
+
+        MutableMap<String, Object> scriptProps = MutableMap.<String, Object>of(WinRmScriptTool.PROP_SUMMARY.getName(), summaryForLogging);
+        WinRmScriptTool scriptTool = new WinRmScriptTool(scriptProps, this);
+
+        if (regularCommands == null || regularCommands.size() == 0) {
+            return scriptTool.execPsScript(flags, powerShellCommands);
+        } else {
+            return scriptTool.execNativeScript(flags, regularCommands);
+        }
+    }
+
+    public int copyResource(Map<Object, Object> flags, InputStream source, String target, boolean createParentDir) {
+        if (createParentDir) {
+            createDirectory(getDirectory(target), "Creating resource directory");
+        }
+        return copyTo(source, target);
+    }
+
+    public int copyResource(Map<Object, Object> flags, String source, String target, boolean createParentDir, ResourceUtils resource) {
+        if (createParentDir) {
+            createDirectory(getDirectory(target), "Creating resource directory");
+        }
+
+        InputStream stream = null;
+        try {
+            Tasks.setBlockingDetails("retrieving resource "+source+" for copying across");
+            stream = resource.getResourceFromUrl(source);
+            Tasks.setBlockingDetails("copying resource "+source+" to server");
+            return copyTo(stream, target);
+        } catch (Exception e) {
+            throw Exceptions.propagate(e);
+        } finally {
+            Tasks.setBlockingDetails(null);
+            if (stream != null) Streams.closeQuietly(stream);
+        }
+    }
+
+    public int createDirectory(String directoryName, String summaryForLogging) {
+        return executePsCommand("New-Item -path \"" + directoryName + "\" -type directory -ErrorAction SilentlyContinue").getStatusCode();
+    }
+
+    private String getDirectory(String fileName) {
+        return fileName.substring(0, fileName.lastIndexOf("\\"));
     }
 
     private void writeToStream(ByteArrayOutputStream stream, String string) {
@@ -274,6 +339,7 @@ public class WinRmMachineLocation extends AbstractLocation implements MachineLoc
         }
     }
 
+    @Override
     public int copyTo(InputStream source, String destination) {
         executePsCommand("rm -ErrorAction SilentlyContinue " + destination);
         try {
@@ -288,9 +354,9 @@ public class WinRmMachineLocation extends AbstractLocation implements MachineLoc
                 } else {
                     chunk = Arrays.copyOf(inputData, bytesRead);
                 }
-                executePsCommand(Joiner.on("\r\n").join(ImmutableList.of("If ((!(Test-Path " + destination + ")) -or ((Get-Item '" + destination + "').length -eq " +
-                        expectedFileSize + ")) {Add-Content -Encoding Byte -path " + destination +
-                        " -value ([System.Convert]::FromBase64String(\"" + new String(Base64.encodeBase64(chunk)) + "\"))}"), "copyFile"));
+                executePsCommand("If ((!(Test-Path " + destination + ")) -or ((Get-Item '" + destination + "').length -eq " +
+                        expectedFileSize + ")) {Add-Content -Encoding Byte -path \"" + destination +
+                        "\" -value ([System.Convert]::FromBase64String(\"" + new String(Base64.encodeBase64(chunk)) + "\"))}");
                 expectedFileSize += bytesRead;
             }
 
