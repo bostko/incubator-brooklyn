@@ -139,7 +139,7 @@ public class WinRmMachineLocationLiveTest {
         String remotePath = "C:\\myfile-"+Identifiers.makeRandomId(4)+".txt";
         machine.copyTo(new ByteArrayInputStream(contents.getBytes()), remotePath);
         
-        WinRmToolResponse response = machine.executeScript("type "+remotePath);
+        WinRmToolResponse response = machine.executeCmdCommand("type " + remotePath);
         String msg = "statusCode="+response.getStatusCode()+"; out="+response.getStdOut()+"; err="+response.getStdErr();
         assertEquals(response.getStatusCode(), 0, msg);
         assertEquals(response.getStdOut().trim(), contents, msg);
@@ -152,7 +152,7 @@ public class WinRmMachineLocationLiveTest {
             String remotePath = "C:\\myfile-"+Identifiers.makeRandomId(4)+".txt";
             machine.copyTo(localFile, remotePath);
             
-            WinRmToolResponse response = machine.executeScript("type "+remotePath);
+            WinRmToolResponse response = machine.executeCmdCommand("type " + remotePath);
             String msg = "statusCode="+response.getStatusCode()+"; out="+response.getStdOut()+"; err="+response.getStdErr();
             assertEquals(response.getStatusCode(), 0, msg);
             assertEquals(response.getStdOut().trim(), contents, msg);
@@ -186,7 +186,7 @@ public class WinRmMachineLocationLiveTest {
      */
     @Test(groups={"Live", "WIP"})
     public void testExecMultiPartScript() throws Exception {
-        assertExecSucceeds(ImmutableList.of("echo first", "echo second"), "first"+"\r\n"+"second", "");
+        assertExecSucceeds("echo first"+"\r\n"+"echo second", "first"+"\r\n"+"second", "");
     }
     
     @Test(groups="Live")
@@ -195,13 +195,11 @@ public class WinRmMachineLocationLiveTest {
         
         // Single commands
         assertExecFails(INVALID_CMD);
-        assertExecFails(ImmutableList.of(INVALID_CMD));
     }
 
     @Test(groups="Live")
     public void testExecScriptExit0() throws Exception {
         assertExecSucceeds("exit /B 0", "", "");
-        assertExecSucceeds(ImmutableList.of("exit /B 0"), "", "");
     }
 
     /*
@@ -217,7 +215,6 @@ public class WinRmMachineLocationLiveTest {
     public void testExecScriptExit1() throws Exception {
         // Single commands
         assertExecFails("exit /B 1");
-        assertExecFails(ImmutableList.of("exit /B 1"));
     }
 
     @Test(groups="Live")
@@ -335,7 +332,7 @@ public class WinRmMachineLocationLiveTest {
     
     @Test(groups="Live")
     public void testExecPsMultiPartScript() throws Exception {
-        assertExecPsSucceeds(ImmutableList.of("Write-Host first", "Write-Host second"), "first"+"\n"+"second", "");
+        assertExecPsSucceeds("Write-Host first" + "\r\n" +  "Write-Host second", "first"+"\n"+"second", "");
     }
 
     @Test(groups="Live")
@@ -365,7 +362,7 @@ public class WinRmMachineLocationLiveTest {
         String scriptPath = "C:\\myscript-"+Identifiers.makeRandomId(4)+".bat";
         machine.copyTo(new ByteArrayInputStream(script.getBytes()), scriptPath);
 
-        WinRmToolResponse response = machine.executePsScript("& '"+scriptPath+"'");
+        WinRmToolResponse response = machine.executePsCommand("& '" + scriptPath + "'");
         String msg = "statusCode="+response.getStatusCode()+"; out="+response.getStdOut()+"; err="+response.getStdErr();
         assertEquals(response.getStatusCode(), 3, msg);
     }
@@ -457,7 +454,7 @@ public class WinRmMachineLocationLiveTest {
     @Test(groups="Live")
     public void testConfirmUseOfErrorActionPreferenceDoesNotCauseErr() throws Exception {
         // Confirm that ErrorActionPreference=Stop does not itself cause a failure, and still get output on success.
-        assertExecPsSucceeds(ImmutableList.of(PS_ERR_ACTION_PREF_EQ_STOP, "Write-Host myline"), "myline", "");
+        assertExecPsSucceeds(PS_ERR_ACTION_PREF_EQ_STOP + "\r\n" + "Write-Host myline", "myline", "");
     }
 
     /*
@@ -473,24 +470,19 @@ public class WinRmMachineLocationLiveTest {
     public void testExecPsExit1() throws Exception {
         // Single commands
         assertExecPsFails("exit 1");
-        assertExecPsFails(ImmutableList.of("exit 1"));
-        
-        // Multi-part
-        assertExecPsFails(ImmutableList.of(PS_ERR_ACTION_PREF_EQ_STOP, "Write-Host myline", "exit 1"));
-        
+
         // Multi-line
-        assertExecPsFails(PS_ERR_ACTION_PREF_EQ_STOP + "\n" + "Write-Host myline" + "\n" + "exit 1");
+        assertExecPsFails(PS_ERR_ACTION_PREF_EQ_STOP + "\r\n" + "Write-Host myline" + "\r\n" + "exit 1");
     }
 
     @Test(groups="Live")
     public void testExecFailingPsScript() throws Exception {
         // Single commands
         assertExecPsFails(INVALID_CMD);
-        assertExecPsFails(ImmutableList.of(INVALID_CMD));
-        
+
         // Multi-part commands
-        assertExecPsFails(ImmutableList.of(PS_ERR_ACTION_PREF_EQ_STOP, "Write-Host myline", INVALID_CMD));
-        assertExecPsFails(ImmutableList.of(PS_ERR_ACTION_PREF_EQ_STOP, INVALID_CMD, "Write-Host myline"));
+        assertExecPsFails(Joiner.on("\r\n").join(ImmutableList.of(PS_ERR_ACTION_PREF_EQ_STOP, "Write-Host myline", INVALID_CMD)));
+        assertExecPsFails(Joiner.on("\r\n").join(ImmutableList.of(PS_ERR_ACTION_PREF_EQ_STOP, INVALID_CMD, "Write-Host myline")));
     }
 
     @Test(groups={"Live", "Acceptance"})
@@ -547,42 +539,22 @@ public class WinRmMachineLocationLiveTest {
 
     private void assertExecFails(String cmd) {
         Stopwatch stopwatch = Stopwatch.createStarted();
-        assertFailed(cmd, machine.executeScript(cmd), stopwatch);
+        assertFailed(cmd, machine.executeCmdCommand(cmd), stopwatch);
     }
 
-    private void assertExecFails(List<String> cmds) {
-        Stopwatch stopwatch = Stopwatch.createStarted();
-        assertFailed(cmds, machine.executeScript(cmds), stopwatch);
-    }
-    
     private void assertExecPsFails(String cmd) {
         Stopwatch stopwatch = Stopwatch.createStarted();
-        assertFailed(cmd, machine.executePsScript(cmd), stopwatch);
-    }
-    
-    private void assertExecPsFails(List<String> cmds) {
-        Stopwatch stopwatch = Stopwatch.createStarted();
-        assertFailed(cmds, machine.executePsScript(cmds), stopwatch);
+        assertFailed(cmd, machine.executePsCommand(cmd), stopwatch);
     }
 
     private void assertExecSucceeds(String cmd, String stdout, String stderr) {
         Stopwatch stopwatch = Stopwatch.createStarted();
-        assertSucceeded(cmd, machine.executeScript(cmd), stdout, stderr, stopwatch);
-    }
-
-    private void assertExecSucceeds(List<String> cmds, String stdout, String stderr) {
-        Stopwatch stopwatch = Stopwatch.createStarted();
-        assertSucceeded(cmds, machine.executeScript(cmds), stdout, stderr, stopwatch);
+        assertSucceeded(cmd, machine.executeCmdCommand(cmd), stdout, stderr, stopwatch);
     }
 
     private void assertExecPsSucceeds(String cmd, String stdout, String stderr) {
         Stopwatch stopwatch = Stopwatch.createStarted();
-        assertSucceeded(cmd, machine.executePsScript(cmd), stdout, stderr, stopwatch);
-    }
-
-    private void assertExecPsSucceeds(List<String> cmds, String stdout, String stderr) {
-        Stopwatch stopwatch = Stopwatch.createStarted();
-        assertSucceeded(cmds, machine.executePsScript(cmds), stdout, stderr, stopwatch);
+        assertSucceeded(cmd, machine.executePsCommand(cmd), stdout, stderr, stopwatch);
     }
 
     private void assertFailed(Object cmd, WinRmToolResponse response, Stopwatch stopwatch) {

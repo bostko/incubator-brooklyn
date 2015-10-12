@@ -230,7 +230,7 @@ public class WindowsPerformanceCounterFeed extends AbstractFeed {
         @SuppressWarnings("unchecked")
         public T call() throws Exception {
             WinRmMachineLocation machine = EffectorTasks.getMachine(entity, WinRmMachineLocation.class);
-            WinRmToolResponse response = machine.executePsScript(command);
+            WinRmToolResponse response = machine.executePsCommand(command);
             return (T)response;
         }
     }
