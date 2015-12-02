@@ -18,6 +18,7 @@
  */
 package org.apache.brooklyn.rest.jsgui;
 
+import org.apache.brooklyn.test.Asserts;
 import org.apache.brooklyn.test.HttpTestUtils;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.ContextHandler;
@@ -25,8 +26,8 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import org.apache.brooklyn.api.mgmt.ManagementContext;
 import org.apache.brooklyn.core.entity.Entities;
+import org.apache.brooklyn.core.server.BrooklynServiceAttributes;
 import org.apache.brooklyn.rest.BrooklynRestApiLauncherTestFixture;
-import org.apache.brooklyn.rest.util.OsgiCompat;
 import org.eclipse.jetty.server.NetworkConnector;
 
 /** Convenience and demo for launching programmatically. */
@@ -75,7 +76,7 @@ public class BrooklynJavascriptGuiLauncherTest {
     }
 
     private ManagementContext getManagementContextFromJettyServerAttributes(Server server) {
-        return OsgiCompat.getManagementContext((ContextHandler) server.getHandler());
+        return (ManagementContext) ((ContextHandler)server.getHandler()).getAttribute(BrooklynServiceAttributes.BROOKLYN_MANAGEMENT_CONTEXT);
     }
 
 }

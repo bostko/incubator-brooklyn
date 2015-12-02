@@ -24,6 +24,7 @@ import io.swagger.config.SwaggerConfig;
 import io.swagger.core.filter.SpecFilter;
 import io.swagger.core.filter.SwaggerSpecFilter;
 import io.swagger.jaxrs.Reader;
+import io.swagger.jaxrs.config.BeanConfig;
 import io.swagger.jaxrs.config.JaxrsScanner;
 import io.swagger.jaxrs.config.ReaderConfigUtils;
 import io.swagger.jaxrs.listing.SwaggerSerializers;
@@ -36,6 +37,8 @@ import java.util.Map;
 import java.util.Set;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -65,7 +68,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Ciprian Ciubotariu <cheepeero@gmx.net>
  */
-public class ApiListingResource {
+public class ApiListingResource extends HttpServlet {
 
     static Logger LOGGER = LoggerFactory.getLogger(ApiListingResource.class);
 
@@ -73,6 +76,15 @@ public class ApiListingResource {
     ServletContext context;
 
     boolean initialized = false;
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+
+        BeanConfig beanConfig = new BeanConfig();
+        beanConfig.setVersion("1.0.2");
+        beanConfig.setResourcePackage("org.apache.brooklyn.rest.api");
+    }
 
     private static class ServletConfigAdapter implements ServletConfig {
 
