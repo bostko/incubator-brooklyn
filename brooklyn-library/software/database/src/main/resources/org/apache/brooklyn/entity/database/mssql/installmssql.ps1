@@ -39,7 +39,6 @@ Install-WindowsFeature NET-Framework-Core
 
 $pass = '${attribute['windows.password']}'
 $secpasswd = ConvertTo-SecureString $pass -AsPlainText -Force
-$mycreds = New-Object System.Management.Automation.PSCredential ($($env:COMPUTERNAME + "\Administrator"), $secpasswd)
 
-$process = Start-Process ( $driveLetter + "setup.exe") -ArgumentList "/ConfigurationFile=C:\ConfigurationFile.ini" -Credential $mycreds -RedirectStandardOutput "C:\sqlout.txt" -RedirectStandardError "C:\sqlerr.txt" -Wait -PassThru
+$process = Start-Process ( $driveLetter + "setup.exe") -ArgumentList "/ConfigurationFile=C:\ConfigurationFile.ini" -RedirectStandardOutput "C:\sqlout.txt" -RedirectStandardError "C:\sqlerr.txt" -Wait -PassThru
 exit $process.ExitCode
