@@ -57,12 +57,13 @@ public interface WinRmTool {
     ConfigKey<Boolean> USE_NTLM = ConfigKeys.newBooleanConfigKey("winrm.useNtlm", "The parameter configures tells the machine sensors whether the winrm port is over https. If the parameter is true then 5986 will be used as a winrm port.", true);
     ConfigKey<String> PROP_USER = newStringConfigKey("user", "User to connect as", null);
     ConfigKey<String> PROP_PASSWORD = newStringConfigKey("password", "Password to use to connect", null);
+    ConfigKey<String> OPERATION_TIMEOUT = newStringConfigKey("operationTimeout", "WinRM OperationTimeout", "1m");
 
     // TODO See SshTool#PROP_SSH_TRIES, where it was called "sshTries"; remove duplication? Merge into one well-named thing?
     ConfigKey<Integer> PROP_EXEC_TRIES = ConfigKeys.newIntegerConfigKey(
             "execTries", 
             "Max number of times to attempt WinRM operations", 
-            10);
+            1);
 
     ConfigKey<Duration> PROP_EXEC_RETRY_DELAY = newConfigKey(
             Duration.class,
